@@ -48,8 +48,9 @@ class Signup{
   {
     try
     {
-      $sql = "INSERT INTO Homeowners (username, password, name, email, phone, address,postal_code,home_type,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code', '$this->home_type','$this->user_type')";
+      $sql = "INSERT INTO Homeowners (username, password,name,email,phone,address,postal_code,home_type,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code', '$this->home_type', '$this->user_type')";
       $result = mysqli_query($this->conn, $sql);
+      //printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
     }
     catch (mysqli_sql_exception $e)
     {
@@ -83,7 +84,7 @@ class LogIn extends SignUp{
 
   function selectFromTable()
   {
-    $sql = "SELECT password,name,email,phone,address,postal_code,home_type,user_type FROM Homeowners WHERE username = '$this->username'UNION SELECT password,name,email,phone,address,postal_code,null,user_type FROM Company WHERE username = '$this->username'";
+    $sql = "SELECT password,name,email,phone,address,postal_code,home_type,user_type FROM Homeowners WHERE username = '$this->username' UNION SELECT password,name,email,phone,address,postal_code,null,user_type FROM Company WHERE username = '$this->username'";
     $result = $this->conn->query($sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     if(mysqli_num_rows($result)==1)
@@ -101,7 +102,6 @@ class LogIn extends SignUp{
             $_SESSION["home_type"] = $row['home_type'];
             $_SESSION["user_type"] = $row['user_type'];
             header("location: welcome.php");
-
       }
       else{
 
