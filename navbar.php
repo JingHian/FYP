@@ -7,18 +7,28 @@
         <div class="navbar-nav">
           <a class="nav-link "  href="welcome.php">Home</a>
           <?php
-            if($_SESSION["user_type"] =="company"){echo '<a class="nav-link " href="insertProducts.php" >Insert Products</a>';}
-          ?>
-          <a class="nav-link " href="listProducts.php" >List Products</a>
-
-          <?php
+            if($_SESSION["user_type"] =="admin"){
+              echo '<a class="nav-link " href="#" >View Profiles</a>';
+              echo '<a class="nav-link " href="#" >Verify Companies</a>';
+              echo '<a class="nav-link " href="#" >Enquiries</a>';
+              echo '<a class="nav-link " href="#" >Service Categories</a>';
+            }
+            if($_SESSION["user_type"] =="company"){
+              echo '<a class="nav-link " href="#" >Customers</a>';
+              echo '<a class="nav-link " href="#" >Services</a>';
+              echo '<a class="nav-link " href="#" >Equipment</a>';
+              echo '<a class="nav-link " href="#" >Staff</a>';
+              echo '<a class="nav-link " href="#" >Enquiries</a>';
+              echo '<a class="nav-link " href="#" >Bookings</a>';
+            }
             if($_SESSION["user_type"] =="homeowner"){
-              echo '<a class="nav-link " href="rentProducts.php" >Rent Products</a>';
-              echo '<a class="nav-link " href="extendProducts.php" >Extend Rent</a>';
-              echo '<a class="nav-link " href="returnProducts.php" >Return Products</a>';
-                                          }
+              echo '<a class="nav-link " href="#" >View Companies</a>';
+              echo '<a class="nav-link " href="#" >Manage My Services</a>';
+              echo '<a class="nav-link " href="#" >Bookings</a>';
+              echo '<a class="nav-link " href="#" >Enquiries</a>';
+              echo '<a class="nav-link " href="#" >Add Water Usage</a>';
+            }
           ?>
-          <a class="nav-link " href="searchProducts.php" >Search Products</a>
         </div>
         <div class="navbar-nav ms-auto">
           <a class="nav-link " href="userInfo.php"><?php echo htmlspecialchars($_SESSION["name"]).'('.htmlspecialchars($_SESSION["user_type"]).')'; ?></a>
