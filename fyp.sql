@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2022 at 03:09 PM
+-- Generation Time: Jun 13, 2022 at 02:33 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -22,6 +22,29 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `fyp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `fyp`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `admin_ID` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `user_type` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone`, `user_type`) VALUES
+(2, 'admin1', '$2y$10$PzVZrvMbbN8/ANiT2.9OBu2j1/exOdblgYA.l8UF/NHAC2Q7Y/5Aq', 'Test', 'test@mail.com', 98765432, 'admin');
 
 -- --------------------------------------------------------
 
@@ -48,8 +71,31 @@ CREATE TABLE `company` (
 --
 
 INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `user_type`, `suspended`, `verified`) VALUES
-(1, 'company1', '$2y$10$EMN7mmj/Bjue7q65NStNJ.Xtp01Bmj6xUb5U4s/pt5IxL1EECZAW6', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123456, 'company', 0, 0),
-(2, 'company2', '$2y$10$VNtfG56fmaO4tkp6323zzuM7ojJA0/jjhU1WkDRxQVgXUlJPi6GmC', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'company', 0, 0);
+(1, 'company1', '$2y$10$LC7fQTlrA4YwODzgiV9XKetm1Y5gSUJ/Nwg4QA.QbEko0Rr9/pmIy', 'Testing', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'company', 0, 0),
+(2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Testing2', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'company', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_services`
+--
+
+CREATE TABLE `company_services` (
+  `service_ID` int(11) NOT NULL,
+  `company_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `company_services`
+--
+
+INSERT INTO `company_services` (`service_ID`, `company_ID`) VALUES
+(1, 1),
+(2, 1),
+(49, 1),
+(52, 1),
+(2, 2),
+(73, 2);
 
 -- --------------------------------------------------------
 
@@ -76,15 +122,63 @@ CREATE TABLE `homeowners` (
 --
 
 INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `home_type`, `user_type`, `suspended`) VALUES
-(1, 'homeowner1', '$2y$10$9AkQyZGG2V3iOcMzHiNCSetykaq0aT8lSahw4v3QB8hmGVcZuPTdS', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '4room', 'homeowner', 0),
-(2, 'homeowner2', '$2y$10$dJN9fv.Z.Roeh0/qOU99Nup8da4Sk6NHHQDphrh6HRInU7cgKqPM2', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '4room', 'homeowner', 0),
-(3, 'homeowner3', '$2y$10$CQ0/ugRdlZQFeJkLX8ty8exjXdE8A9RzTyYrzQi1J7rCuCDMqtNP.', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '5room', 'homeowner', 0),
-(4, 'homeowner4', '$2y$10$Ndy574KevKhZbby5BHb9bOZNCTVWHQ3NpfBTX7lRbM8gRKX3H.Gpm', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '2room', 'homeowner', 0),
-(5, 'homeowner6', '$2y$10$t8cbQun8xyivIpv51FMZ.OnqZwuLqz78oQeyTdQpln9iUvnfuwzg.', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'condo', 'homeowner', 0);
+(1, 'homeowner1', '$2y$10$kDgwOcjxhguKJqUkRw0HPe682D4lYpAmCvUNPmPovqk8sJaz145b.', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '2room', 'homeowner', 0),
+(2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'exec', 'homeowner', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `homeowner_services`
+--
+
+CREATE TABLE `homeowner_services` (
+  `service_ID` int(11) NOT NULL,
+  `homeowner_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `homeowner_services`
+--
+
+INSERT INTO `homeowner_services` (`service_ID`, `homeowner_ID`) VALUES
+(1, 1),
+(2, 1),
+(49, 1),
+(52, 1),
+(1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `service_ID` int(11) NOT NULL,
+  `service_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`service_ID`, `service_name`) VALUES
+(49, 'Fireworks'),
+(2, 'Maintenence'),
+(7, 'One'),
+(73, 'Parties'),
+(52, 'Pipes'),
+(1, 'Water Supply');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_ID`);
 
 --
 -- Indexes for table `company`
@@ -94,6 +188,13 @@ ALTER TABLE `company`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `company_services`
+--
+ALTER TABLE `company_services`
+  ADD KEY `FK_company_services_company_ID` (`company_ID`),
+  ADD KEY `FK_company_services_service_ID` (`service_ID`);
+
+--
 -- Indexes for table `homeowners`
 --
 ALTER TABLE `homeowners`
@@ -101,8 +202,28 @@ ALTER TABLE `homeowners`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `homeowner_services`
+--
+ALTER TABLE `homeowner_services`
+  ADD KEY `FK_homeowner_services_homeowner_ID` (`homeowner_ID`),
+  ADD KEY `FK_homeowner_services_service_ID` (`service_ID`);
+
+--
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`service_ID`),
+  ADD UNIQUE KEY `service_name` (`service_name`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -114,7 +235,31 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `homeowners`
 --
 ALTER TABLE `homeowners`
-  MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `company_services`
+--
+ALTER TABLE `company_services`
+  ADD CONSTRAINT `FK_company_services_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_company_services_service_ID` FOREIGN KEY (`service_ID`) REFERENCES `services` (`service_ID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `homeowner_services`
+--
+ALTER TABLE `homeowner_services`
+  ADD CONSTRAINT `FK_homeowner_services_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_homeowner_services_service_ID` FOREIGN KEY (`service_ID`) REFERENCES `services` (`service_ID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
