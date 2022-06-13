@@ -1,34 +1,53 @@
 <?php
-class Signup{
-  private $conn = NULL;
-  private $username;
-  private $password;
-  private $name;
-  private $email;
-  private $phone;
-  private $address;
-  private $postal_code;
-  private $home_type;
-  private $user_type;
+class SignUp{
+  protected $conn = NULL;
+  protected $username;
+  protected $password;
+  protected $name;
+  protected $email;
+  protected $phone;
+  protected $address;
+  protected $postal_code;
+  protected $home_type;
+  protected $user_type;
 
   function __construct($username,$password,$name,$email,$phone,$address,$postal_code,$home_type,$user_type) {
-  	include_once("conn.php");
-    	$this->conn = $conn;
-      $this->username = $username;
-      $this->password = $password;
-      $this->name = $name;
-      $this->email = $email;
-      $this->phone = $phone;
-      $this->address = $address;
-      $this->postal_code = $postal_code;
-      $this->home_type = $home_type;
-      $this->user_type = $user_type;
+    include("conn.php");
+    $this->conn = $conn;
+    $this->username = $username;
+    $this->password = $password;
+    $this->name = $name;
+    $this->email = $email;
+    $this->phone = $phone;
+    $this->address = $address;
+    $this->postal_code = $postal_code;
+    $this->home_type = $home_type;
+    $this->user_type = $user_type;
 
   }
 
   function checkUniqueID() //check if username is unique
   {
-    $sql = "Select * from Homeowners where username='$this->username'";
+    $sql = "SELECT * FROM Homeowners WHERE username='$this->username' UNION
+            SELECT * FROM Company WHERE username='$this->username'";
+
+    $result = $this->conn->query($sql);
+
+    $num = mysqli_num_rows($result);
+
+    if($num > 0)
+    {
+      return false;
+    }
+    else{
+      return true;
+    }
+
+  }
+
+  function checkUniqueIDAdmin() //check if username is unique for admin
+  {
+    $sql = "SELECT * FROM Admin WHERE username='$this->username'";
 
     $result = $this->conn->query($sql);
 
@@ -71,12 +90,108 @@ class Signup{
     }
   }
 
+  function insertIntoTableAdmin() //insert company details into databse
+  {
+    try
+    {
+      $sql = "INSERT INTO Admin (username, password, name, email, phone,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone','$this->user_type')";
+      $result = mysqli_query($this->conn, $sql);
+    }
+    catch (mysqli_sql_exception $e)
+    {
+      echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
+    }
+  }
+
+
+  function insertIntoServices($services)
+  {
+    // print_r($this->services);
+
+    try
+    {
+    foreach ($services as $i => $value) {
+      $sql = "INSERT IGNORE INTO Services (service_name) VALUES('$value')";
+      $result = mysqli_query($this->conn, $sql);
+      }
+    }
+    catch (mysqli_sql_exception $e)
+    {
+      echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
+    }
+  }
+
+
+  function insertIntoHomeownerServices($services)
+  {
+    // print_r($this->services);
+    foreach ($services as $i => $value) {
+    $sql = "SELECT service_ID FROM Services where service_name ='$value'";
+    $result = mysqli_query($this->conn, $sql);
+    if ($result->num_rows > 0) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+        $service_ID_List[] = $row['service_ID'];
+      }
+    }
+    }
+
+    $sql = "SELECT homeowner_ID FROM Homeowners where username ='$this->username'";
+    $result = mysqli_query($this->conn, $sql);
+    if ($result->num_rows > 0) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+        $homeowner_ID = $row['homeowner_ID'];
+      }
+    }
+  // print_r($service_ID_List);
+  // echo $homeowner_ID;
+
+  foreach ($service_ID_List as $i => $value) {
+    $sql = "INSERT INTO Homeowner_Services (service_ID,homeowner_ID) values ( '$value', '$homeowner_ID')";
+    $result = mysqli_query($this->conn, $sql);
+    }
+
+  }
+
+  function insertIntoCompanyServices($services)
+  {
+    // print_r($this->services);
+    foreach ($services as $i => $value) {
+    $sql = "SELECT service_ID FROM Services where service_name ='$value'";
+    $result = mysqli_query($this->conn, $sql);
+    if ($result->num_rows > 0) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+        $service_ID_List[] = $row['service_ID'];
+      }
+    }
+    }
+
+    $sql = "SELECT company_ID FROM Company where username ='$this->username'";
+    $result = mysqli_query($this->conn, $sql);
+    if ($result->num_rows > 0) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+        $company_ID = $row['company_ID'];
+      }
+  }
+  // print_r($service_ID_List);
+  // echo $company_ID;
+
+  foreach ($service_ID_List as $i => $value) {
+    $sql = "INSERT INTO Company_Services (service_ID,company_ID) values ( '$value', '$company_ID')";
+    $result = mysqli_query($this->conn, $sql);
+  }
+
+  }
+
 }
 
 class LogIn extends SignUp{
 
   function __construct($username,$password){
-    include_once("conn.php");
+    include("conn.php");
     $this->conn = $conn;
     $this->username = $username;
     $this->password = $password;
@@ -84,7 +199,9 @@ class LogIn extends SignUp{
 
   function selectFromTable()
   {
-    $sql = "SELECT password,name,email,phone,address,postal_code,home_type,user_type FROM Homeowners WHERE username = '$this->username' UNION SELECT password,name,email,phone,address,postal_code,null,user_type FROM Company WHERE username = '$this->username'";
+    $sql = "SELECT homeowner_ID as ID,password,name,email,phone,address,postal_code,home_type,user_type FROM Homeowners WHERE username = '$this->username'
+      UNION SELECT company_ID as ID,password,name,email,phone,address,postal_code,null,user_type FROM Company WHERE username = '$this->username'
+      UNION SELECT admin_ID as ID,password,name,email,phone,null,null,null,user_type FROM Admin WHERE username = '$this->username'";
     $result = $this->conn->query($sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     if(mysqli_num_rows($result)==1)
@@ -94,6 +211,7 @@ class LogIn extends SignUp{
             session_start();
             // Store data in session variables
             $_SESSION["loggedin"] = true;
+            $_SESSION["ID"] = $row['ID'];
             $_SESSION["name"] = $row['name'];
             $_SESSION["email"] = $row['email'];
             $_SESSION["phone"] = $row['phone'];
@@ -110,6 +228,9 @@ class LogIn extends SignUp{
     }
   }
 
+
 }
+
+
 
 ?>
