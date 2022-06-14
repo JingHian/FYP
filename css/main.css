@@ -1,0 +1,34 @@
+body{
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+.twenty {
+  display: block;
+  width: 21%;
+  margin: 0 auto;
+}
+
+.ninety-five {
+  display: block;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.form-horizontal{
+    display:block;
+    width:25%;
+    margin:0 auto;
+}
+
+.chart-container {
+    height:400px
+}
+
+.usage-font{
+    font-size:20px;
+    font-weight: bold;
+}
+
+.height300{
+  height:300px;
+}

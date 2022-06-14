@@ -63,22 +63,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <?php include('cssLinks.php');?>
     <title>Water Supply Marketplace</title>
   </head>
   <body>
-    <style>
-      .twenty {
-        display: block;
-        width: 21%;
-        margin: 0 auto;
-      }
-      .ninety-five {
-        display: block;
-        width: 95%;
-        margin: 0 auto;
-      }
-    </style>
     <div class="container">
       <h1 class="display-5" style="text-align: center;margin-top:100px;">Water Supply Marketplace</h1>
       <h2 class="display-6 fs-2 text-muted" style="text-align: center;">Homeowner Sign Up</h2>
@@ -89,7 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       <button type="button" data-bs-target="#carousel-one" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#carousel-one" data-bs-slide-to="1" aria-label="Slide 2"></button>
     </div>
-    <div class ="container twenty" style="height:750px;">
+    <div class ="container" style="height:750px;">
     <div class="carousel-inner " >
         <div class="carousel-item active">
               <span style="color:green"> <?php echo $signUpSuccess;?> </span>
@@ -169,8 +157,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     </div>
     </form>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+    <?php include('jsLinks.php');?>
   </body>
 </html>
