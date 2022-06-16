@@ -37,15 +37,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         </div>
       </div>
       <hr>
-      <h2 class ="text-center" style="margin:10px 0 20px 0;">Stats</h1>
+      <h2 class ="text-center" style="margin:10px 0 20px 0;">Stats</h2>
       <div class ="row ">
-        <div class ="col-5 border border-secondary border-3 rounded pt-3 height300">
+        <div class ="col-5 border border-secondary border-3 rounded pt-3 height-300">
           <div>
             <p class="usage-font">You used 11% more water than last month:</p>
           </div>
         </div>
         <div class ="col-2">  </div>
-        <div class ="col-5 border border-secondary border-3 rounded pt-3 height300">
+        <div class ="col-5 border border-secondary border-3 rounded pt-3 height-300">
           <div>
             <p class="usage-font">You used 5% more water than similar households:</p>
           </div>

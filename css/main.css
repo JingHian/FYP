@@ -29,6 +29,18 @@ body{
     font-weight: bold;
 }
 
-.height300{
+.height-300{
   height:300px;
+}
+
+.height-200{
+  height:150px;
+}
+
+.icon-size{
+  font-size: 40px !important;
+}
+.col-05 {
+    flex: 0 0 auto;
+    width: 4.16666666%;
 }
