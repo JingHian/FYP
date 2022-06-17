@@ -18,75 +18,68 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <body>
   <?php include_once('navbar.php');?>
-  <h1 class ="display-6 text-center " style="margin-top:20px;margin-bottom:20px;">Track Water Usage</h1>
+  <h1 class ="display-6 text-center " style="margin-top:20px;margin-bottom:20px;">Services</h1>
   <div class="container">
     <div class="row ">
-    <div class="col-2"></div>
-      <div class="d-flex align-items-center justify-content-center col-2 border border-secondary border-3 rounded pt-3 mb-3 height-200">
+    <div class="col-3"></div>
+      <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-secondary border-3 pt-3  height-200">
         <div class =" text-center">
-          <span class="material-symbols-outlined  font-deepskyblue icon-size">water_drop</span>
-          <p class="usage-font font-deepskyblue">Water Usage </p>
+          <span class="material-symbols-outlined  icon-size">water_drop</span>
+          <p class="usage-font">Water Supply </p>
         </div>
-      </div>
-      <div class="col-1"></div>
-        <div class="d-flex align-items-center justify-content-center col-2 border border-secondary border-3 rounded pt-3 mb-3 height-200">
+      </button>
+        <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-secondary border-start-0 border-end-0 border-3 pt-3  height-200">
           <div class =" text-center">
-            <span class="material-symbols-outlined icon-size">water_drop</span>
-            <p class="usage-font ">Water Usage </p>
+            <span class="material-symbols-outlined icon-size">home_repair_service</span>
+            <p class="usage-font ">Equipment</p>
           </div>
-        </div>
-        <div class="col-1"></div>
-        <div class="d-flex align-items-center justify-content-center col-2 border border-secondary border-3 rounded pt-3 mb-3 height-200">
+        </button>
+        <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-secondary border-3 pt-3  height-200">
           <div class =" text-center">
-            <span class="material-symbols-outlined icon-size">water_drop</span>
-            <p class="usage-font ">Water Usage </p>
+            <span class="material-symbols-outlined icon-size">engineering</span>
+            <p class="usage-font ">Staff </p>
           </div>
-        </div>
-        <div class="col-2"></div>
-        <div class="col-2"></div>
-          <div class="d-flex align-items-center justify-content-center col-2 border border-secondary border-3 rounded pt-3 mb-3 height-200">
+        </button>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+          <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-top-0 border-bottom-0 border-secondary border-3 pt-3  height-200">
             <div class =" text-center">
-              <span class="material-symbols-outlined icon-size">water_drop</span>
-              <p class="usage-font ">Water Usage </p>
+              <span class="material-symbols-outlined   icon-size">contact_support</span>
+              <p class="usage-font">Homeowner Enquiries </p>
             </div>
-          </div>
-          <div class="col-1"></div>
-            <div class="d-flex align-items-center justify-content-center col-2 border border-secondary border-3 rounded pt-3 mb-3 height-200">
+          </button>
+            <button class="btn no-rounded-border d-flex align-items-center  justify-content-center col-2 border  border-top-0 border-bottom-0 border-secondary border-start-0 border-end-0 border-3 pt-3  height-200">
               <div class =" text-center">
-                <span class="material-symbols-outlined icon-size">water_drop</span>
-                <p class="usage-font ">Water Usage </p>
+                <span class="material-symbols-outlined  icon-size">event_available</span>
+                <p class="usage-font ">Homeowner Bookings </p>
               </div>
-            </div>
-            <div class="col-1"></div>
-            <div class="d-flex align-items-center justify-content-center col-2 border border-secondary border-3 rounded pt-3 mb-3 height-200">
+            </button>
+            <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-top-0 border-bottom-0 border-secondary border-3 pt-3  height-200">
               <div class =" text-center">
-                <span class="material-symbols-outlined icon-size">water_drop</span>
-                <p class="usage-font ">Water Usage </p>
+                <span class="material-symbols-outlined   icon-size">request_quote</span>
+                <p class="usage-font">Homeowner Bills </p>
               </div>
-            </div>
-            <div class="col-2"></div>
-            <div class="col-2"></div>
-              <div class="d-flex align-items-center justify-content-center col-2 border border-secondary border-3 rounded pt-3 mb-3 height-200">
+            </button>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+              <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-secondary border-3 pt-3  height-200">
                 <div class =" text-center">
-                  <span class="material-symbols-outlined icon-size">water_drop</span>
-                  <p class="usage-font ">Water Usage </p>
+                  <span class="material-symbols-outlined   icon-size">price_change</span>
+                  <p class="usage-font">Pricing</p>
                 </div>
-              </div>
-              <div class="col-1"></div>
-                <div class="d-flex align-items-center justify-content-center col-2 border border-secondary border-3 rounded pt-3 mb-3 height-200">
+              </button>
+                <button class="btn no-rounded-border d-flex align-items-center  justify-content-center col-2 border border-secondary border-start-0 border-end-0 border-3 pt-3  height-200">
                   <div class =" text-center">
-                    <span class="material-symbols-outlined icon-size">water_drop</span>
-                    <p class="usage-font ">Water Usage </p>
+                    <span class="material-symbols-outlined  icon-size">inventory_2</span>
+                    <p class="usage-font ">Packages </p>
                   </div>
-                </div>
-                <div class="col-1"></div>
-                <div class="d-flex align-items-center justify-content-center col-2 border border-secondary border-3 rounded pt-3 mb-3 height-200">
+                </button>
+                <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-secondary border-3 pt-3  height-200">
                   <div class =" text-center">
-                    <span class="material-symbols-outlined icon-size">water_drop</span>
-                    <p class="usage-font ">Water Usage </p>
+                    <span class="material-symbols-outlined   icon-size">person</span>
+                    <p class="usage-font">Edit Profile </p>
                   </div>
-                </div>
-                <div class="col-2"></div>
+                </button>
 
     </div>
   </div>
