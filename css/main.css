@@ -68,3 +68,8 @@ body{
 .no-rounded-border{
   border-radius: 0 !important;
 }
+
+.no-text-deco{
+  text-decoration: none;
+   color: black;
+}

@@ -23,10 +23,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <div class="row ">
     <div class="col-3"></div>
       <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-secondary border-3 pt-3  height-200">
+        <a class ="no-text-deco" href="viewWaterUsage.php">
         <div class =" text-center">
           <span class="material-symbols-outlined  icon-size">water_drop</span>
-          <p class="usage-font">Water Supply </p>
+          <p class="usage-font">Water Usage </p>
         </div>
+      </a>
       </button>
         <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-secondary border-start-0 border-end-0 border-3 pt-3  height-200">
           <div class =" text-center">
