@@ -17,7 +17,7 @@
   		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 		<title>Company Details</title>
     </head>
-	<body> 
+	<body>
 		<div class="container mt-3">
 			<div class="d-flex justify-content-around bg-secondary mb-3">
 				<input class="form-control" id="myInput" type="text" placeholder="Search..">
@@ -45,14 +45,14 @@
 				<th scope="col">Action</th>
 				</tr>
 			</thead>
-			<tbody id="companyTable"> 
+			<tbody id="companyTable">
 				<tr>
 				<th scope="row">1</th>
 				<td>Company 1</td>
 				<td>Water Supply, Maintainance</td>
 				<td>123 some avenue #12-521</td>
 				<td><span id="rateMe1" class="empty-stars"></span>3/5</td>
-				<td><button type="button" class="btn btn-light">Details</button></td>
+				<td><button type="button" class="btn btn-light"><a href="company_details.php">Details</a></button></td>
 				</tr>
 				<tr>
 				<th scope="row">2</th>
@@ -60,7 +60,7 @@
 				<td>Water</td>
 				<td>345</td>
 				<td><span id="rateMe1" class="empty-stars"></span>5/5</td>
-				<td><button type="button" class="btn btn-light">Details</button></td>
+				<td><button type="button" class="btn btn-light"><a href="company_details.php">Details</a></button></td>
 				</tr>
 				<tr>
 				<th scope="row">3</th>
@@ -68,7 +68,7 @@
 				<td>Supply</td>
 				<td>789</td>
 				<td><span id="rateMe1" class="empty-stars"></span>4/5</td>
-				<td><button type="button" class="btn btn-light">Details</button></td>
+				<td><button type="button" class="btn btn-light"><a href="company_details.php">Details</a></button></td>
 				</tr>
 			</tbody>
 			</table>

@@ -23,9 +23,9 @@
             }
             if($_SESSION["user_type"] =="homeowner"){
               echo '<a class="nav-link " href="viewCompanies.php" >View Companies</a>';
-              echo '<a class="nav-link " href="#" >Manage My Services</a>';
+              echo '<a class="nav-link " href="services.php" >Manage My Services</a>';
               echo '<a class="nav-link " href="#" >Bookings</a>';
-              echo '<a class="nav-link " href="#" >Enquiries</a>';
+              echo '<a class="nav-link " href="viewenquiries.php" >Enquiries</a>';
               echo '<a class="nav-link " href="#" >Add Water Usage</a>';
             }
           ?>
