@@ -20,6 +20,24 @@ body{
     margin:0 auto;
 }
 
+.form-horizontal-2{
+    display:block;
+    width:35%;
+    margin:0 auto;
+}
+
+.submitLink {
+  background-color: transparent;
+  text-decoration: underline;
+  border: none;
+  color: #0d6efd;
+  cursor: pointer;
+}
+
+submitLink:focus {
+  outline: none;
+}
+
 .chart-container {
     height:400px
 }

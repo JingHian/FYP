@@ -9,7 +9,7 @@
         <title>Company Details</title>
     </head>
     <body>
-        
+
         <?php include_once('navbar.php');?>
         <div class ="container">
         </div>
@@ -24,21 +24,9 @@
             <br> <br>
 
         </div>
-        
-        <?php
 
-             $servername = "localhost";
-             $username = "root";
-             $password = "";
-             $dbname = "fyp";
-             //$searchedName = $_SESSION['inputid'] ?? "";
-     
-             // Create connection
-             try {
-             $conn = mysqli_connect($servername, $username, $password, $dbname); 
-             } catch ( mysqli_sql_exception $e) {
-                 die("Connection failed: " . mysqli_connect_error());
-             }
+        <?php
+          include("conn.php");
 
              //automatically create the table if not extist yet when the homeowner clicks the eqnuries menu
              $casesTable = "CREATE TABLE IF NOT EXISTS Cases (
@@ -49,27 +37,32 @@
                 case_date VARCHAR(15) NOT NULL,
                 case_status VARCHAR(10) NOT NULL,
                 case_description VARCHAR(500) NOT NULL)";
-    
-            mysqli_query($conn, $casesTable);  
+
+            mysqli_query($conn, $casesTable);
 
             $homeownerName = $_SESSION["name"];
+            $homeowner_ID = $_SESSION['ID'];
 
             try {
-                $query = "select case_ID, case_subject, company_ID, homeowner_ID, case_date, case_status from Cases where homeowner_id in (select homeowner_ID from homeowners where name = '$homeownerName')";
+                $query = "SELECT cas.case_ID, cas.case_subject, cas.company_ID, cas.homeowner_ID, cas.case_date, cas.case_status,comp.name
+                          FROM Cases AS cas
+                          JOIN Company AS comp
+                          ON cas.company_ID = comp.company_ID
+                          WHERE homeowner_id = '$homeowner_ID'";
                 $result = mysqli_query($conn, $query);
-    
+
                 if (mysqli_num_rows($result) < 1) {
                     echo "<br><br>No enquiries are found.<br><br>";
                 } else {
-    
+
                     echo "<table class='enquirytable' border = '1px solid black'>";
-                    echo "<th>Enquiry ID</th>" . "<th>Subject</th>" . "<th>To</th>" . "<th>From</th>" . "<th>Date</th>" . "<th>Status</th>" . "<th>Action</th>";
+                    echo  "<th>Subject</th>" . "<th>To</th>" . "<th>From</th>" . "<th>Date</th>" . "<th>Status</th>" . "<th>Action</th>";
                     while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
-    
-                        echo "<tr><td>" . $Row['case_ID'] . "</td>";
+
+                        echo "<tr>";
                         echo "<td>" . $Row['case_subject'] . "</td>";
-                        echo "<td>" . $Row['company_ID'] . "</td>";
-                        echo "<td>" . $Row['homeowner_ID'] . "</td>";
+                        echo "<td>" . $Row['name'] . "</td>";
+                        echo "<td>" . $homeownerName . "</td>";
                         echo "<td>" . $Row['case_date'] ."</td>";
                         echo "<td>" . $Row['case_status'] ."</td>";
                         echo "</tr>";
@@ -95,7 +88,7 @@
                 margin-right:auto;
                 width: 60%;
                 height: 20;
-                line-height: 40px; 
+                line-height: 40px;
                 border-left: none;
                 border-right: none;
                 border-top: 5px solid #000;

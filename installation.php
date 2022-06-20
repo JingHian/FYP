@@ -1,50 +1,83 @@
-<?php session_start(); ?>
+<?php session_start();
+
+$name = $_SESSION["name"];
+$phone = $_SESSION["phone"];
+$email = $_SESSION["email"];
+$address = $_SESSION["address"];
+$postal_code = $_SESSION["postal_code"];
+
+?>
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <?php include('cssLinks.php');?>
     <title>Company Details</title>
 </head>
 
 <body>
     <?php include_once('navbar.php');?>
-    <div class ="container">
+  <div class="container" >
+  <h1 class ="display-5 text-center" style="margin-top:50px;">Choose Installation Date</h1>
+  <div class="row justify-content-center">
+    <div class="col-6 text-center">
+  <p class ="display-6 fs-5" name = "product" value ="avail">confirm your details.</p>
+</div>
+  </div>
+</div>
+<div class="container form-horizontal">
+    <div class="row">
+        <div class="col">
+          <div class="form-floating  mb-3 ">
+            <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $_SESSION["name"]; ?>"disabled>
+            <label for="name">Name</label>
+          </div>
+        </div>
+
+        <div class="col">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="phone" name="phone"placeholder="phone" value="<?php echo $phone; ?>"disabled>
+          <label for="phone">Phone</label>
+        </div>
+      </div>
+      </div>
+
+
+      <div class="col">
+        <div class="form-floating  mb-3 ">
+          <input type="text" class="form-control" id="email" name="email" placeholder="email" value="<?php echo $email; ?>"disabled>
+          <label for="email">Email</label>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-floating  mb-3 ">
+          <input type="text" class="form-control" id="address" name="address" placeholder="address" value="<?php echo $address; ?>"disabled>
+          <label for="address">Address</label>
+        </div>
+      </div>
+
+<div class="row">
+      <div class="col">
+        <div class="form-floating mb-3 ">
+          <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="postal_code" value="<?php echo $postal_code; ?>"disabled>
+          <label for="postal_code">Postal Code</label>
+        </div>
+      </div>
+
+      <div class="col">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+        <div class="form-floating mb-3">
+          <input type="date" class="form-control" id="date" name="date"placeholder="date" >
+          <label for="date">Date</label>
+        </div>
+        </form>
+      </div>
     </div>
-
-    <div class="heading">
-        <h2> Fill In These Installation Details</h2>
+    <div class="form-group mt-3 text-center">
+        <input type="submit" class="btn btn-primary" value="Submit">
     </div>
-
-    <form action="installation.php" method="post">
-        <input type="text" name ="name" placeholder="Name">
-        <input type="number" name ="phone-number" placeholder="Phone Number" required> <br>
-        <input type="text" name ="email" placeholder="Email" required> <br>
-        <input type="text" name ="address" placeholder="Address" required> <br>
-        <input type="text" name ="postal-code" placeholder="Postal Code" required>
-        <input type="date" name ="booking-date" placeholder="Booking Date" required> <br>
-
-        <input type="submit" value="Book" class="enquiry">
-    </form>
-
-    <style>
-        .heading {
-            text-align: center;
-            padding: 100px;
-        }
-
-        form {
-            text-align: center;
-            padding: 100px;
-        }
-
-        input {
-            margin-bottom: 20px;
-            border-radius: 5px;
-
-        }
-
-    </style>
-
+</div>
+<?php include('jsLinks.php');?>
 </body>
 </html>
