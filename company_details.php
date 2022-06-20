@@ -29,7 +29,7 @@
         echo "<div class=pageHeading>";
 
         try {
-            $query = "select name, address from company where name = 'company3'";
+            $query = "select name, address from company where name = 'company 3'";
             $result = mysqli_query($conn, $query);
 
             while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
@@ -99,7 +99,7 @@
             <h4>
                 <?php
                     try {
-                        $query = "select email, phone from company where name = 'company3'";
+                        $query = "select email, phone from company where name = 'company 3'";
                         $result = mysqli_query($conn, $query);
 
                         while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
