@@ -31,7 +31,17 @@
           ?>
         </div>
         <div class="navbar-nav ms-auto">
-          <a class="nav-link " href="userInfo.php"><?php echo htmlspecialchars($_SESSION["name"]).'('.htmlspecialchars($_SESSION["user_type"]).')'; ?></a>
+
+          <a class="nav-link "
+            <?php
+              if($_SESSION["user_type"] =="company"){
+              echo 'href="userInfo.php">';
+            }
+              else if($_SESSION["user_type"] =="homeowner"){
+              echo 'href="userInfoHome.php">';
+          }
+            ?>
+            <?php echo htmlspecialchars($_SESSION["name"]).'('.htmlspecialchars($_SESSION["user_type"]).')'; ?></a>
           <a class="nav-link active d-flex justify-content-end" href="logout.php" >log out</a>
         </div>
       </div>
