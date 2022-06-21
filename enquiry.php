@@ -38,8 +38,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
     mysqli_query($conn, $casesTable);
 
-
-
   if ($companyName == "") {
       echo "";
   } else {
@@ -53,8 +51,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       }
   }
   }
-
-
 
 ?>
 <html>

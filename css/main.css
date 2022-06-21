@@ -91,3 +91,7 @@ submitLink:focus {
   text-decoration: none;
    color: black;
 }
+
+.table-padding{
+  line-height:50px;
+}
