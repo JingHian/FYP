@@ -1,12 +1,16 @@
 <?php
     session_start();
     include ("conn.php");
-    include ("tableClass.php");
+    include ("classes.php");
     include_once ('navbar.php');
     $name = $_SESSION["name"];
     $usertype = $_SESSION["user_type"];
 
     $tables = new Company();
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+      header("location:companyDetails.php");
+    }
 ?>
 <html>
     <head>
