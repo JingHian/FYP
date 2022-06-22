@@ -38,7 +38,8 @@ class Company{
               <th>Ratings</th>
               <th>Action</th>
             </tr>
-            </thead>";
+            </thead>
+            <tbody id='companyTable'>";
   }
 
  function listCompanies(){
@@ -57,7 +58,7 @@ class Company{
       // output data of each row
       while($row = $result->fetch_assoc()) {
         echo "<form method='post' action=''>
-                <tr class='table-padding'>
+                <tr class='table-padding' >
                   <td>".$row["name"]."</td>
                   <td>".$row["service_grouped"]."</td>
                   <td>".$row["address"]."</td>
@@ -67,7 +68,8 @@ class Company{
                 </tr>
               </form>";
       }
-      echo "</table>";
+      echo "
+      </tbody></table>";
     } else {
       echo "No Products Found";
     }
