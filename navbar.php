@@ -15,7 +15,7 @@
             }
             if($_SESSION["user_type"] =="company"){
               echo '<a class="nav-link " href="#" >Customers</a>';
-              echo '<a class="nav-link " href="#" >Services</a>';
+              echo '<a class="nav-link " href="servicesCompany.php" >Services</a>';
               echo '<a class="nav-link " href="#" >Equipment</a>';
               echo '<a class="nav-link " href="#" >Staff</a>';
               echo '<a class="nav-link " href="#" >Enquiries</a>';
@@ -23,9 +23,9 @@
             }
             if($_SESSION["user_type"] =="homeowner"){
               echo '<a class="nav-link " href="viewCompanies.php" >View Companies</a>';
-              echo '<a class="nav-link " href="services.php" >Manage My Services</a>';
-              echo '<a class="nav-link " href="#" >Bookings</a>';
-              echo '<a class="nav-link " href="viewenquiries.php" >Enquiries</a>';
+              echo '<a class="nav-link " href="servicesHomeowner.php" >My Services</a>';
+              echo '<a class="nav-link " href="bookHomeowner.php" >Bookings</a>';
+              echo '<a class="nav-link " href="viewEnquiries.php" >Enquiries</a>';
               echo '<a class="nav-link " href="#" >Add Water Usage</a>';
             }
           ?>

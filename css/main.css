@@ -65,7 +65,7 @@ submitLink:focus {
 
 .material-symbols-outlined {
   font-variation-settings:
-  'FILL' 1,
+  'FILL' 0,
   'wght' 400,
   'GRAD' 0,
   'opsz' 48
@@ -90,4 +90,8 @@ submitLink:focus {
 .no-text-deco{
   text-decoration: none;
    color: black;
+}
+
+.table-padding{
+  line-height:50px;
 }

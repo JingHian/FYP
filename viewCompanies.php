@@ -1,9 +1,16 @@
 <?php
     session_start();
     include ("conn.php");
+    include ("classes.php");
     include_once ('navbar.php');
     $name = $_SESSION["name"];
     $usertype = $_SESSION["user_type"];
+
+    $tables = new Company();
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+      header("location:companyDetails.php");
+    }
 ?>
 <html>
     <head>
@@ -18,6 +25,16 @@
 		<title>Company Details</title>
     </head>
 	<body>
+
+
+<div class="container" >
+<h1 class ="display-5 text-center" style="margin-top:50px;">Companies</h1>
+<div class="row justify-content-center">
+  <div class="col-6 text-center">
+<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">Here you can view companies currently registered on our platform.</p>
+</div>
+</div>
+</div>
 		<div class="container mt-3">
 			<div class="d-flex justify-content-around bg-secondary mb-3">
 				<input class="form-control" id="myInput" type="text" placeholder="Search..">
@@ -33,56 +50,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="container-sm">
-			<table class="table table-hover">
-			<thead>
-				<tr class="header">
-				<th scope="col"></th>
-				<th scope="col">Company Name</th>
-				<th scope="col">Services offered</th>
-				<th scope="col">Address</th>
-				<th scope="col">Ratings</th>
-				<th scope="col">Action</th>
-				</tr>
-			</thead>
-			<tbody id="companyTable">
-				<tr>
-				<th scope="row">1</th>
-				<td>Company 1</td>
-				<td>Water Supply, Maintainance</td>
-				<td>123 some avenue #12-521</td>
-				<td><span id="rateMe1" class="empty-stars"></span>3/5</td>
-				<td><button type="button" class="btn btn-light"><a href="company_details.php">Details</a></button></td>
-				</tr>
-				<tr>
-				<th scope="row">2</th>
-				<td>Company 2</td>
-				<td>Water</td>
-				<td>345</td>
-				<td><span id="rateMe1" class="empty-stars"></span>5/5</td>
-				<td><button type="button" class="btn btn-light"><a href="company_details.php">Details</a></button></td>
-				</tr>
-				<tr>
-				<th scope="row">3</th>
-				<td>Company 3</td>
-				<td>Supply</td>
-				<td>789</td>
-				<td><span id="rateMe1" class="empty-stars"></span>4/5</td>
-				<td><button type="button" class="btn btn-light"><a href="company_details.php">Details</a></button></td>
-				</tr>
-			</tbody>
-			</table>
-		</div>
-		<script>
-		$(document).ready(function(){
-		$("#myInput").on("keyup", function() {
-			var value = $(this).val().toLowerCase();
-			$("#companyTable tr").filter(function() {
-			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-			});
-		});
-		});
-		</script>
+    <div class="container justify-content-center text-center">
+    <?php
+      $tables->listCompanies();
+      ?>
+    </div>
+
 	</body>
 </html>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
