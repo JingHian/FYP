@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2022 at 02:33 PM
+-- Generation Time: Jun 22, 2022 at 03:34 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -49,6 +49,56 @@ INSERT INTO `admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `booking_ID` int(11) NOT NULL,
+  `company_ID` int(11) NOT NULL,
+  `homeowner_ID` int(11) NOT NULL,
+  `staff_ID` int(11) DEFAULT NULL,
+  `booking_date` date NOT NULL,
+  `booking_description` varchar(255) NOT NULL,
+  `booking_type` varchar(20) NOT NULL,
+  `booking_status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cases`
+--
+
+CREATE TABLE `cases` (
+  `case_ID` int(11) NOT NULL,
+  `case_subject` varchar(30) NOT NULL,
+  `company_ID` int(11) NOT NULL,
+  `homeowner_ID` int(11) NOT NULL,
+  `case_date` varchar(15) NOT NULL,
+  `case_status` varchar(10) NOT NULL,
+  `case_description` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cases`
+--
+
+INSERT INTO `cases` (`case_ID`, `case_subject`, `company_ID`, `homeowner_ID`, `case_date`, `case_status`, `case_description`) VALUES
+(13, 'Water leak', 2, 1, '2022-06-20', 'Awaiting', 'test'),
+(14, 'test', 1, 1, '2022-06-20', 'Awaiting', 'hello\r\n'),
+(15, 'test', 1, 1, '2022-06-20', 'Awaiting', 'hello\r\n'),
+(16, 'test', 1, 1, '2022-06-20', 'Awaiting', 'hello\r\n'),
+(17, 'test', 1, 1, '2022-06-20', 'Awaiting', 'hello\r\n'),
+(18, 'test', 1, 1, '2022-06-20', 'Awaiting', 'hello\r\n'),
+(19, 'test', 1, 1, '2022-06-20', 'Awaiting', 'hello\r\n'),
+(20, 'test', 1, 1, '2022-06-20', 'Awaiting', '1234'),
+(21, 'Hello', 1, 1, '2022-06-22', 'Awaiting', 'Just checking if this is still available\r\n'),
+(22, 'Broken pipes', 3, 1, '2022-06-22', 'Awaiting', 'Some of my pipes are broken'),
+(23, 'Send a technician ', 3, 1, '2022-06-22', 'Awaiting', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam euismod ligula vitae purus ultrices, non fermentum dui bibendum. Ut vel accumsan mi. Vestibulum eget ornare enim, id porttitor ligula. Nunc justo nunc, faucibus at varius sed, hendrerit sit amet nunc. Etiam vulputate malesuada lacus nec auc');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `company`
 --
 
@@ -71,8 +121,9 @@ CREATE TABLE `company` (
 --
 
 INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `user_type`, `suspended`, `verified`) VALUES
-(1, 'company1', '$2y$10$LC7fQTlrA4YwODzgiV9XKetm1Y5gSUJ/Nwg4QA.QbEko0Rr9/pmIy', 'Testing', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'company', 0, 0),
-(2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Testing2', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'company', 0, 0);
+(1, 'company1', '$2y$10$LC7fQTlrA4YwODzgiV9XKetm1Y5gSUJ/Nwg4QA.QbEko0Rr9/pmIy', 'Company One', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'company', 0, 0),
+(2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'company', 0, 0),
+(3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'company', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -95,7 +146,12 @@ INSERT INTO `company_services` (`service_ID`, `company_ID`) VALUES
 (49, 1),
 (52, 1),
 (2, 2),
-(73, 2);
+(73, 2),
+(1, 3),
+(2, 3),
+(52, 3),
+(77, 3),
+(78, 3);
 
 -- --------------------------------------------------------
 
@@ -163,7 +219,9 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`service_ID`, `service_name`) VALUES
+(78, 'Customer Service'),
 (49, 'Fireworks'),
+(77, 'Inspections'),
 (2, 'Maintenence'),
 (7, 'One'),
 (73, 'Parties'),
@@ -179,6 +237,20 @@ INSERT INTO `services` (`service_ID`, `service_name`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`admin_ID`);
+
+--
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`booking_ID`),
+  ADD KEY `FK_bookings_company_ID` (`company_ID`),
+  ADD KEY `FK_bookings_homeowner_ID` (`homeowner_ID`);
+
+--
+-- Indexes for table `cases`
+--
+ALTER TABLE `cases`
+  ADD PRIMARY KEY (`case_ID`);
 
 --
 -- Indexes for table `company`
@@ -226,10 +298,22 @@ ALTER TABLE `admin`
   MODIFY `admin_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cases`
+--
+ALTER TABLE `cases`
+  MODIFY `case_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `homeowners`
@@ -241,11 +325,18 @@ ALTER TABLE `homeowners`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD CONSTRAINT `FK_bookings_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_bookings_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `company_services`
