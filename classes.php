@@ -57,8 +57,9 @@ class Company{
       $this->tableHeader();
       // output data of each row
       while($row = $result->fetch_assoc()) {
-        echo "<form method='post' action=''>
+        echo "
                 <tr class='table-padding' >
+                  <form method='post' action=''>
                   <td>".$row["name"]."</td>
                   <td>".$row["service_grouped"]."</td>
                   <td>".$row["address"]."</td>
