@@ -29,7 +29,7 @@ class Company{
 
   function tableHeader()
   {
-    echo "<table class='table table-hover'>
+    echo "<table class='table table-hover' id='table_test'>
             <thead>
             <tr class='table-padding'>
               <th>Company Name</th>

@@ -1,6 +1,11 @@
-$( document ).ready(function(){
-
-});
+$(document).ready( function () {
+    $('#table_test').DataTable({
+    paging: false,
+    // info: false,
+    searching: false,
+  });
+    // $('#example').DataTable();
+} );
 
 $('#add_service').on('click', add);
 var counter = 0;
