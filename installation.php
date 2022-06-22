@@ -74,6 +74,12 @@ $postal_code = $_SESSION["postal_code"];
         </form>
       </div>
     </div>
+    <div class="col">
+      <div class="form-floating  mb-3 ">
+        <textarea class="form-control" id="comments" name="comments" placeholder="comments" style="height: 200px" ></textarea>
+        <label for="comments">Additional comments</label>
+      </div>
+    </div>
     <div class="form-group mt-3 text-center">
         <input type="submit" class="btn btn-primary" value="Submit">
     </div>
