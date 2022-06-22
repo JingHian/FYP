@@ -1,6 +1,8 @@
 <?php session_start();
 
 include("conn.php");
+include("classes.php");
+$company = new Company();
 
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: index.php");
@@ -31,56 +33,42 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <div class="container">
   <form id="enquirydetails" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
     <div class="col">
-        <div class="condi-dropdown mb-3">
-          <select id="company" class="form-select" name="company" form="enquirydetails" required>
-              <option value="" default>Select a Company</option>
-              <?php while (($Row = mysqli_fetch_assoc($getcompanyname)) != FALSE) { ?>
-                  <option value="<?php echo $Row['name'];?>"> <?php echo $Row['name'];}?>
-                  </option>
-          </select>
-        </div>
+      <?php  $company->CompanyDropDown();?>
       </div>
         <div class="col">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="to_company" name="to_company" placeholder="to_company" value ="<?php echo $_POST['company_name'];?>" disabled>
-            <label for="to_company">To: </label>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="Subject" name="Subject" placeholder="Subject" value ="<?php echo $_POST['case_subject'];?>" disabled>
-            <label for="Subject">Subject</label>
+            <input type="text" class="form-control" id="home_address" name="home_address" placeholder="home_address" value ="<?php echo $_SESSION["address"];?>" disabled>
+            <label for="home_address">Address </label>
           </div>
         </div>
         <div class="row">
-          <div class ="col-6">
+          <div class ="col">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="case_date" name="case_date" placeholder="case_date" value ="<?php echo $_POST['case_date'];?>" disabled>
-            <label for="case_date">Date</label>
+            <input type="text" class="form-control" id="home_postal" name="home_postal" placeholder="home_postal" value ="<?php echo $_SESSION['postal_code'];?>" disabled>
+            <label for="home_postal">Postal Code</label>
           </div>
         </div>
 
-        <div class ="col-6">
+      <div class="col">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="case_status" name="case_status" placeholder="case_status" value ="<?php echo $_POST['case_status'];?>" disabled>
-          <label for="case_status">Status</label>
+          <input type="date" class="form-control" id="date" name="date"placeholder="date" >
+          <label for="date">Date</label>
         </div>
       </div>
 
         </div>
         <div class="col">
           <div class="form-floating  mb-3 ">
-            <textarea class="form-control" id="enquirydetails" name="enquirydetails" placeholder="enquirydetails" style="height: 200px" disabled><?php echo $_POST['case_description'];?></textarea>
-            <label for="enquirydetails">Enquiry Details</label>
+            <textarea class="form-control" id="problem_details" name="problem_details" placeholder="problem_details" style="height: 200px" ></textarea>
+            <label for="problem_details">Problem Details</label>
           </div>
         </div>
 
 
   </form>
-  <div class="form-group mt-3 text-center form-horizontal">
-      <input type="button" onClick="history.go(-1);" class="btn btn-primary" value="Back">
-  </div>
+    <div class="form-group mb-2 mt-3 text-center">
+        <input type="submit" class="btn btn-primary" value="Submit Booking">
+    </div>
 </div>
 
 
