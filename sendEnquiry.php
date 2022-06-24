@@ -13,15 +13,15 @@ $company = new Company();
 $enquiry_success = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $companyName = $_POST['company'] ?? "";
+  $companyName = $_POST['company_name'] ?? "";
   $subject = $_POST['enquirysubject'] ?? "";
   $details = $_POST['enquirydetails'] ?? "";
   $homeownerName = $_SESSION['name'] ?? "";
   $tableName = "Cases";
-  $getHID = mysqli_query($conn, "select homeowner_ID from homeowners where name = ". "'$homeownerName'");
+  $getHID = mysqli_query($conn, "select homeowner_ID from Homeowners where name = ". "'$homeownerName'");
   $HID = $_SESSION["ID"];
 
-  $getCID = mysqli_query($conn, "select company_ID from company where name = ". "'$companyName'");
+  $getCID = mysqli_query($conn, "select company_ID from Company where name = ". "'$companyName'");
   $CID = $getCID->fetch_array()[0] ?? '';
 
    //automatically create the table if not extist yet when the homeowner clicks the eqnuries menu
@@ -37,10 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   mysqli_query($conn, $casesTable);
 
 if ($companyName == "") {
-    echo "";
+    echo "errer";
 } else {
     try {
         $sql = "INSERT INTO $tableName (case_subject, company_ID, homeowner_ID, case_date, case_status, case_description) VALUES " . "('$subject', '$CID', '$HID', curdate(), 'Awaiting', '$details')";
+        printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
         @mysqli_query($conn, $sql);
         $enquiry_success = "Your enquiry has been sent to ". $companyName."!";
 
