@@ -1,8 +1,9 @@
 <?php session_start();
 
 include("conn.php");
-include("classes.php");
+include_once("classes.php");
 $company = new Company();
+$homeowner = new Homeowner();
 
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: index.php");
@@ -10,12 +11,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 }
 
+// if($_SERVER["REQUEST_METHOD"] == "POST"){
+//   $homeowner->insertBooking($_POST['company_name'],$_POST['date'],$_POST['problem_details'],$_POST['booking_type']);
+//
+// }
+
 ?>
 <html>
     <head>
       <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <?php include('cssLinks.php');?>
+        <?php include_once('cssLinks.php');?>
         <title>Enquiry</title>
     </head>
 
@@ -31,7 +37,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       </div>
     </div>
 <div class="container">
-  <form id="enquirydetails" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+  <form id="enquirydetails" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
     <div class="col">
       <?php  $company->CompanyDropDown();?>
       </div>
@@ -51,29 +57,24 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
       <div class="col">
         <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="date" name="date"placeholder="date" >
+          <input type="date" class="form-control" id="date" name="date"placeholder="date" required>
           <label for="date">Date</label>
         </div>
       </div>
 
+      </div>
+      <div class="col">
+        <div class="form-floating  mb-3 ">
+          <textarea class="form-control" id="problem_details" name="problem_details" placeholder="problem_details" style="height: 200px" ></textarea>
+          <label for="problem_details">Problem Details</label>
         </div>
-        <div class="col">
-          <div class="form-floating  mb-3 ">
-            <textarea class="form-control" id="problem_details" name="problem_details" placeholder="problem_details" style="height: 200px" ></textarea>
-            <label for="problem_details">Problem Details</label>
-          </div>
-        </div>
+      </div>
+      <input type="hidden" id="booking_type" name="booking_type" value="problem">
 
-
-  </form>
-    <div class="form-group mb-2 mt-3 text-center">
-        <input type="submit" class="btn btn-primary" value="Submit Booking">
-    </div>
-</div>
-
-
+      <div class="form-group mb-2 mt-3 text-center">
+          <input type="submit" class="btn btn-primary" value="Submit Booking">
+      </div>
+        </form>
+      </div>
     </body>
-
-
-
 </html>

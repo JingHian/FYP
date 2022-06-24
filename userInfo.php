@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <?php
     session_start();
-    include ("conn.php");
+    include_once ("conn.php");
     include_once ('navbar.php');
     $name = $_SESSION["name"];
     $usertype = $_SESSION["user_type"];
@@ -22,7 +22,7 @@ and open the template in the editor.
     <head>
         <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <?php include('cssLinks.php');?>
+        <?php include_once('cssLinks.php');?>
     <title>Company Details</title>
     </head>
     <body>

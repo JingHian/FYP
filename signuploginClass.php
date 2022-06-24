@@ -146,12 +146,14 @@ class SignUp{
     }
   // print_r($service_ID_List);
   // echo $homeowner_ID;
+  if (is_array($service_ID_List) || is_object($service_ID_List))
+  {
+    foreach ($service_ID_List as $i => $value) {
+      $sql = "INSERT INTO Homeowner_Services (service_ID,homeowner_ID) values ( '$value', '$homeowner_ID')";
+      $result = mysqli_query($this->conn, $sql);
+      }
 
-  foreach ($service_ID_List as $i => $value) {
-    $sql = "INSERT INTO Homeowner_Services (service_ID,homeowner_ID) values ( '$value', '$homeowner_ID')";
-    $result = mysqli_query($this->conn, $sql);
     }
-
   }
 
   function insertIntoCompanyServices($services)
@@ -204,6 +206,7 @@ class LogIn extends SignUp{
       UNION SELECT admin_ID as ID,password,name,email,phone,null,null,null,user_type FROM Admin WHERE username = '$this->username'";
     $result = $this->conn->query($sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
     if(mysqli_num_rows($result)==1)
     {
       $hashed_password = $row['password'];

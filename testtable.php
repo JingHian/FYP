@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <?php include('cssLinks.php');?>
+    <?php include_once('cssLinks.php');?>
 <title>Water Supply Marketplace</title>
 </head>
 <link rel="stylesheet" type="text/css" href="https://code.jquery.com/jquery-3.5.1.js">
