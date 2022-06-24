@@ -13,7 +13,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <head>
       <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <?php include('cssLinks.php');?>
+        <?php include_once('cssLinks.php');?>
         <title>Enquiry</title>
     </head>
 

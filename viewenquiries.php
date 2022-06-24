@@ -1,6 +1,6 @@
 <?php session_start();
-include "conn.php";
-include "classes.php";
+include_once "conn.php";
+include_once "classes.php";
 include_once "navbar.php";
 $enquiries = new Homeowner();
 

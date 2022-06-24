@@ -1,5 +1,5 @@
 <?php
-include 'cssLinks.php';
+include_once 'cssLinks.php';
 if(!isset($_SESSION))
 {
     session_start();
@@ -18,7 +18,7 @@ class Company{
     $getcompanyname = mysqli_query($this->conn, "SELECT name FROM company");
 
     echo '<div class="condi-dropdown mb-3">
-      <select id="company" class="form-select" name="company" form="enquirydetails" required>
+      <select id="company_name" class="form-select" name="company_name" form="enquirydetails" required>
           <option value="" default>Select a Company</option>';
           while (($Row = mysqli_fetch_assoc($getcompanyname)) != FALSE) {
               echo '<option value="'.$Row["name"].'">'. $Row["name"].'</option>';
@@ -43,7 +43,6 @@ class Company{
   }
 
  function listCompanies(){
-
    $query = "SELECT comp.name, comp.address, comp.postal_code, GROUP_CONCAT(serv.service_name SEPARATOR ', ') as service_grouped
              FROM Company AS comp
              JOIN Company_Services AS cs
@@ -57,7 +56,7 @@ class Company{
       $this->tableHeader();
       // output data of each row
       while($row = $result->fetch_assoc()) {
-        echo "
+      echo "
                 <tr class='table-padding' >
                   <form method='post' action=''>
                   <td>".$row["name"]."</td>
@@ -72,7 +71,7 @@ class Company{
       echo "
       </tbody></table>";
     } else {
-      echo "No Products Found";
+      echo "No Companies Found";
     }
 
 }
@@ -157,4 +156,31 @@ class Homeowner{
 
 }
 
+// function insertBooking($company_name,$date,$details,$booking_type)
+// {
+//   // get company_ID from company name
+//   $sql = "SELECT company_ID from COMPANY where name= '$company_name'";
+//   $result = mysqli_query($this->conn, $sql);
+//   $row = mysqli_fetch_assoc($result);
+//   $company_ID = $row['company_ID'];
+//
+//   echo '<pre>' . print_r($_SESSION) . '</pre>';
+//   echo $date;
+//   echo $details;
+//   echo $booking_type;
+//   echo $company_name;
+//   echo $company_ID;
+//
+//   // try
+//   // {
+//   //   $sql = "INSERT INTO Bookings (company_ID, homeowner_ID,booking_date,booking_description,booking_type,booking_status) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code', '$this->home_type', '$this->user_type')";
+//   //   $result = mysqli_query($this->conn, $sql);
+//   //   //printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
+//   // }
+//   // catch (mysqli_sql_exception $e)
+//   // {
+//   //   echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
+//   // }
+// }
+//
 }
