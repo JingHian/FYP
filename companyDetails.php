@@ -2,6 +2,9 @@
  session_start();
  include_once('navbar.php');
  include_once('cssLinks.php');
+ include_once "logInCheck.php";
+
+ 
  if($_SERVER["REQUEST_METHOD"] == "POST") {
    if ($_POST['goTo'] == 'Hire')
    {

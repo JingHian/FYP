@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once "logInCheck.php";
 $name = $_SESSION["name"];
 $phone = $_SESSION["phone"];
 $email = $_SESSION["email"];

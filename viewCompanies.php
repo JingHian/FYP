@@ -3,10 +3,17 @@
     include_once ("conn.php");
     include_once ("classes.php");
     include_once ('navbar.php');
+    include_once "logInCheck.php";
     $name = $_SESSION["name"];
     $usertype = $_SESSION["user_type"];
 
     $tables = new Company();
+
+    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+        header("location: index.php");
+        exit;
+
+    }
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
       header("location:companyDetails.php");
@@ -33,7 +40,7 @@
 </div>
 		<div class="container mt-3">
 			<div class="d-flex justify-content-around bg-secondary mb-3">
-				<input class="form-control" id="myInput" type="text" placeholder="Search..">
+				<input class="form-control search-for" type="text" placeholder="Search..">
 				<div class="dropdown d-flex justify-content-end">
 					<button class="btn btn-secondary dropdown-toggle align-text-top" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 						Category
@@ -56,15 +63,6 @@
 
 	</body>
     <?php include_once ("jsLinks.php"); ?>
+  
 
-  <script>
-  $(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#companyTable tr").filter(function() {
-    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-  });
-  </script>
 </html>

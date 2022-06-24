@@ -1,5 +1,6 @@
 <?php session_start();
 include_once "conn.php";
+include_once "logInCheck.php";
 include_once "classes.php";
 include_once "navbar.php";
 $enquiries = new Homeowner();
@@ -10,7 +11,7 @@ $enquiries = new Homeowner();
   <head>
       <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <?php include_once('cssLinks.php');?>
       <title>Company Details</title>
   </head>
   <body>
@@ -27,7 +28,7 @@ $enquiries = new Homeowner();
       </div>
       <div class="container mt-3">
         <div class="d-flex justify-content-around bg-secondary mb-3">
-          <input class="form-control" id="myInput" type="text" placeholder="Search..">
+          <input class="form-control search-for" type="text" placeholder="Search..">
           <div class="dropdown d-flex justify-content-end">
             <button class="btn btn-secondary dropdown-toggle align-text-top" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               Category
@@ -44,4 +45,6 @@ $enquiries = new Homeowner();
       <?php $enquiries->viewEnquiries(); ?>
       </div>
 
+      <?php include_once('jsLinks.php');?>
   </body>
+  </html>

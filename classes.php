@@ -15,7 +15,7 @@ class Company{
 
   function CompanyDropDown(){
 
-    $getcompanyname = mysqli_query($this->conn, "SELECT name FROM company");
+    $getcompanyname = mysqli_query($this->conn, "SELECT name FROM Company");
 
     echo '<div class="condi-dropdown mb-3">
       <select id="company_name" class="form-select" name="company_name" form="enquirydetails" required>
@@ -29,7 +29,7 @@ class Company{
 
   function tableHeader()
   {
-    echo "<table class='table table-hover' id='table_test'>
+    echo "<table class='table table-hover datatable_style' >
             <thead>
             <tr class='table-padding'>
               <th>Company Name</th>
@@ -39,7 +39,7 @@ class Company{
               <th>Action</th>
             </tr>
             </thead>
-            <tbody id='companyTable'>";
+            <tbody class='search-table'>";
   }
 
  function listCompanies(){
@@ -87,7 +87,7 @@ class Homeowner{
 
   function tableHeaderEnquiries()
   {
-    echo "<table class='table table-hover'>
+    echo "<table class='table table-hover datatable_style' >
             <thead>
             <tr class='table-padding'>
               <th>Enquiry #</th>
@@ -97,7 +97,8 @@ class Homeowner{
               <th>Status</th>
               <th>Action</th>
             </tr>
-            </thead>";
+            </thead>
+            <tbody class='search-table'>";
   }
 
  function viewEnquiries(){
@@ -130,8 +131,9 @@ class Homeowner{
        } else {
           $this->tableHeaderEnquiries();
            while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
-               echo "<form method='post' action='viewEnquiryDetails.php'>
+               echo "
                        <tr class='table-padding'>
+                       <form method='post' action='viewEnquiryDetails.php'>
                           <td>" . $Row['case_ID'] . "</td>".
                          "<td>" . $Row['case_subject'] . "</td>".
                          "<td>" . $Row['name'] . "</td>".
@@ -147,7 +149,7 @@ class Homeowner{
                        </tr>
                      </form>";
            }
-           echo "</table>";
+           echo "</tbody></table>";
        }
     } catch (Exception $e){
        echo "<br><br>No products are found.<br><br>";
@@ -156,31 +158,35 @@ class Homeowner{
 
 }
 
-// function insertBooking($company_name,$date,$details,$booking_type)
-// {
-//   // get company_ID from company name
-//   $sql = "SELECT company_ID from COMPANY where name= '$company_name'";
-//   $result = mysqli_query($this->conn, $sql);
-//   $row = mysqli_fetch_assoc($result);
-//   $company_ID = $row['company_ID'];
-//
-//   echo '<pre>' . print_r($_SESSION) . '</pre>';
-//   echo $date;
-//   echo $details;
-//   echo $booking_type;
-//   echo $company_name;
-//   echo $company_ID;
-//
-//   // try
-//   // {
-//   //   $sql = "INSERT INTO Bookings (company_ID, homeowner_ID,booking_date,booking_description,booking_type,booking_status) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code', '$this->home_type', '$this->user_type')";
-//   //   $result = mysqli_query($this->conn, $sql);
-//   //   //printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
-//   // }
-//   // catch (mysqli_sql_exception $e)
-//   // {
-//   //   echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
-//   // }
-// }
-//
+function insertBooking($company_name,$date,$details,$booking_type)
+{
+  // get company_ID from company name
+  $sql = "SELECT company_ID from Company where name= '$company_name'";
+  $result = mysqli_query($this->conn, $sql);
+  $row = mysqli_fetch_assoc($result);
+  $company_ID = $row['company_ID'];
+  $ID = $_SESSION['ID'];
+  //
+  // echo '<pre>' . print_r($_SESSION) . '</pre>';
+  // echo $date;
+  // echo $details;
+  // echo $booking_type;
+  // echo $company_name;
+  // echo $company_ID;
+
+  try
+  {
+    $sql = "INSERT INTO Bookings (company_ID, homeowner_ID, booking_date,booking_description,booking_type,booking_status) VALUES ( '$company_ID', '$ID', '$date', '$details', '$booking_type', 'In Progress')";
+    $result = mysqli_query($this->conn, $sql);
+    // printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
+    return True;
+
+  }
+  catch (mysqli_sql_exception $e)
+  {
+    echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
+    return False;
+  }
+}
+
 }

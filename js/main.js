@@ -1,10 +1,18 @@
 $(document).ready( function () {
-    $('#table_test').DataTable({
+    $('.datatable_style').DataTable({
     paging: false,
     // info: false,
     searching: false,
   });
-    // $('#example').DataTable();
+
+  // search script
+  $(".search-for").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".search-table tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
 } );
 
 $('#add_service').on('click', add);
