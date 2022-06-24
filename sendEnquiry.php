@@ -37,11 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   mysqli_query($conn, $casesTable);
 
 if ($companyName == "") {
-    echo "errer";
+    echo "";
 } else {
     try {
         $sql = "INSERT INTO $tableName (case_subject, company_ID, homeowner_ID, case_date, case_status, case_description) VALUES " . "('$subject', '$CID', '$HID', curdate(), 'Awaiting', '$details')";
-        printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
+        // printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
         @mysqli_query($conn, $sql);
         $enquiry_success = "Your enquiry has been sent to ". $companyName."!";
 
