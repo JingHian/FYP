@@ -5,6 +5,7 @@ $phone = $_SESSION["phone"];
 $email = $_SESSION["email"];
 $address = $_SESSION["address"];
 $postal_code = $_SESSION["postal_code"];
+include_once "logInCheck.php";
 
 ?>
 <html>

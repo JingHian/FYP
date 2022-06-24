@@ -4,6 +4,7 @@ include("conn.php");
 include_once("classes.php");
 $company = new Company();
 $homeowner = new Homeowner();
+$booking_success = "";
 
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: index.php");
@@ -11,10 +12,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 }
 
-// if($_SERVER["REQUEST_METHOD"] == "POST"){
-//   $homeowner->insertBooking($_POST['company_name'],$_POST['date'],$_POST['problem_details'],$_POST['booking_type']);
-//
-// }
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+  if($homeowner->insertBooking($_POST['company_name'],$_POST['date'],$_POST['problem_details'],$_POST['booking_type']))
+  {
+    $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_POST['company_name']."!";
+  }
+
+}
 
 ?>
 <html>
@@ -74,6 +78,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <div class="form-group mb-2 mt-3 text-center">
           <input type="submit" class="btn btn-primary" value="Submit Booking">
       </div>
+      <p class="text-center" style  ="color:green"><?php echo $booking_success;?></p>
         </form>
       </div>
     </body>

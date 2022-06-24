@@ -8,13 +8,14 @@ and open the template in the editor.
     session_start();
     include_once ("conn.php");
     include_once ('navbar.php');
+    include_once "logInCheck.php";
     $name = $_SESSION["name"];
     $usertype = $_SESSION["user_type"];
-    
+
     if (isset($POST['compname']))
     {
         $name = $_POST['Companyname'];
-        
+
         $sql = "UPDATE ";
     }
 ?>
@@ -32,7 +33,7 @@ and open the template in the editor.
             margin-left:15px;
             margin-right: 750px;
         }
-        
+
         .hrtop {
             border-top: 5px solid black;
         }
@@ -119,14 +120,14 @@ and open the template in the editor.
             <?php
             if ($usertype == "company")
             {
-                
+
             echo"<tr>
                     <th></th>
                     <th></th>
                     <th></th>
                 </tr>";
             $getdetails = "SELECT * FROM company WHERE NAME = '$name'";
-            try 
+            try
                 {
                     $Cdetails = mysqli_query($conn, $getdetails);
                     if(mysqli_num_rows($Cdetails)> 0)
@@ -151,14 +152,14 @@ and open the template in the editor.
                                    . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
                                    . "<input type =\"submit\" name=\"post\" value = \"Edit\">"
                                    . "</form>"
-                                   . 
+                                   .
                                  "<br><br><br></td>";
                             echo "</div>";
                             echo "<hr class='hrtop'>";
 
-                           
+
                             echo "<div class=\"details\">";
-                            
+
                                 echo "<div class=\"aboutUs\">";
                                 echo "<h3>About us</h3>";
                                 echo "<h4> Sample Text</h4>";
@@ -167,28 +168,28 @@ and open the template in the editor.
                                        . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
                                        . "<input type =\"submit\" name=\"abt\" value = \"Edit\">"
                                        . "</form>";
-                                
+
                                 echo "<br>";
-                                
+
                                 echo "<h3> Services and Prices </h3>";
-                                echo "<h4> Sample Text</h4>";                                
+                                echo "<h4> Sample Text</h4>";
                                 echo "<br><form action=\"change.php\" method=\"post\">"
                                        . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
                                        . "<input type =\"submit\" name=\"Edit\" value = \"Edit\">"
                                        . "</form>";
-                                
+
                                 echo "<br>";
-                                
-                                
+
+
                                 echo "<h3> Packages </h3>";
                                 echo "<h4> Sample Text</h4>";
                                 echo "<br><form action=\"change.php\" method=\"post\">"
                                        . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
                                        . "<input type =\"submit\" name=\"Edit\" value = \"Edit\">"
                                        . "</form>";
-                                
+
                                 echo "<br>";
-                               
+
                                 echo "<h3>Contact Us</h3>";
                                 echo "<h4>" . $row['email'] . " " . $row['phone'] . "</h4>";
                                 echo "<br><br>Email : <br><input type=\"text\" name = \"Email\" value= " . $row['email'] . ">";
@@ -198,9 +199,9 @@ and open the template in the editor.
                                        . "<input type =\"submit\" name=\"Edit\" value = \"Edit\">"
                                        . "</form>";
                                 echo "</div>";
-                                
+
                             echo "</div>";
-                            
+
                             echo "<div class=\"review\">
                             <table class=\"outerReviewTable\">
                                 <tr><th><h2>Reviews</h2><br></th><tr>
@@ -213,11 +214,11 @@ and open the template in the editor.
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                                                         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                                 </h5></td>
                                             </tr>
@@ -234,11 +235,11 @@ and open the template in the editor.
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                                                         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                                 </h5></td>
                                             </tr>
@@ -255,11 +256,11 @@ and open the template in the editor.
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                                                         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                                 </h5></td>
                                             </tr>
@@ -275,11 +276,11 @@ and open the template in the editor.
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                                                         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                                 </h5></td>
                                             </tr>
@@ -290,9 +291,9 @@ and open the template in the editor.
                         </div>";
                         }
                     }
-                        
+
                 }
-                catch (mysqli_sql_exception $e) 
+                catch (mysqli_sql_exception $e)
                 {
                     echo "error" . mysqli_error($conn);
                     mysqli_close($conn);
@@ -300,9 +301,9 @@ and open the template in the editor.
             }
             elseif ($usertype = "homeowner")
             {
-                
+
             }
-            
-            ?>   
+
+            ?>
     </body>
 </html>

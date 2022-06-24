@@ -2,12 +2,7 @@
 session_start();
 include("conn.php");
 include_once("classes.php");
-
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: index.php");
-    exit;
-
-}
+include_once "logInCheck.php";
 
 $company = new Company();
 $enquiry_success = "";

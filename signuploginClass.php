@@ -206,7 +206,7 @@ class LogIn extends SignUp{
       UNION SELECT admin_ID as ID,password,name,email,phone,null,null,null,user_type FROM Admin WHERE username = '$this->username'";
     $result = $this->conn->query($sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
+    // printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
     if(mysqli_num_rows($result)==1)
     {
       $hashed_password = $row['password'];
