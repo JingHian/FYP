@@ -19,17 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $getCID = mysqli_query($conn, "select company_ID from Company where name = ". "'$companyName'");
   $CID = $getCID->fetch_array()[0] ?? '';
 
-   //automatically create the table if not extist yet when the homeowner clicks the eqnuries menu
-   $casesTable = "CREATE TABLE IF NOT EXISTS Cases (
-      case_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-      case_subject VARCHAR(30) NOT NULL,
-      company_ID int(11) NOT NULL,
-      homeowner_ID int(11) NOT NULL,
-      case_date VARCHAR(15) NOT NULL,
-      case_status VARCHAR(10) NOT NULL,
-      case_description VARCHAR(500) NOT NULL)";
-
-  mysqli_query($conn, $casesTable);
 
 if ($companyName == "") {
     echo "";
