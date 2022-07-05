@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2022 at 03:34 PM
+-- Generation Time: Jul 05, 2022 at 07:33 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -206,6 +206,62 @@ INSERT INTO `homeowner_services` (`service_ID`, `homeowner_ID`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `maintenance_equipment`
+--
+
+CREATE TABLE `maintenance_equipment` (
+  `equipment_ID` int(11) NOT NULL,
+  `company_ID` int(11) NOT NULL,
+  `equipment_name` varchar(30) NOT NULL,
+  `quantity` int(15) NOT NULL,
+  `installation_date` varchar(15) NOT NULL,
+  `warranty_date` varchar(15) NOT NULL,
+  `expirydate` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `maintenance_equipment`
+--
+
+INSERT INTO `maintenance_equipment` (`equipment_ID`, `company_ID`, `equipment_name`, `quantity`, `installation_date`, `warranty_date`, `expirydate`) VALUES
+(1, 1, 'ianwq', 22, '1986', '1986', '1990'),
+(2, 1, 'dcqw', 22, '2022-05-30', '2022-06-08', '2022-06-06'),
+(3, 1, 'iansutarjieq', 4, '2022-06-22', '2022-06-23', '2022-06-10'),
+(5, 1, 'eqiopment', 3, '2022-07-11', '2022-07-20', '2022-07-13'),
+(6, 1, 'eq1', 33, '2022-07-06', '2022-07-14', '2022-07-12'),
+(7, 1, 'ianeeqqqq', 1234321, '2022-06-29', '2022-06-30', '2022-07-07'),
+(8, 1, 'dcqwdf', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
+(9, 1, 'dcqwdf', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
+(19, 2, 'qwd', 2, '2022-04-19', '2022-07-14', '2022-07-14'),
+(21, 2, 'wcfw2d', 41, '2022-07-19', '2022-06-10', '2022-07-05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `maintenance_staff`
+--
+
+CREATE TABLE `maintenance_staff` (
+  `staff_ID` int(11) NOT NULL,
+  `company_ID` int(11) NOT NULL,
+  `staff_role` varchar(30) NOT NULL,
+  `staff_name` varchar(60) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `phone` int(20) NOT NULL,
+  `status` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `maintenance_staff`
+--
+
+INSERT INTO `maintenance_staff` (`staff_ID`, `company_ID`, `staff_role`, `staff_name`, `email`, `phone`, `status`) VALUES
+(3, 2, 'ffedefvrwq', 'fcwa', 'ferwefq', 54, ''),
+(4, 2, 'ewfqe', 'EFW', 'frvfwefwvf', 432123, '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `services`
 --
 
@@ -281,6 +337,18 @@ ALTER TABLE `homeowner_services`
   ADD KEY `FK_homeowner_services_service_ID` (`service_ID`);
 
 --
+-- Indexes for table `maintenance_equipment`
+--
+ALTER TABLE `maintenance_equipment`
+  ADD PRIMARY KEY (`equipment_ID`);
+
+--
+-- Indexes for table `maintenance_staff`
+--
+ALTER TABLE `maintenance_staff`
+  ADD PRIMARY KEY (`staff_ID`);
+
+--
 -- Indexes for table `services`
 --
 ALTER TABLE `services`
@@ -320,6 +388,18 @@ ALTER TABLE `company`
 --
 ALTER TABLE `homeowners`
   MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `maintenance_equipment`
+--
+ALTER TABLE `maintenance_equipment`
+  MODIFY `equipment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `maintenance_staff`
+--
+ALTER TABLE `maintenance_staff`
+  MODIFY `staff_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `services`
