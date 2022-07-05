@@ -7,7 +7,7 @@ include_once "logInCheck.php";
 $company = new Company();
 $enquiry_success = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
   $companyName = $_POST['company_name'] ?? "";
   $subject = $_POST['enquirysubject'] ?? "";
   $details = $_POST['enquirydetails'] ?? "";
@@ -57,7 +57,11 @@ if ($companyName == "") {
     </div>
 <div class="container">
   <form id="enquirydetails" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-
+      <?php
+       $rand=rand();
+       $_SESSION['rand']=$rand;
+      ?>
+      <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
     <div class="col">
       <?php  $company->CompanyDropDown();?>
       </div>
@@ -78,7 +82,7 @@ if ($companyName == "") {
     <div class="form-group mb-2 mt-3 text-center">
         <input type="submit" class="btn  btn-primary" value="Submit Enquiry">
     </div>
-    <p class="text-center" style  ="color:green"><?php echo $enquiry_success;?></p>
+      <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $enquiry_success;?></div>
   </form>
 </div>
 
