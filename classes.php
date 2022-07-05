@@ -75,6 +75,55 @@ class Company{
     }
 
 }
+
+function tableHeaderStaff()
+{
+  echo "<table class='table table-hover datatable_style' >
+          <thead>
+          <tr class='table-padding'>
+            <th>Staff ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody class='search-table'>";
+}
+
+function listStaff(){
+  $query = "SELECT staff.staff_ID, staff.staff_name, staff.email, staff.phone, staff.staff_role, staff.status
+            FROM Maintenance_Staff as staff
+            GROUP BY staff_name";
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderStaff();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+     echo "
+               <tr class='table-padding' >
+                 <form method='post' action=''>
+                 <td>".$row["staff_ID"]."</td>
+                 <td>".$row["staff_name"]."</td>
+                 <td>".$row["email"]."</td>
+                 <td>".$row["phone"]."</td>
+                 <td>".$row["staff_role"]."</td>
+                 <td>".$row["status"]."</td>
+                 ".'<input type ="hidden" value ="'.$row["staff_name"].'" name ="staff_name"/>'.
+                 "<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Edit'></td>
+               </tr>
+             </form>";
+     }
+     echo "
+     </tbody></table>";
+   } else {
+     echo "No Staff Found";
+   }
+
+}
 }
 
 class Homeowner{

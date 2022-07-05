@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2022 at 03:34 PM
+-- Generation Time: Jul 05, 2022 at 02:47 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -29,6 +29,7 @@ USE `fyp`;
 -- Table structure for table `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `admin_ID` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
@@ -52,6 +53,7 @@ INSERT INTO `admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone
 -- Table structure for table `bookings`
 --
 
+DROP TABLE IF EXISTS `bookings`;
 CREATE TABLE `bookings` (
   `booking_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL,
@@ -69,6 +71,7 @@ CREATE TABLE `bookings` (
 -- Table structure for table `cases`
 --
 
+DROP TABLE IF EXISTS `cases`;
 CREATE TABLE `cases` (
   `case_ID` int(11) NOT NULL,
   `case_subject` varchar(30) NOT NULL,
@@ -102,6 +105,7 @@ INSERT INTO `cases` (`case_ID`, `case_subject`, `company_ID`, `homeowner_ID`, `c
 -- Table structure for table `company`
 --
 
+DROP TABLE IF EXISTS `company`;
 CREATE TABLE `company` (
   `company_ID` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
@@ -131,6 +135,7 @@ INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `p
 -- Table structure for table `company_services`
 --
 
+DROP TABLE IF EXISTS `company_services`;
 CREATE TABLE `company_services` (
   `service_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL
@@ -159,6 +164,7 @@ INSERT INTO `company_services` (`service_ID`, `company_ID`) VALUES
 -- Table structure for table `homeowners`
 --
 
+DROP TABLE IF EXISTS `homeowners`;
 CREATE TABLE `homeowners` (
   `homeowner_ID` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
@@ -187,6 +193,7 @@ INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email
 -- Table structure for table `homeowner_services`
 --
 
+DROP TABLE IF EXISTS `homeowner_services`;
 CREATE TABLE `homeowner_services` (
   `service_ID` int(11) NOT NULL,
   `homeowner_ID` int(11) NOT NULL
@@ -206,9 +213,67 @@ INSERT INTO `homeowner_services` (`service_ID`, `homeowner_ID`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `maintenance_equipment`
+--
+
+DROP TABLE IF EXISTS `maintenance_equipment`;
+CREATE TABLE `maintenance_equipment` (
+  `equipment_ID` int(11) NOT NULL,
+  `company_ID` int(11) NOT NULL,
+  `equipment_name` varchar(30) NOT NULL,
+  `quantity` int(15) NOT NULL,
+  `installation_date` varchar(15) NOT NULL,
+  `warranty_date` varchar(15) NOT NULL,
+  `expirydate` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `maintenance_equipment`
+--
+
+INSERT INTO `maintenance_equipment` (`equipment_ID`, `company_ID`, `equipment_name`, `quantity`, `installation_date`, `warranty_date`, `expirydate`) VALUES
+(1, 1, 'dcqw', 22, '2022-05-30', '2022-06-08', '2022-06-06'),
+(2, 1, 'dcqw', 22, '2022-05-30', '2022-06-08', '2022-06-06'),
+(3, 1, 'iansutarjieq', 4, '2022-06-22', '2022-06-23', '2022-06-10'),
+(4, 2, 'efdqe', 322, '2022-06-01', '2022-06-03', '2022-06-07'),
+(5, 1, 'eqiopment', 3, '2022-07-11', '2022-07-20', '2022-07-13'),
+(6, 1, 'eq1', 33, '2022-07-06', '2022-07-14', '2022-07-12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `maintenance_staff`
+--
+
+DROP TABLE IF EXISTS `maintenance_staff`;
+CREATE TABLE `maintenance_staff` (
+  `staff_ID` int(11) NOT NULL,
+  `company_ID` int(11) NOT NULL,
+  `staff_role` varchar(30) NOT NULL,
+  `staff_name` varchar(60) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `phone` int(20) NOT NULL,
+  `status` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `maintenance_staff`
+--
+
+INSERT INTO `maintenance_staff` (`staff_ID`, `company_ID`, `staff_role`, `staff_name`, `email`, `phone`, `status`) VALUES
+(1, 2, 'eadwv', 'edecwv', 'grea', 22222, ''),
+(2, 2, 'dfg', 'osas', 'osas@gmail.com', 2147483647, ''),
+(3, 2, 'ffedefvrwq', 'fcwa', 'ferwefq', 54, ''),
+(4, 2, 'ewfqe', 'EFW', 'frvfwefwvf', 432123, ''),
+(5, 1, 'staff1', 'ianstaff', 'ian@gmail.com', 2147483647, '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `services`
 --
 
+DROP TABLE IF EXISTS `services`;
 CREATE TABLE `services` (
   `service_ID` int(11) NOT NULL,
   `service_name` varchar(50) NOT NULL
@@ -281,6 +346,18 @@ ALTER TABLE `homeowner_services`
   ADD KEY `FK_homeowner_services_service_ID` (`service_ID`);
 
 --
+-- Indexes for table `maintenance_equipment`
+--
+ALTER TABLE `maintenance_equipment`
+  ADD PRIMARY KEY (`equipment_ID`);
+
+--
+-- Indexes for table `maintenance_staff`
+--
+ALTER TABLE `maintenance_staff`
+  ADD PRIMARY KEY (`staff_ID`);
+
+--
 -- Indexes for table `services`
 --
 ALTER TABLE `services`
@@ -320,6 +397,18 @@ ALTER TABLE `company`
 --
 ALTER TABLE `homeowners`
   MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `maintenance_equipment`
+--
+ALTER TABLE `maintenance_equipment`
+  MODIFY `equipment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `maintenance_staff`
+--
+ALTER TABLE `maintenance_staff`
+  MODIFY `staff_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `services`

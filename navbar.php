@@ -17,7 +17,7 @@
               echo '<a class="nav-link " href="#" >Customers</a>';
               echo '<a class="nav-link " href="servicesCompany.php" >Services</a>';
               echo '<a class="nav-link " href="#" >Equipment</a>';
-              echo '<a class="nav-link " href="#" >Staff</a>';
+              echo '<a class="nav-link " href="viewStaff.php" >Staff</a>';
               echo '<a class="nav-link " href="#" >Enquiries</a>';
               echo '<a class="nav-link " href="#" >Bookings</a>';
             }
