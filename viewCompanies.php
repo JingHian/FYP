@@ -17,7 +17,6 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
       header("location:companyDetails.php");
-      $_SESSION['company_name'] = $_POST['company_name'];
     }
 ?>
 <html>
@@ -64,6 +63,6 @@
 
 	</body>
     <?php include_once ("jsLinks.php"); ?>
-
+  
 
 </html>

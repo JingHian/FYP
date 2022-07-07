@@ -1,10 +1,8 @@
 <?php session_start();
-
 include_once "conn.php";
 include_once "logInCheck.php";
 include_once "classes.php";
 include_once "navbar.php";
-
 $enquiries = new Homeowner();
 
 ?>
@@ -23,9 +21,9 @@ $enquiries = new Homeowner();
         <div class="col text-center">
           <p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">Here you can view the status of your Enquiries.</p>
         </div>
-    <div class="col-12 text-center">
-        <a class="float-end btn btn-primary" href="sendEnquiry.php" type="submit">New +</a>
-      </div>
+        <form method="post" action="sendEnquiry.php">
+            <button class="float-end btn btn-primary" type="submit">New +</button>
+        </form>
       </div>
       </div>
       <div class="container mt-3">

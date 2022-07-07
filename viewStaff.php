@@ -15,8 +15,9 @@
 
     }
 
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
-    }
+    // if($_SERVER["REQUEST_METHOD"] == "POST") {
+    //   header("location:updateOrDeleteStaff.php");
+    // }
 ?>
 <html>
     <head>
@@ -24,20 +25,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?php include_once('cssLinks.php');?>
 
-		<title>Company Details</title>
+		<title>Staff Details</title>
     </head>
 	<body>
 
 
 <div class="container" >
-<h1 class ="display-5 text-center" style="margin-top:50px;">Homeowner Cases</h1>
+<h1 class ="display-5 text-center" style="margin-top:50px;">Staff</h1>
 <div class="row justify-content-center">
   <div class="col-6 text-center">
-<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View and reply to cases from Homeowners.</p>
+<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">Here you can view the staff currently registered on our platform.</p>
 </div>
 </div>
 </div>
 		<div class="container mt-3">
+      <div class="col-md-12 text-right">
+          <form method="POST" action="insertStaff.php">
+              <input type="submit"  class="btn btn-light" value="New +"/>
+          </form>
+        </div>
 			<div class="d-flex justify-content-around bg-secondary mb-3">
 				<input class="form-control search-for" type="text" placeholder="Search..">
 				<div class="dropdown d-flex justify-content-end">
@@ -54,7 +60,7 @@
 		</div>
     <div class="container justify-content-center text-center">
     <?php
-      $tables->listCases();
+      $tables->listStaff();
       ?>
 
 
@@ -62,6 +68,6 @@
 
 	</body>
     <?php include_once ("jsLinks.php"); ?>
-
+  
 
 </html>

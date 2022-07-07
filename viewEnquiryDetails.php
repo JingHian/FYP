@@ -2,7 +2,6 @@
 
 include("conn.php");
 include_once "logInCheck.php";
-include_once "classes.php";
 
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: index.php");
@@ -68,12 +67,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <label for="enquirydetails">Enquiry Details</label>
           </div>
         </div>
-        <div class="col">
-          <div class="form-floating  mb-3 ">
-            <textarea class="form-control hide-reply" id="enquiry_reply" name="enquiry_reply" style="height: 200px" disabled><?php echo $_POST['case_reply'];?></textarea>
-            <label for="enquiry_reply" id="reply-label">Enquiry Reply</label>
-          </div>
-        </div>
 
 
   </form>
@@ -82,9 +75,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   </div>
 </div>
 
-<?php include_once('jsLinks.php');?>
 
-</body>
+    </body>
 
 
 

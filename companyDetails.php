@@ -4,10 +4,9 @@
  include_once('cssLinks.php');
  include_once "logInCheck.php";
 
-echo $_SESSION['company_name'];
+ 
  if($_SERVER["REQUEST_METHOD"] == "POST") {
    if ($_POST['goTo'] == 'Hire')
-
    {
      header("location:installation.php");
    }
@@ -47,7 +46,7 @@ echo $_SESSION['company_name'];
 <div class ="container">
 <div class="row">
   <div class="col bg-light p-2">
-    <h2><?php echo $_SESSION['company_name'];?></h2>
+    <h2>Company One</h2>
     <h3>123 Test Avenue 12 #4-2192 123942</h3>
     <p class="float-start">4.5 </p>
     <p class="float-start material-symbols-outlined">star</p>

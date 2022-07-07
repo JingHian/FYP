@@ -12,7 +12,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 }
 
-if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
   if($homeowner->insertBooking($_POST['company_name'],$_POST['date'],$_POST['problem_details'],$_POST['booking_type']))
   {
     $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_POST['company_name']."!";
@@ -42,11 +42,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
     </div>
 <div class="container">
   <form id="enquirydetails" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-    <?php
-     $rand=rand();
-     $_SESSION['rand']=$rand;
-    ?>
-    <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
     <div class="col">
       <?php  $company->CompanyDropDown();?>
       </div>
@@ -83,7 +78,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
       <div class="form-group mb-2 mt-3 text-center">
           <input type="submit" class="btn btn-primary" value="Submit Booking">
       </div>
-      <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $booking_success;?></div>
+      <p class="text-center" style  ="color:green"><?php echo $booking_success;?></p>
         </form>
       </div>
     </body>

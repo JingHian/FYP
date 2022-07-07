@@ -95,10 +95,3 @@ submitLink:focus {
 .table-padding{
   line-height:50px;
 }
-
-.booking-alert,.hide-reply{
-    display: block;
-}
-.booking-alert:empty,.hide-reply:empty{
-    display: none;
-}
