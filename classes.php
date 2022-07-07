@@ -19,10 +19,24 @@ class Company{
 
     echo '<div class="condi-dropdown mb-3">
       <select id="company_name" class="form-select" name="company_name" form="enquirydetails" required>
-          <option value="" default>Select a Company</option>';
+          <option value="" default disabled >Select a Company</option>';
           while (($Row = mysqli_fetch_assoc($getcompanyname)) != FALSE) {
               echo '<option value="'.$Row["name"].'">'. $Row["name"].'</option>';
             };
+          echo'  </select>
+          </div>';
+  }
+
+  function StaffDropDown(){
+
+    $getcompanyname = mysqli_query($this->conn, "SELECT name FROM Company");
+
+    echo '<div class="condi-dropdown mb-3">
+      <select id="staff_name" class="form-select" name="staff_name" form="staff_name" required>
+          <option value="" default disabled>Assign a Staff</option>';
+          // while (($Row = mysqli_fetch_assoc($getcompanyname)) != FALSE) {
+          //     echo '<option value="'.$Row["name"].'">'. $Row["name"].'</option>';
+          //   };
           echo'  </select>
           </div>';
   }
@@ -75,6 +89,134 @@ class Company{
     }
 
 }
+
+function tableHeaderCases()
+{
+  echo "<table class='table table-hover datatable_style' >
+          <thead>
+          <tr class='table-padding'>
+            <th>Enquiry #</th>
+            <th>Subject</th>
+            <th>From</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody class='search-table'>";
+}
+
+ function listCases(){
+   $ID = $_SESSION['ID'];
+
+  $query = "SELECT cas.*,home.name
+            FROM Cases AS cas
+            JOIN Homeowners AS home
+            ON cas.homeowner_ID = home.homeowner_ID
+            WHERE company_ID = '$ID'";
+
+   $result = mysqli_query($this->conn, $query);
+
+    if ($result->num_rows > 0) {
+      $this->tableHeaderCases();
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+      echo "
+                <tr class='table-padding' >
+                  <form method='post' action='replyCase.php'>
+                  <td>".$row["case_ID"]."</td>
+                  <td>".$row["case_subject"]."</td>
+                  <td>".$row["name"]."</td>
+                  <td>".$row["case_date"]."</td>
+                  <td>".$row["case_status"]."</td>
+                  <td>"."4/5"." </td>
+                  ".'<input type ="hidden" value ="'.$row["case_ID"].'" name ="case_ID"/>'.
+                    '<input type ="hidden" value ="'.$row["case_subject"].'" name ="case_subject"/>'.
+                    '<input type ="hidden" value ="'.$row["name"].'" name ="homeowner_name"/>'.
+                    '<input type ="hidden" value ="'.$row["case_date"].'" name ="case_date"/>'.
+                    '<input type ="hidden" value ="'.$row["case_status"].'" name ="case_status"/>'.
+                    '<input type ="hidden" value ="'.$row["case_description"].'" name ="case_description"/>'.
+                    '<input type ="hidden" value ="" name ="reply"/>'.
+                  "<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Details'></td>
+                </tr>
+              </form>";
+      }
+      echo "
+      </tbody></table>";
+    } else {
+      echo "No Companies Found";
+    }
+
+}
+
+
+function tableHeaderBookingComp()
+{
+  echo "<table class='table table-hover datatable_style' >
+          <thead>
+          <tr class='table-padding'>
+            <th>Booking #</th>
+            <th>Homeowner Name</th>
+            <th>Date</th>
+            <th>Assigned Staff</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody class='search-table'>";
+}
+
+function listBookingsComp(){
+  $ID = $_SESSION['ID'];
+
+ $query = "SELECT book.*,home.name
+           FROM Bookings AS book
+           JOIN Homeowners AS home
+           ON book.homeowner_ID = home.homeowner_ID
+           WHERE company_ID = '$ID'";
+
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderBookingComp();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+     echo "
+               <tr class='table-padding' >
+                 <form method='post' action='assignStaff.php'>
+                 <td>".$row["booking_ID"]."</td>
+                 <td>".$row["name"]."</td>
+                 <td>".$row["booking_date"]."</td>
+                 <td>".$row["staff_ID"]."</td>
+                 <td>".$row["booking_status"]."</td>
+                 ".'<input type ="hidden" value ="'.$row["booking_ID"].'" name ="booking_ID"/>'.
+                   '<input type ="hidden" value ="'.$row["name"].'" name ="homeowner_name"/>'.
+                   '<input type ="hidden" value ="'.$row["booking_date"].'" name ="booking_date"/>'.
+                   '<input type ="hidden" value ="'.$row["staff_ID"].'" name ="booking_subject"/>'.
+                   '<input type ="hidden" value ="'.$row["booking_status"].'" name ="booking_status"/>'.
+                   '<input type ="hidden" value ="'.$row["booking_description"].'" name ="booking_description"/>'.
+                 "<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Details'></td>
+               </tr>
+             </form>";
+     }
+     echo "
+     </tbody></table>";
+   } else {
+     echo "No Homeowner Bookings Found";
+   }
+
+}
+
+function updateCase($reply,$case_ID){
+  $query = "UPDATE Cases
+            SET
+            case_reply ='$reply' ,
+            case_status = 'Replied'
+            WHERE case_ID ='$case_ID'";
+
+  $result = mysqli_query($this->conn, $query);
+
+  }
 }
 
 class Homeowner{
@@ -119,7 +261,7 @@ class Homeowner{
     $homeowner_ID = $_SESSION['ID'];
 
     try {
-       $query = "SELECT cas.case_ID, cas.case_subject,cas.case_description, cas.company_ID, cas.homeowner_ID, cas.case_date, cas.case_status,comp.name
+       $query = "SELECT cas.*,comp.name
                  FROM Cases AS cas
                  JOIN Company AS comp
                  ON cas.company_ID = comp.company_ID
@@ -143,6 +285,7 @@ class Homeowner{
                          "<input type ='hidden' value ='".$Row['case_subject']."' name ='case_subject'/>".
                          "<input type ='hidden' value ='".$Row['name']."' name ='company_name'/>".
                          "<input type ='hidden' value ='".$Row['case_description']."' name ='case_description'/>".
+                         "<input type ='hidden' value ='".$Row['case_reply']."' name ='case_reply'/>".
                          "<input type ='hidden' value ='".$Row['case_date']."' name ='case_date'/>".
                          "<input type ='hidden' value ='".$Row['case_status']."' name ='case_status'/>".
                          "<input type ='hidden' value ='".$Row['case_ID']."' name ='case_ID'/>"."
@@ -187,6 +330,60 @@ function insertBooking($company_name,$date,$details,$booking_type)
     echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
     return False;
   }
+}
+
+function tableHeaderBookingHome()
+{
+  echo "<table class='table table-hover datatable_style' >
+          <thead>
+          <tr class='table-padding'>
+            <th>Booking #</th>
+            <th>Company Name</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody class='search-table'>";
+}
+
+function listBookingsHomeowner(){
+  $ID = $_SESSION['ID'];
+
+ $query = "SELECT book.*,comp.name
+           FROM Bookings AS book
+           JOIN Company AS comp
+           ON book.company_ID = comp.company_ID
+           WHERE homeowner_ID = '$ID'";
+
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderBookingHome();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+     echo "
+               <tr class='table-padding' >
+                 <form method='post' action='viewBookingDetailsHomeowner.php'>
+                 <td>".$row["booking_ID"]."</td>
+                 <td>".$row["name"]."</td>
+                 <td>".$row["booking_date"]."</td>
+                 <td>".$row["booking_status"]."</td>
+                 ".'<input type ="hidden" value ="'.$row["booking_ID"].'" name ="booking_ID"/>'.
+                   '<input type ="hidden" value ="'.$row["name"].'" name ="company_name"/>'.
+                   '<input type ="hidden" value ="'.$row["booking_date"].'" name ="booking_date"/>'.
+                   '<input type ="hidden" value ="'.$row["booking_status"].'" name ="booking_status"/>'.
+                   '<input type ="hidden" value ="'.$row["booking_description"].'" name ="booking_description"/>'.
+                 "<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Details'></td>
+               </tr>
+             </form>";
+     }
+     echo "
+     </tbody></table>";
+   } else {
+     echo "No Homeowner Bookings Found";
+   }
+
 }
 
 }
