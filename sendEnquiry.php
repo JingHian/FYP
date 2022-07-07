@@ -7,7 +7,7 @@ include_once "logInCheck.php";
 $company = new Company();
 $enquiry_success = "";
 
-if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $companyName = $_POST['company_name'] ?? "";
   $subject = $_POST['enquirysubject'] ?? "";
   $details = $_POST['enquirydetails'] ?? "";
@@ -19,6 +19,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
   $getCID = mysqli_query($conn, "select company_ID from Company where name = ". "'$companyName'");
   $CID = $getCID->fetch_array()[0] ?? '';
 
+   //automatically create the table if not extist yet when the homeowner clicks the eqnuries menu
+   $casesTable = "CREATE TABLE IF NOT EXISTS Cases (
+      case_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      case_subject VARCHAR(30) NOT NULL,
+      company_ID int(11) NOT NULL,
+      homeowner_ID int(11) NOT NULL,
+      case_date VARCHAR(15) NOT NULL,
+      case_status VARCHAR(10) NOT NULL,
+      case_description VARCHAR(500) NOT NULL)";
+
+  mysqli_query($conn, $casesTable);
 
 if ($companyName == "") {
     echo "";
@@ -57,11 +68,7 @@ if ($companyName == "") {
     </div>
 <div class="container">
   <form id="enquirydetails" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-      <?php
-       $rand=rand();
-       $_SESSION['rand']=$rand;
-      ?>
-      <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
+
     <div class="col">
       <?php  $company->CompanyDropDown();?>
       </div>
@@ -82,7 +89,7 @@ if ($companyName == "") {
     <div class="form-group mb-2 mt-3 text-center">
         <input type="submit" class="btn  btn-primary" value="Submit Enquiry">
     </div>
-      <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $enquiry_success;?></div>
+    <p class="text-center" style  ="color:green"><?php echo $enquiry_success;?></p>
   </form>
 </div>
 
