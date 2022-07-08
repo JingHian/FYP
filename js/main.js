@@ -13,6 +13,11 @@ $(document).ready( function () {
     });
   });
 
+  // hide label for enquiry replies if there is no reply
+  if (!$.trim($("#enquiry_reply").val())){
+    $("#reply-label").hide();
+  }
+
 } );
 
 $('#add_service').on('click', add);

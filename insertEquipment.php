@@ -1,23 +1,11 @@
-<?php 
-session_start(); 
- include_once('navbar.php');
- include_once('cssLinks.php');
- //include_once "logInCheck.php";
-?>
- 
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "fyp";
-    //$searchedName = $_SESSION['inputid'] ?? "";
-
-    // Create connection
-    try {
-    $conn = mysqli_connect($servername, $username, $password, $dbname); 
-    } catch ( mysqli_sql_exception $e) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+session_start();
+include_once ("conn.php");
+include_once ("classes.php");
+include_once('navbar.php');
+include_once('cssLinks.php');
+include_once "logInCheck.php";
+$insertEquipment_success = "";
 
     //automatically create the equipment table if not extist yet when the company clicks add equipment
    $equipmentTable = "CREATE TABLE IF NOT EXISTS Maintenance_Equipment (
@@ -27,10 +15,38 @@ session_start();
     quantity int(15) NOT NULL,
     installation_date VARCHAR(15) NOT NULL,
     warranty_date VARCHAR(15) NOT NULL,
-    expirydate VARCHAR(15) NOT NULL)";
+    expiry_date VARCHAR(15) NOT NULL)";
 
 mysqli_query($conn, $equipmentTable);
- 
+
+
+$CID = $_SESSION['ID'];
+$equipmentName = $_POST['equipmentname'] ?? "";
+$equipmentQuantity = $_POST['equipmentquantity'] ?? "";
+$installationDate = $_POST['installationdate'] ?? "";
+$warrantyDate = $_POST['warrantydate'] ?? "";
+$expiry_date = $_POST['expiry_date'] ?? "";
+$tableName = "maintenance_equipment";
+$companyName = $_SESSION['name'] ?? "";
+
+if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
+    if ($equipmentName == "") {
+        echo "";
+    } else {
+        try {
+            $sql = "INSERT INTO $tableName (company_ID, equipment_name, quantity, installation_date, warranty_date, expiry_date) VALUES " . "('$CID', '$equipmentName', '$equipmentQuantity', '$installationDate', '$warrantyDate', '$expiry_date')";
+            //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
+            mysqli_query($conn, $sql);
+
+            $insertEquipment_success = "Equipment $equipmentName has been added to $companyName.";
+
+        }  catch (mysqli_sql_exception $e) {
+            echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
+        }
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -51,8 +67,13 @@ mysqli_query($conn, $equipmentTable);
             </div>
         </div>
 
-        <div class="container form-horizontal">
-            <form id="equipmentdetails" action="insertEquipment.php" method="post">
+        <div class="container">
+            <form class=" form-horizontal-2" action="insertEquipment.php" method="post">
+            <?php
+             $rand=rand();
+             $_SESSION['rand']=$rand;
+            ?>
+            <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
             <div class="row">
                 <div class="col">
                     <div class="form-floating mb-3 ">
@@ -65,7 +86,7 @@ mysqli_query($conn, $equipmentTable);
             <div class="row">
                 <div class="col">
                     <div class="form-floating  mb-3 ">
-                        <input type="number" class='form-control' name="equipmentquantity" placeholder="Quantity" required> 
+                        <input type="number" class='form-control' name="equipmentquantity" placeholder="Quantity" required>
                         <label for="equipmentquantity">Quantity</label>
                     </div>
                 </div>
@@ -88,68 +109,19 @@ mysqli_query($conn, $equipmentTable);
 
                 <div class="col">
                     <div class="form-floating mb-3">
-                    <input type="date" class='form-control' name="expirydate" placeholder="Expiry Date" required>
-                        <label for="expirydate">Expiry Date</label>
+                    <input type="date" class='form-control' name="expiry_date" placeholder="Expiry Date" required>
+                        <label for="expiry_date">Expiry Date</label>
                     </div>
                 </div>
             </div>
 
 
-                <!-- <input type="text" name="equipmentname" placeholder="Equipment Name" required> <br> <br>
-                <input type="number" name="equipmentquantity" placeholder="Quantity" required> 
-                <input type="date" name="installationdate" placeholder="Installation Date" required> <br> <br> 
-                <input type="date" name="warrantydate" placeholder="Warranty Date" required>
-                <input type="date" name="expirydate" placeholder="Expiry Date" required> <br> <br> 
-                <input type="submit" name="submit" value="Add"> -->
-
                 <div class="form-group mt-3 text-center">
                     <input type="submit" class="btn btn-primary" name="submit" value="Submit">
                 </div>
+                  <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $insertEquipment_success;?></div>
             </form>
         </div>
-
-        <style>
-            .row {
-                width: 800px;
-                margin: 0 auto;
-            }
-        </style>
-
-        <?php
-            $CID = $_SESSION['ID'];
-            $equipmentName = $_POST['equipmentname'] ?? "";
-            $equipmentQuantity = $_POST['equipmentquantity'] ?? "";
-            $installationDate = $_POST['installationdate'] ?? "";
-            $warrantyDate = $_POST['warrantydate'] ?? "";
-            $expiryDate = $_POST['expirydate'] ?? "";
-            $tableName = "maintenance_equipment";
-
-            // echo $CID;
-            // echo $equipmentName;
-            // echo $equipmentQuantity;
-            // echo $installationDate;
-            // echo $warrantyDate;
-            // echo $expiryDate;
-        
-            if (isset($_POST['submit'])) {
-                if ($equipmentName == "") {
-                    echo "";
-                } else {
-                    try {
-                        $sql = "INSERT INTO $tableName (company_ID, equipment_name, quantity, installation_date, warranty_date, expirydate) VALUES " . "('$CID', '$equipmentName', '$equipmentQuantity', '$installationDate', '$warrantyDate', '$expiryDate')";
-                        //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
-                        mysqli_query($conn, $sql);
-                        echo "<p class=text-center>Equipment $equipmentName has been inserted</p>"; 
-
-                    }  catch (mysqli_sql_exception $e) {
-                        echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
-                    }
-                }
-                
-            }
-            
-        ?>
-
 
     </body>
 </html>

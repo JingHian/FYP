@@ -7,9 +7,16 @@
     $name = $_SESSION["name"];
     $usertype = $_SESSION["user_type"];
 
-    $tables = new Company();
+    $tables = new Homeowner();
 
+    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+        header("location: index.php");
+        exit;
 
+    }
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+    }
 ?>
 <html>
     <head>
@@ -17,21 +24,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?php include_once('cssLinks.php');?>
 
-		<title>Staff Details</title>
+		<title>Homeowner Bookings</title>
     </head>
 	<body>
 
 
 <div class="container" >
-<h1 class ="display-5 text-center" style="margin-top:50px;">Staff</h1>
+<h1 class ="display-5 text-center" style="margin-top:50px;">Homeowner Bookings</h1>
 <div class="row justify-content-center">
-  <div class="col-6 text-center">
-<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View the Staff members of your Company.</p>
+  <div class="col-12 text-center">
+<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View Homeowner bookings and assign staff.</p>
 </div>
-<form method="POST" action="insertStaff.php">
-    <input type ="hidden" value ="123" name ="randcheck"/>
-    <input type="submit"  class="float-end btn btn-primary" value="New +"/>
-</form>
+<div class="col-12 text-center">
+    <a class="float-end btn btn-primary" href="bookHomeowner.php" type="submit">New +</a>
+  </div>
 </div>
 </div>
 		<div class="container mt-3">
@@ -41,17 +47,12 @@
 					<button class="btn btn-secondary dropdown-toggle align-text-top" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 						Category
 					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">Category1</a></li>
-						<li><a class="dropdown-item" href="#">Category2</a></li>
-						<li><a class="dropdown-item" href="#">Category3</a></li>
-					</ul>
 				</div>
 			</div>
 		</div>
     <div class="container justify-content-center text-center">
     <?php
-      $tables->listStaff();
+      $tables->listBookingsHomeowner();
       ?>
 
 

@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <?php
     session_start();
     include_once ("conn.php");
@@ -9,7 +10,6 @@
 
     $tables = new Company();
 
-
 ?>
 <html>
     <head>
@@ -17,24 +17,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?php include_once('cssLinks.php');?>
 
-		<title>Staff Details</title>
+		<title>Equipments Details</title>
     </head>
 	<body>
 
 
 <div class="container" >
-<h1 class ="display-5 text-center" style="margin-top:50px;">Staff</h1>
+<h1 class ="display-5 text-center" style="margin-top:50px;">Equipment List</h1>
 <div class="row justify-content-center">
   <div class="col-6 text-center">
-<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View the Staff members of your Company.</p>
+<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">Here you can view equipments currently registered on the companies.</p>
 </div>
-<form method="POST" action="insertStaff.php">
-    <input type ="hidden" value ="123" name ="randcheck"/>
-    <input type="submit"  class="float-end btn btn-primary" value="New +"/>
-</form>
+      <div class="col-12 text-center">
+        <form method="POST" action="insertEquipment.php">
+            <input type ="hidden" value ="123" name ="randcheck"/>
+            <input type="submit"  class="float-end btn btn-primary" value="New +"/>
+        </form>
 </div>
-</div>
-		<div class="container mt-3">
+      </div>
+      </div>
+
+  		<div class="container mt-3">
 			<div class="d-flex justify-content-around bg-secondary mb-3">
 				<input class="form-control search-for" type="text" placeholder="Search..">
 				<div class="dropdown d-flex justify-content-end">
@@ -49,16 +52,12 @@
 				</div>
 			</div>
 		</div>
+
     <div class="container justify-content-center text-center">
     <?php
-      $tables->listStaff();
+      $tables->listEquipment();
       ?>
-
-
     </div>
-
 	</body>
     <?php include_once ("jsLinks.php"); ?>
-
-
 </html>

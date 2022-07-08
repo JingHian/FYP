@@ -1,25 +1,13 @@
-<?php 
-session_start(); 
+<?php
+session_start();
+include_once ("conn.php");
+include_once ("classes.php");
  include_once('navbar.php');
  include_once('cssLinks.php');
- //include_once "logInCheck.php";
-?>
- 
-<?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "fyp";
-    //$searchedName = $_SESSION['inputid'] ?? "";
+ include_once "logInCheck.php";
+ $insertStaff_success = "";
 
-    // Create connection
-    try {
-    $conn = mysqli_connect($servername, $username, $password, $dbname); 
-    } catch ( mysqli_sql_exception $e) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
-    //automatically create the equipment table if not extist yet when the company clicks add equipment
+    //automatically create the equipment table if not exist yet when the company clicks add equipment
    $equipmentTable = "CREATE TABLE IF NOT EXISTS Maintenance_Staff (
         staff_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         company_ID int(11) NOT NULL,
@@ -29,7 +17,34 @@ session_start();
         phone int(20) NOT NULL)";
 
     mysqli_query($conn, $equipmentTable);
- 
+
+
+    $CID = $_SESSION['ID'];
+    $name = $_POST['staffname'] ?? "";
+    $email = $_POST['staffemail'] ?? "";
+    $phoneNumber = $_POST['staffphonenumber'] ?? "";
+    $role = $_POST['staffrole'] ?? "";
+    $tableName = "maintenance_staff";
+    $companyName = $_SESSION['name'] ?? "";
+
+  if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
+        if ($name == "") {
+            echo "";
+        } else {
+            try {
+                $sql = "INSERT INTO $tableName (company_ID, staff_role, staff_name, email, phone) VALUES " . "('$CID', '$role', '$name', '$email', '$phoneNumber')";
+                //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
+                mysqli_query($conn, $sql);
+
+              $insertStaff_success = "Staff $name has been added to $companyName.";
+
+            }  catch (mysqli_sql_exception $e) {
+                echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
+            }
+        }
+
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -50,9 +65,13 @@ session_start();
             </div>
         </div>
 
-        <div class="container form-horizontal">
-            <form id="staffdetails" action="insertStaff.php" method="post">
-                
+        <div class="container ">
+            <form id="staffdetails" class="form-horizontal-2" action="insertStaff.php" method="post">
+            <?php
+             $rand=rand();
+             $_SESSION['rand']=$rand;
+            ?>
+            <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
             <div class="row">
                 <div class="col">
                     <div class="form-floating mb-3 ">
@@ -89,55 +108,12 @@ session_start();
                 </div>
             </div>
 
-
-                <!-- <input type="text" name="equipmentname" placeholder="Equipment Name" required> <br> <br>
-                <input type="number" name="equipmentquantity" placeholder="Quantity" required> 
-                <input type="date" name="installationdate" placeholder="Installation Date" required> <br> <br> 
-                <input type="date" name="warrantydate" placeholder="Warranty Date" required>
-                <input type="date" name="expirydate" placeholder="Expiry Date" required> <br> <br> 
-                <input type="submit" name="submit" value="Add"> -->
-
                 <div class="form-group mt-3 text-center">
                     <input type="submit" class="btn btn-primary" name="submit" value="Submit">
                 </div>
+                  <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $insertStaff_success;?></div>
             </form>
         </div>
-
-        <style>
-            .row {
-                width: 700px;
-                margin: 0 auto;
-            }
-        </style>
-
-        <?php
-            $CID = $_SESSION['ID'];
-            $name = $_POST['staffname'] ?? "";
-            $email = $_POST['staffemail'] ?? "";
-            $phoneNumber = $_POST['staffphonenumber'] ?? "";
-            $role = $_POST['staffrole'] ?? "";
-            $tableName = "maintenance_staff";
-            $companyName = $_SESSION['name'] ?? "";
-        
-            if (isset($_POST['submit'])) {
-                if ($name == "") {
-                    echo "";
-                } else {
-                    try {
-                        $sql = "INSERT INTO $tableName (company_ID, staff_role, staff_name, email, phone) VALUES " . "('$CID', '$role', '$name', '$email', '$phoneNumber')";
-                        //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
-                        mysqli_query($conn, $sql);
-                        echo "<p class=text-center>Staff $name has been inserted to $companyName</p>"; 
-
-                    }  catch (mysqli_sql_exception $e) {
-                        echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
-                    }
-                }
-                
-            }
-            
-        ?>
-
 
     </body>
 </html>
