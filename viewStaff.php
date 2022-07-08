@@ -28,7 +28,7 @@
   <div class="col-6 text-center">
 <p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View the Staff members of your Company.</p>
 </div>
-<form method="POST" action="insertStaff.php">
+<form method="POST" class="mb-0" action="insertStaff.php">
     <input type ="hidden" value ="123" name ="randcheck"/>
     <input type="submit"  class="float-end btn btn-primary" value="New +"/>
 </form>

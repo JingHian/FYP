@@ -26,14 +26,12 @@
 <h1 class ="display-5 text-center" style="margin-top:50px;">Equipment List</h1>
 <div class="row justify-content-center">
   <div class="col-6 text-center">
-<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">Here you can view equipments currently registered on the companies.</p>
+<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View equipment currently registed to your company.</p>
 </div>
-      <div class="col-12 text-center">
-        <form method="POST" action="insertEquipment.php">
+        <form method="POST" class="mb-0" action="insertEquipment.php">
             <input type ="hidden" value ="123" name ="randcheck"/>
             <input type="submit"  class="float-end btn btn-primary" value="New +"/>
         </form>
-</div>
       </div>
       </div>
 
