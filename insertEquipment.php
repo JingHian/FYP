@@ -29,7 +29,7 @@ $expiry_date = $_POST['expiry_date'] ?? "";
 $tableName = "maintenance_equipment";
 $companyName = $_SESSION['name'] ?? "";
 
-if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
+if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand']){
     if ($equipmentName == "") {
         echo "";
     } else {

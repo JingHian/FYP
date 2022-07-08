@@ -6,6 +6,7 @@
     include_once "logInCheck.php";
     $name = $_SESSION["name"];
     $usertype = $_SESSION["user_type"];
+    $_SESSION["rand"] = 123;
 
     $tables = new Company();
 
