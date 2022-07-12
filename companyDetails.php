@@ -4,7 +4,6 @@
  include_once('cssLinks.php');
  include_once "logInCheck.php";
 
-echo $_SESSION['company_name'];
  if($_SERVER["REQUEST_METHOD"] == "POST") {
    if ($_POST['goTo'] == 'Hire')
 

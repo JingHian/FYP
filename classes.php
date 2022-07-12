@@ -384,6 +384,38 @@ function deleteEquipment($equipment_ID){
 }
 
 
+function updateInfoComp($name,$phone,$email,$address,$postal_code,$description,$password){
+try {
+  $ID = $_SESSION['ID'];
+  if ($password == '')
+  {
+    $sql = "UPDATE Company SET name = '$name', phone = '$phone', email = '$email', address = '$address', postal_code = '$postal_code' , description = '$description' WHERE company_ID = $ID";
+    mysqli_query($this->conn, $sql);
+    $_SESSION['name'] = $name;
+    $_SESSION['phone'] = $phone;
+    $_SESSION['email'] = $email;
+    $_SESSION['address'] = $address;
+    $_SESSION['postal_code'] = $postal_code;
+    $_SESSION['description'] = $description;
+  } else{
+    $sql = "UPDATE Company SET name = '$name', phone = '$phone', email = '$email', address = '$address', postal_code = '$postal_code' , description = '$description', password = '$password' WHERE company_ID = $ID";
+    mysqli_query($this->conn, $sql);
+    $_SESSION['name'] = $name;
+    $_SESSION['phone'] = $phone;
+    $_SESSION['email'] = $email;
+    $_SESSION['address'] = $address;
+    $_SESSION['postal_code'] = $postal_code;
+    $_SESSION['description'] = $description;
+    $_SESSION['password'] = $password;
+  }
+
+}  catch (mysqli_sql_exception $e) {
+  echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn);
+}
+
+}
+
+
 }
 
 class Homeowner{
@@ -550,6 +582,37 @@ function listBookingsHomeowner(){
    } else {
      echo "No Homeowner Bookings Found";
    }
+
+}
+
+function updateInfoHome($name,$phone,$email,$address,$postal_code,$home_type,$password){
+try {
+  $ID = $_SESSION['ID'];
+  if ($password == '')
+  {
+    $sql = "UPDATE Homeowners SET name = '$name', phone = '$phone', email = '$email', address = '$address', postal_code = '$postal_code' , home_type = '$home_type' WHERE homeowner_ID = $ID";
+    mysqli_query($this->conn, $sql);
+    $_SESSION['name'] = $name;
+    $_SESSION['phone'] = $phone;
+    $_SESSION['email'] = $email;
+    $_SESSION['address'] = $address;
+    $_SESSION['postal_code'] = $postal_code;
+    $_SESSION['home_type'] = $home_type;
+  } else{
+    $sql = "UPDATE Homeowners SET name = '$name', phone = '$phone', email = '$email', address = '$address', postal_code = '$postal_code' , home_type = '$home_type', password = '$password' WHERE homeowner_ID = $ID";
+    mysqli_query($this->conn, $sql);
+    $_SESSION['name'] = $name;
+    $_SESSION['phone'] = $phone;
+    $_SESSION['email'] = $email;
+    $_SESSION['address'] = $address;
+    $_SESSION['postal_code'] = $postal_code;
+    $_SESSION['home_type'] = $home_type;
+    $_SESSION['password'] = $password;
+  }
+
+}  catch (mysqli_sql_exception $e) {
+  echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
+}
 
 }
 

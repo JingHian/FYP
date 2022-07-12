@@ -201,9 +201,9 @@ class LogIn extends SignUp{
 
   function selectFromTable()
   {
-    $sql = "SELECT homeowner_ID as ID,password,name,email,phone,address,postal_code,home_type,user_type FROM Homeowners WHERE username = '$this->username'
-      UNION SELECT company_ID as ID,password,name,email,phone,address,postal_code,null,user_type FROM Company WHERE username = '$this->username'
-      UNION SELECT admin_ID as ID,password,name,email,phone,null,null,null,user_type FROM Admin WHERE username = '$this->username'";
+    $sql = "SELECT homeowner_ID as ID,password,name,email,phone,address,postal_code,null,home_type,user_type FROM Homeowners WHERE username = '$this->username'
+      UNION SELECT company_ID as ID,password,name,email,phone,address,postal_code,description,null,user_type FROM Company WHERE username = '$this->username'
+      UNION SELECT admin_ID as ID,password,name,email,phone,null,null,null,null,user_type FROM Admin WHERE username = '$this->username'";
     $result = $this->conn->query($sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     // printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
@@ -215,11 +215,13 @@ class LogIn extends SignUp{
             // Store data in session variables
             $_SESSION["loggedin"] = true;
             $_SESSION["ID"] = $row['ID'];
+            $_SESSION["password"] = $row['password'];
             $_SESSION["name"] = $row['name'];
             $_SESSION["email"] = $row['email'];
             $_SESSION["phone"] = $row['phone'];
             $_SESSION["address"] = $row['address'];
             $_SESSION["postal_code"] = $row['postal_code'];
+            $_SESSION["description"] = $row['description'];
             $_SESSION["home_type"] = $row['home_type'];
             $_SESSION["user_type"] = $row['user_type'];
             header("location: welcome.php");

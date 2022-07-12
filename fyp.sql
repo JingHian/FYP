@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2022 at 01:42 PM
+-- Generation Time: Jul 12, 2022 at 02:46 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -69,18 +69,8 @@ CREATE TABLE `bookings` (
 
 INSERT INTO `bookings` (`booking_ID`, `company_ID`, `homeowner_ID`, `staff_ID`, `booking_date`, `booking_description`, `booking_type`, `booking_status`) VALUES
 (3, 3, 2, NULL, '2022-06-30', 'Pipes Broken', 'problem', 'In Progress'),
-(9, 2, 1, NULL, '2022-06-29', 'My pipes are leaking', 'problem', 'In Progress'),
-(10, 2, 1, NULL, '2022-07-06', 'Nil', 'installation', 'In Progress'),
-(11, 3, 1, NULL, '2022-07-27', 'None thank you', 'installation', 'In Progress'),
-(12, 1, 1, NULL, '2022-07-27', 'Hi', 'installation', 'In Progress'),
-(14, 3, 1, NULL, '2022-07-30', 'Hello', 'installation', 'In Progress'),
-(17, 1, 1, NULL, '2022-08-18', 'Sink pipe leaking', 'problem', 'In Progress'),
-(18, 1, 1, NULL, '2022-07-13', 'hi', 'problem', 'In Progress'),
-(21, 3, 1, NULL, '2022-09-29', 'test', 'installation', 'In Progress'),
-(22, 1, 1, NULL, '2022-07-22', 'asdfasdadssadasd', 'problem', 'In Progress'),
 (25, 2, 3, NULL, '2022-10-05', 'testing booking', 'problem', 'In Progress'),
-(26, 1, 3, NULL, '2022-07-27', 'asd', 'problem', 'In Progress'),
-(27, 1, 1, NULL, '2022-07-04', '123', 'problem', 'In Progress');
+(26, 1, 3, NULL, '2022-07-27', 'asd', 'problem', 'In Progress');
 
 -- --------------------------------------------------------
 
@@ -104,26 +94,15 @@ CREATE TABLE `cases` (
 --
 
 INSERT INTO `cases` (`case_ID`, `case_subject`, `company_ID`, `homeowner_ID`, `case_date`, `case_status`, `case_description`, `case_reply`) VALUES
-(13, 'Water leak', 2, 1, '2022-06-20', 'Replied', 'test', 'Hello I am here'),
-(14, 'test', 1, 1, '2022-06-20', 'replied', 'hello\r\n', 'Hi'),
-(15, 'test', 1, 1, '2022-06-20', 'replied', 'hello\r\n', 'Testing Reply'),
-(16, 'test', 1, 1, '2022-06-20', 'Replied', 'hello\r\n', 'Replied.'),
-(17, 'test', 1, 1, '2022-06-20', 'Awaiting', 'hello\r\n', NULL),
-(18, 'test', 1, 1, '2022-06-20', 'Awaiting', 'hello\r\n', NULL),
-(19, 'test', 1, 1, '2022-06-20', 'Awaiting', 'hello\r\n', NULL),
-(20, 'test', 1, 1, '2022-06-20', 'Awaiting', '1234', NULL),
-(21, 'Hello', 1, 1, '2022-06-22', 'replied', 'Just checking if this is still available\r\n', 'yes it is still available at our headquarters'),
-(22, 'Broken pipes', 3, 1, '2022-06-22', 'Awaiting', 'Some of my pipes are broken', NULL),
-(23, 'Send a technician ', 3, 1, '2022-06-22', 'Awaiting', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam euismod ligula vitae purus ultrices, non fermentum dui bibendum. Ut vel accumsan mi. Vestibulum eget ornare enim, id porttitor ligula. Nunc justo nunc, faucibus at varius sed, hendrerit sit amet nunc. Etiam vulputate malesuada lacus nec auc', NULL),
-(24, '123', 1, 2, '2022-06-24', 'replied', '123', 'Hello my name is William'),
+(24, '123', 1, 2, '2022-06-24', 'Replied', '123', 'hu'),
 (25, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
 (26, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
 (27, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
-(30, 'Water leakage', 2, 1, '2022-07-01', 'Awaiting', 'Do you guys fix water leaks?', NULL),
 (31, 'Homeowner 3 problem', 3, 3, '2022-07-05', 'Awaiting', 'Homeowner 3 problem details', NULL),
 (32, 'test', 1, 3, '2022-07-05', 'Replied', 'testing', 'Testing Reply\r\n'),
 (34, 'asdasd', 2, 3, '2022-07-05', 'Awaiting', 'test', NULL),
-(35, 'test', 2, 3, '2022-07-05', 'Awaiting', 'test', NULL);
+(35, 'test', 2, 3, '2022-07-05', 'Awaiting', 'test', NULL),
+(36, 'test', 2, 5, '2022-07-12', 'Awaiting', 'Hello', NULL);
 
 -- --------------------------------------------------------
 
@@ -140,6 +119,7 @@ CREATE TABLE `company` (
   `phone` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
   `postal_code` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `user_type` varchar(20) NOT NULL,
   `suspended` tinyint(1) NOT NULL DEFAULT 0,
   `verified` tinyint(1) NOT NULL DEFAULT 0
@@ -149,10 +129,10 @@ CREATE TABLE `company` (
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `user_type`, `suspended`, `verified`) VALUES
-(1, 'company1', '$2y$10$LC7fQTlrA4YwODzgiV9XKetm1Y5gSUJ/Nwg4QA.QbEko0Rr9/pmIy', 'Company One', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'company', 0, 0),
-(2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'company', 0, 0),
-(3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'company', 0, 0);
+INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `description`, `user_type`, `suspended`, `verified`) VALUES
+(1, 'company1', '$2y$10$0AJV74vgbUUuNMg6kaUSh.dINaglwMnDBc8KtrbC.8ch5TAHTFlD.', 'Company One', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2191', 123942, 'test', 'company', 0, 0),
+(2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, '', 'company', 0, 0),
+(3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, '', 'company', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -219,10 +199,10 @@ CREATE TABLE `homeowners` (
 --
 
 INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `home_type`, `user_type`, `suspended`) VALUES
-(1, 'homeowner1', '$2y$10$kDgwOcjxhguKJqUkRw0HPe682D4lYpAmCvUNPmPovqk8sJaz145b.', 'Homeowner1', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '2room', 'homeowner', 0),
 (2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'exec', 'homeowner', 0),
 (3, 'homeowner5', '$2y$10$BXkqQo2q2zqQPH2HE9ju8OmGO4njqP/WmjEF1y5oMr7bV.yQiZgJe', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0),
-(4, 'homeowner1111', '$2y$10$v4wKpvpubMGqaJKIuJpMQOmoe8B8D8teLdXM1UXcxsBzqIlMAj9x2', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '4room', 'homeowner', 0);
+(4, 'homeowner1111', '$2y$10$v4wKpvpubMGqaJKIuJpMQOmoe8B8D8teLdXM1UXcxsBzqIlMAj9x2', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '4room', 'homeowner', 0),
+(5, 'homeowner1', '$2y$10$A70oK8EuIeeGvOXv7vNxBOT9HiCDp5c8IcPNIGSUZoxWmHf8zc1ri', 'Mark Lee', 'Marklee@mail.com', 98765432, '421 Test Avenue 122 #64-21', 1239422, 'exec', 'homeowner', 0);
 
 -- --------------------------------------------------------
 
@@ -240,20 +220,15 @@ CREATE TABLE `homeowner_services` (
 --
 
 INSERT INTO `homeowner_services` (`service_ID`, `homeowner_ID`) VALUES
-(1, 1),
-(2, 1),
-(49, 1),
-(52, 1),
 (1, 2),
 (1, 3),
 (1, 4),
 (2, 4),
 (82, 4),
-(1, 1),
-(2, 1),
-(49, 1),
-(52, 1),
-(1, 2);
+(1, 2),
+(1, 5),
+(2, 5),
+(85, 5);
 
 -- --------------------------------------------------------
 
@@ -276,9 +251,7 @@ CREATE TABLE `maintenance_equipment` (
 --
 
 INSERT INTO `maintenance_equipment` (`equipment_ID`, `company_ID`, `equipment_name`, `quantity`, `installation_date`, `warranty_date`, `expiry_date`) VALUES
-(2, 1, 'dcqw', 22, '2022-05-30', '2022-06-08', '2022-06-06'),
 (3, 1, 'iansutarjieq', 4, '2022-06-22', '2022-06-23', '2022-06-10'),
-(5, 1, 'eqiopment', 3, '2022-07-11', '2022-07-20', '2022-07-13'),
 (6, 1, 'eq1', 33, '2022-07-06', '2022-07-14', '2022-07-12'),
 (7, 1, 'ianeeqqqq', 1234321, '2022-06-29', '2022-06-30', '2022-07-07'),
 (8, 1, 'dcqwdf', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
@@ -288,7 +261,8 @@ INSERT INTO `maintenance_equipment` (`equipment_ID`, `company_ID`, `equipment_na
 (23, 2, 'Reverse Osmosis Filters', 20, '2022-07-04', '2022-09-02', '2024-05-15'),
 (25, 2, 'test', 123, '2022-07-05', '2022-07-15', '2022-07-27'),
 (26, 2, 'Alkaline Solution', 521, '2022-06-27', '2022-08-05', '2022-10-19'),
-(27, 2, 'test11', 123, '2022-07-20', '2022-07-28', '2022-08-03');
+(27, 2, 'test11', 123, '2022-07-20', '2022-07-28', '2022-08-03'),
+(28, 1, 'Reverse Osmosis Filters', 20, '2022-07-08', '2022-07-29', '2022-07-20');
 
 -- --------------------------------------------------------
 
@@ -314,8 +288,10 @@ INSERT INTO `maintenance_staff` (`staff_ID`, `company_ID`, `staff_role`, `staff_
 (11, 1, 'Customer Service', 'John Doe', 'jd@mail.sg', 98762521, ''),
 (12, 1, 'Plumber', 'Jane Smith', 'js@mail.sg', 46109281, ''),
 (16, 1, 'Customer Service', 'Tan Ah Kow', 'TaK@mail.com', 95719243, ''),
-(17, 1, 'Customer Service', 'Tan Ah Kow', 'TaK@mail.com', 95719243, ''),
-(21, 2, 'Customer Service', 'Jing Hian', 'jh@mail.com', 92837621, '');
+(21, 2, 'Customer Service', 'Jing Hian', 'jh@mail.com', 92837621, ''),
+(22, 2, 'Plumber', 'John Doe', 'test@mail.com', 12345678, ''),
+(23, 1, 'Customer Service', 'John Doe', 'test@mail.com', 12345678, ''),
+(24, 1, 'Plumber', 'Jane Smith', 'dsad@mail.com', 98765432, '');
 
 -- --------------------------------------------------------
 
@@ -333,6 +309,7 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`service_ID`, `service_name`) VALUES
+(85, ''),
 (82, 'aaa'),
 (78, 'Customer Service'),
 (49, 'Fireworks'),
@@ -365,7 +342,8 @@ ALTER TABLE `bookings`
 -- Indexes for table `cases`
 --
 ALTER TABLE `cases`
-  ADD PRIMARY KEY (`case_ID`);
+  ADD PRIMARY KEY (`case_ID`),
+  ADD KEY `FK_cases_homeowner_ID` (`homeowner_ID`);
 
 --
 -- Indexes for table `company`
@@ -434,7 +412,7 @@ ALTER TABLE `bookings`
 -- AUTO_INCREMENT for table `cases`
 --
 ALTER TABLE `cases`
-  MODIFY `case_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `case_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -446,25 +424,25 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `homeowners`
 --
 ALTER TABLE `homeowners`
-  MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `maintenance_equipment`
 --
 ALTER TABLE `maintenance_equipment`
-  MODIFY `equipment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `equipment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `maintenance_staff`
 --
 ALTER TABLE `maintenance_staff`
-  MODIFY `staff_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `staff_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- Constraints for dumped tables
@@ -476,6 +454,12 @@ ALTER TABLE `services`
 ALTER TABLE `bookings`
   ADD CONSTRAINT `FK_bookings_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_bookings_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `cases`
+--
+ALTER TABLE `cases`
+  ADD CONSTRAINT `FK_cases_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `company_services`
