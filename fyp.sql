@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2022 at 02:46 PM
+-- Generation Time: Jul 15, 2022 at 12:21 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -130,9 +130,9 @@ CREATE TABLE `company` (
 --
 
 INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `description`, `user_type`, `suspended`, `verified`) VALUES
-(1, 'company1', '$2y$10$0AJV74vgbUUuNMg6kaUSh.dINaglwMnDBc8KtrbC.8ch5TAHTFlD.', 'Company One', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2191', 123942, 'test', 'company', 0, 0),
-(2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, '', 'company', 0, 0),
-(3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, '', 'company', 0, 0);
+(1, 'company1', '$2y$10$0AJV74vgbUUuNMg6kaUSh.dINaglwMnDBc8KtrbC.8ch5TAHTFlD.', 'Company One', 'test@mail.com', 98765432, '123 Test A42111', 123521, 'Testing', 'company', 0, 0),
+(2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'Hello we are company 2', 'company', 0, 0),
+(3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'Hello we are company three', 'company', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -141,6 +141,7 @@ INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `p
 --
 
 CREATE TABLE `company_services` (
+  `cs_ID` int(11) NOT NULL,
   `service_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL,
   `price` double(11,2) DEFAULT NULL
@@ -150,29 +151,73 @@ CREATE TABLE `company_services` (
 -- Dumping data for table `company_services`
 --
 
-INSERT INTO `company_services` (`service_ID`, `company_ID`, `price`) VALUES
-(1, 1, NULL),
-(2, 1, NULL),
-(49, 1, NULL),
-(52, 1, NULL),
-(2, 2, NULL),
-(73, 2, NULL),
-(1, 3, NULL),
-(2, 3, NULL),
-(52, 3, NULL),
-(77, 3, NULL),
-(78, 3, NULL),
-(1, 1, NULL),
-(2, 1, NULL),
-(49, 1, NULL),
-(52, 1, NULL),
-(2, 2, NULL),
-(73, 2, NULL),
-(1, 3, NULL),
-(2, 3, NULL),
-(52, 3, NULL),
-(77, 3, NULL),
-(78, 3, NULL);
+INSERT INTO `company_services` (`cs_ID`, `service_ID`, `company_ID`, `price`) VALUES
+(1, 1, 1, 14.20),
+(2, 2, 1, 12.56),
+(3, 49, 1, NULL),
+(4, 52, 1, NULL),
+(5, 2, 2, 56.00),
+(6, 73, 2, NULL),
+(7, 1, 3, 2.56),
+(8, 2, 3, 46.00),
+(9, 52, 3, NULL),
+(10, 77, 3, NULL),
+(11, 78, 3, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `discounts`
+--
+
+CREATE TABLE `discounts` (
+  `discount_ID` int(11) NOT NULL,
+  `company_ID` int(11) NOT NULL,
+  `homeowner_ID` int(11) DEFAULT NULL,
+  `discount_name` varchar(100) NOT NULL,
+  `discount_start_date` varchar(15) NOT NULL,
+  `discount_end_date` varchar(15) NOT NULL,
+  `discount_description` varchar(500) NOT NULL,
+  `discount_modifier` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `discounts`
+--
+
+INSERT INTO `discounts` (`discount_ID`, `company_ID`, `homeowner_ID`, `discount_name`, `discount_start_date`, `discount_end_date`, `discount_description`, `discount_modifier`) VALUES
+(1, 1, NULL, 'Sign up bonus', '2022-07-14', '2022-07-30', 'Sign up and get 10% off', 10),
+(5, 2, NULL, 'Sign up bonus', '2022-07-15', '2022-08-01', 'Sign up now and get 15% off', 15),
+(6, 3, NULL, '30% off your Total bill', '2022-07-01', '2022-09-28', 'Get 30% off your Total bill when you sign up now!', 30);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enquiries`
+--
+
+CREATE TABLE `enquiries` (
+  `enquiry_ID` int(11) NOT NULL,
+  `admin_ID` int(10) DEFAULT NULL,
+  `user_ID` int(11) NOT NULL,
+  `usertype` varchar(15) NOT NULL,
+  `enquiry_date` varchar(15) NOT NULL,
+  `enquiry_subject` varchar(30) NOT NULL,
+  `enquiry_description` varchar(500) NOT NULL,
+  `enquiry_status` varchar(10) NOT NULL,
+  `enquiry_reply` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `enquiries`
+--
+
+INSERT INTO `enquiries` (`enquiry_ID`, `admin_ID`, `user_ID`, `usertype`, `enquiry_date`, `enquiry_subject`, `enquiry_description`, `enquiry_status`, `enquiry_reply`) VALUES
+(1, NULL, 5, 'homeowner', '2022-07-14', 'asdasd', '123', 'Awaiting', NULL),
+(2, NULL, 1, 'company', '2022-07-14', 'test', '123', 'Awaiting', NULL),
+(3, NULL, 1, 'company', '2022-07-14', 'test', 'asd', 'Awaiting', NULL),
+(4, NULL, 1, 'company', '2022-07-15', 'test', '123', 'Awaiting', NULL),
+(5, NULL, 5, 'homeowner', '2022-07-15', 'test', 'asdasd', 'Awaiting', NULL);
 
 -- --------------------------------------------------------
 
@@ -202,7 +247,8 @@ INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email
 (2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'exec', 'homeowner', 0),
 (3, 'homeowner5', '$2y$10$BXkqQo2q2zqQPH2HE9ju8OmGO4njqP/WmjEF1y5oMr7bV.yQiZgJe', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0),
 (4, 'homeowner1111', '$2y$10$v4wKpvpubMGqaJKIuJpMQOmoe8B8D8teLdXM1UXcxsBzqIlMAj9x2', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '4room', 'homeowner', 0),
-(5, 'homeowner1', '$2y$10$A70oK8EuIeeGvOXv7vNxBOT9HiCDp5c8IcPNIGSUZoxWmHf8zc1ri', 'Mark Lee', 'Marklee@mail.com', 98765432, '421 Test Avenue 122 #64-21', 1239422, 'exec', 'homeowner', 0);
+(5, 'homeowner1', '$2y$10$A70oK8EuIeeGvOXv7vNxBOT9HiCDp5c8IcPNIGSUZoxWmHf8zc1ri', 'Mark Lee', 'Marklee@mail.com', 98765432, '421 Test Avenue 122 #64-21213', 1239422, 'exec', 'homeowner', 0),
+(6, 'homeowner3', '$2y$10$pggC5TgFDNr4Wjf4vRpB2u5ZXP19CpJc0ALhc7YgOAqfbSnnyONGa', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '2room', 'homeowner', 0);
 
 -- --------------------------------------------------------
 
@@ -211,6 +257,7 @@ INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email
 --
 
 CREATE TABLE `homeowner_services` (
+  `hs_ID` int(11) NOT NULL,
   `service_ID` int(11) NOT NULL,
   `homeowner_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -219,16 +266,17 @@ CREATE TABLE `homeowner_services` (
 -- Dumping data for table `homeowner_services`
 --
 
-INSERT INTO `homeowner_services` (`service_ID`, `homeowner_ID`) VALUES
-(1, 2),
-(1, 3),
-(1, 4),
-(2, 4),
-(82, 4),
-(1, 2),
-(1, 5),
-(2, 5),
-(85, 5);
+INSERT INTO `homeowner_services` (`hs_ID`, `service_ID`, `homeowner_ID`) VALUES
+(1, 1, 2),
+(2, 1, 3),
+(3, 1, 4),
+(4, 2, 4),
+(5, 82, 4),
+(7, 1, 5),
+(8, 2, 5),
+(9, 85, 5),
+(10, 1, 6),
+(11, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -314,7 +362,7 @@ INSERT INTO `services` (`service_ID`, `service_name`) VALUES
 (78, 'Customer Service'),
 (49, 'Fireworks'),
 (77, 'Inspections'),
-(2, 'Maintenence'),
+(2, 'Maintenance'),
 (7, 'One'),
 (73, 'Parties'),
 (52, 'Pipes'),
@@ -356,8 +404,21 @@ ALTER TABLE `company`
 -- Indexes for table `company_services`
 --
 ALTER TABLE `company_services`
+  ADD PRIMARY KEY (`cs_ID`),
   ADD KEY `FK_company_services_company_ID` (`company_ID`),
   ADD KEY `FK_company_services_service_ID` (`service_ID`);
+
+--
+-- Indexes for table `discounts`
+--
+ALTER TABLE `discounts`
+  ADD PRIMARY KEY (`discount_ID`);
+
+--
+-- Indexes for table `enquiries`
+--
+ALTER TABLE `enquiries`
+  ADD PRIMARY KEY (`enquiry_ID`);
 
 --
 -- Indexes for table `homeowners`
@@ -370,6 +431,7 @@ ALTER TABLE `homeowners`
 -- Indexes for table `homeowner_services`
 --
 ALTER TABLE `homeowner_services`
+  ADD PRIMARY KEY (`hs_ID`),
   ADD KEY `FK_homeowner_services_homeowner_ID` (`homeowner_ID`),
   ADD KEY `FK_homeowner_services_service_ID` (`service_ID`);
 
@@ -421,10 +483,34 @@ ALTER TABLE `company`
   MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `company_services`
+--
+ALTER TABLE `company_services`
+  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `discounts`
+--
+ALTER TABLE `discounts`
+  MODIFY `discount_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `enquiries`
+--
+ALTER TABLE `enquiries`
+  MODIFY `enquiry_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `homeowners`
 --
 ALTER TABLE `homeowners`
-  MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `homeowner_services`
+--
+ALTER TABLE `homeowner_services`
+  MODIFY `hs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `maintenance_equipment`
@@ -442,7 +528,7 @@ ALTER TABLE `maintenance_staff`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- Constraints for dumped tables
