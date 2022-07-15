@@ -57,7 +57,7 @@ class Company{
   }
 
  function listCompanies(){
-   $query = "SELECT comp.name, comp.address, comp.postal_code, GROUP_CONCAT(serv.service_name SEPARATOR ', ') as service_grouped
+   $query = "SELECT comp.company_ID,comp.name, comp.email,comp.phone, comp.address,comp.postal_code, comp.description, GROUP_CONCAT(serv.service_name SEPARATOR ', ') as service_grouped
              FROM Company AS comp
              JOIN Company_Services AS cs
              ON comp.company_ID = cs.company_ID
@@ -78,7 +78,14 @@ class Company{
                   <td>".$row["address"]."</td>
                   <td>"."4/5"." </td>
                   ".'<input type ="hidden" value ="'.$row["name"].'" name ="company_name"/>'.
-                  "<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Details'></td>
+                    '<input type ="hidden" value ="'.$row["email"].'" name ="company_email"/>'.
+                    '<input type ="hidden" value ="'.$row["phone"].'" name ="company_phone"/>'.
+                    '<input type ="hidden" value ="'.$row["company_ID"].'" name ="company_ID"/>'.
+                    '<input type ="hidden" value ="'.$row["address"].'" name ="company_address"/>'.
+                    '<input type ="hidden" value ="'.$row["postal_code"].'" name ="company_postal"/>'.
+                    '<input type ="hidden" value ="'.$row["description"].'" name ="company_description"/>'.
+                    '<input type ="hidden" value ="'.$row["service_grouped"].'" name ="service_grouped"/>'.
+                  "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' value='Details'></td>
                 </tr>
               </form>";
       }
@@ -137,7 +144,7 @@ function tableHeaderCases()
                     '<input type ="hidden" value ="'.$row["case_status"].'" name ="case_status"/>'.
                     '<input type ="hidden" value ="'.$row["case_description"].'" name ="case_description"/>'.
                     '<input type ="hidden" value ="" name ="reply"/>'.
-                  "<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Details'></td>
+                  "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' value='Details'></td>
                 </tr>
               </form>";
       }
@@ -195,7 +202,7 @@ function listBookingsComp(){
                    '<input type ="hidden" value ="'.$row["staff_ID"].'" name ="booking_subject"/>'.
                    '<input type ="hidden" value ="'.$row["booking_status"].'" name ="booking_status"/>'.
                    '<input type ="hidden" value ="'.$row["booking_description"].'" name ="booking_description"/>'.
-                 "<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Details'></td>
+                 "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' value='Details'></td>
                </tr>
              </form>";
      }
@@ -263,7 +270,7 @@ function listStaff(){
       .'<input type ="hidden" value ="'.$row["phone"].'" name ="staff_phone"/>'
       .'<input type ="hidden" value ="'.$row["staff_role"].'" name ="staff_role"/>'
       .'<input type ="hidden" value ="'.$row["status"].'" name ="staff_status"/>'
-      ."<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Details'></td>
+      ."<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' value='Details'></td>
   </tr>
 </form>";
      }
@@ -345,7 +352,7 @@ function listEquipment(){
           .'<input type ="hidden" value ="'.$row["installation_date"].'" name ="installation_date"/>'
           .'<input type ="hidden" value ="'.$row["warranty_date"].'" name ="warranty_date"/>'
           .'<input type ="hidden" value ="'.$row["expiry_date"].'" name ="expiry_date"/>'
-          ."<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Details'></td>
+          ."<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' value='Details'></td>
           </tr>
         </form>";
 
@@ -396,7 +403,7 @@ try {
     $_SESSION['email'] = $email;
     $_SESSION['address'] = $address;
     $_SESSION['postal_code'] = $postal_code;
-    $_SESSION['description'] = $description;
+    $_SESSION['home_type'] = $description;
   } else{
     $sql = "UPDATE Company SET name = '$name', phone = '$phone', email = '$email', address = '$address', postal_code = '$postal_code' , description = '$description', password = '$password' WHERE company_ID = $ID";
     mysqli_query($this->conn, $sql);
@@ -405,7 +412,7 @@ try {
     $_SESSION['email'] = $email;
     $_SESSION['address'] = $address;
     $_SESSION['postal_code'] = $postal_code;
-    $_SESSION['description'] = $description;
+    $_SESSION['home_type'] = $description;
     $_SESSION['password'] = $password;
   }
 
@@ -480,7 +487,7 @@ class Homeowner{
                          "<td>" . $Row['name'] . "</td>".
                          "<td>" . $Row['case_date'] ."</td>".
                          "<td>" . $Row['case_status'] ."</td>".
-                         "<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' name='Details' value='Details'></td>".
+                         "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' name='Details' value='Details'></td>".
                          "<input type ='hidden' value ='".$Row['case_subject']."' name ='case_subject'/>".
                          "<input type ='hidden' value ='".$Row['name']."' name ='company_name'/>".
                          "<input type ='hidden' value ='".$Row['case_description']."' name ='case_description'/>".
@@ -573,7 +580,7 @@ function listBookingsHomeowner(){
                    '<input type ="hidden" value ="'.$row["booking_date"].'" name ="booking_date"/>'.
                    '<input type ="hidden" value ="'.$row["booking_status"].'" name ="booking_status"/>'.
                    '<input type ="hidden" value ="'.$row["booking_description"].'" name ="booking_description"/>'.
-                 "<td class ='align-middle'><input type='submit' class='btn btn-small btn-light' value='Details'></td>
+                 "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' value='Details'></td>
                </tr>
              </form>";
      }

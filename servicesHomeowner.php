@@ -50,18 +50,20 @@ include_once "logInCheck.php";
             <p class="usage-font"> Bills/History </p>
           </div>
         </button>
-          <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-top-0  border-start-0 border-end-0 border-secondary border-3 pt-3  height-200">
+        <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-top-0  border-start-0 border-end-0 border-secondary border-3 pt-3  height-200">
+          <div class =" text-center">
+            <span class="material-symbols-outlined  icon-size">grade</span>
+            <p class="usage-font ">Review Company </p>
+          </div>
+        </button>
+        <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border  border-top-0  border-secondary   border-3 pt-3  height-200">
+          <a class ="no-text-deco" href="enquiryToPlatform.php">
             <div class =" text-center">
               <span class="material-symbols-outlined   icon-size">contact_support</span>
-              <p class="usage-font">Send Report </p>
+              <p class="usage-font">Send Enquiry to Platform </p>
             </div>
+            </a>
           </button>
-            <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border  border-top-0  border-secondary   border-3 pt-3  height-200">
-              <div class =" text-center">
-                <span class="material-symbols-outlined  icon-size">grade</span>
-                <p class="usage-font ">Review Company </p>
-              </div>
-            </button>
 
     </div>
   </div>

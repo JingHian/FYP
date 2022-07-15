@@ -4,6 +4,7 @@ session_start();
 // Check if the user is logged in, if not then redirect him to login page
 
 include_once "logInCheck.php";
+// echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
 ?>
 <!DOCTYPE html>
 <html lang="en">

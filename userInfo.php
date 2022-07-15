@@ -13,7 +13,7 @@ $phone = $_SESSION["phone"];
 $email = $_SESSION["email"];
 $address = $_SESSION["address"];
 $postal_code = $_SESSION["postal_code"];
-$description = $_SESSION["description"];
+$description = $_SESSION["home_type"];
 $editInfo_success = "";
 $wrong_password = "";
 $company = new Company();
@@ -103,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
       </div>
       <div class="col">
         <div class="form-floating mb-3">
-          <textarea  class="form-control" name="description"><?php echo $_SESSION['description']; ?></textarea>
+          <textarea  class="form-control" name="description"><?php echo $_SESSION['home_type']; ?></textarea>
           <label for="description">About Us</label>
         </div>
       </div>
@@ -126,7 +126,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
 
     <div class="form-group mb-2 mt-3 text-center">
         <input type="submit" class="btn  btn-primary" value="Save Changes">
-        <button class="btn  btn-primary" value="View live page">View live page</button>
+        <a class="btn  btn-primary" href="companyDetailsComp.php">View live page</a>
     </div>
       <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $editInfo_success;?></div>
       <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $wrong_password;?></div>

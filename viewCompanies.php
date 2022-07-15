@@ -16,8 +16,15 @@
     }
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
-      header("location:companyDetails.php");
+      $_SESSION['company_ID'] = $_POST['company_ID'];
       $_SESSION['company_name'] = $_POST['company_name'];
+      $_SESSION['company_email'] = $_POST['company_email'];
+      $_SESSION['company_phone'] = $_POST['company_phone'];
+      $_SESSION['company_address'] = $_POST['company_address'];
+      $_SESSION['company_postal'] = $_POST['company_postal'];
+      $_SESSION['company_description'] = $_POST['company_description'];
+      $_SESSION['service_grouped'] = $_POST['service_grouped'];
+      header("location:companyDetails.php");
     }
 ?>
 <html>
