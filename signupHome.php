@@ -140,8 +140,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label class="form-check-label" for="services">Water Supply</label>
               </div>
               <div class="form-check form-check-inline ">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Maintenence">
-                <label class="form-check-label" for="services">Maintenence</label>
+                <input class="form-check-input" type="checkbox" name="services[]" value="Maintenance">
+                <label class="form-check-label" for="services">Maintenance</label>
               </div>
             </div>
             <div class=" form-floating mt-3 mb-3  last_service"></div>

@@ -14,6 +14,7 @@ include_once ("classes.php");
         staff_role varchar(30) NOT NULL,
         staff_name VARCHAR(60) NOT NULL,
         email VARCHAR(30) NOT NULL,
+        status VARCHAR(30) NOT NULL,
         phone int(20) NOT NULL)";
 
     mysqli_query($conn, $equipmentTable);
@@ -32,7 +33,7 @@ include_once ("classes.php");
             echo "";
         } else {
             try {
-                $sql = "INSERT INTO $tableName (company_ID, staff_role, staff_name, email, phone) VALUES " . "('$CID', '$role', '$name', '$email', '$phoneNumber')";
+                $sql = "INSERT INTO $tableName (company_ID, staff_role, staff_name, email, phone,status) VALUES " . "('$CID', '$role', '$name', '$email', '$phoneNumber','Not Assigned')";
                 //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
                 mysqli_query($conn, $sql);
 

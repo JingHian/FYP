@@ -81,7 +81,7 @@ class SignUp{
   {
     try
     {
-      $sql = "INSERT INTO Company (username, password, name, email, phone, address,postal_code,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code','$this->user_type')";
+      $sql = "INSERT INTO Company (username, password, name, email, phone, address,postal_code,description,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code','No description has been set by the company yet','$this->user_type')";
       $result = mysqli_query($this->conn, $sql);
     }
     catch (mysqli_sql_exception $e)

@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
            <div class="col">
              <div class="form-floating mb-3">
               <input type="text" class="form-control" id="maintenance_price" name="maintenance_price" placeholder="maintenance_price"  value = "<?php if($maintenance_price != "none"){echo $maintenance_price;}?>" <?php if($maintenance_price == "none"){echo "disabled";}else{echo "required";}?>>
-              <label for="maintenance_price">Maintenence Fee</label>
+              <label for="maintenance_price">Maintenance Fee</label>
             </div>
           </div>
         </div>
