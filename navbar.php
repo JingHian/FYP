@@ -1,5 +1,5 @@
 <div class="containertest" >
-    <nav class=" navbar navbar-expand-lg navbar-dark bg-dark fs-6">
+    <nav class=" navbar navbar-expand-lg navbar-dark" style="background-color:#2d3e50;">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -43,7 +43,7 @@
           }
             ?>
             <?php echo htmlspecialchars($_SESSION["name"]).'('.htmlspecialchars($_SESSION["user_type"]).')'; ?></a>
-          <a class="nav-link active d-flex justify-content-end" href="logout.php" >log out</a>
+          <a class="nav-link d-flex justify-content-end" href="logout.php" >log out</a>
         </div>
       </div>
     </div>

@@ -43,12 +43,58 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <title>Water Supply Marketplace</title>
 </head>
 <body>
+  <style>
+    .main-wrapper{
+      background-color: white;
+      width: 35%;
+      padding:80px 0  80px 0;
+      margin-top: 200px;
+      border-radius: 15px;
+      box-shadow: 0px 0px 11px -3px rgba(0,0,0,0.75);
+    }
+
+    .form-horizontal-3{
+        display:block;
+        width:70%;
+        margin:0 auto;
+    }
+    body{
+      background-color:#00aeef  !important;
+      background-image: url("img/pexels-pixabay-62307.jpg");
+      height: 100%;
+
+      /* Center and scale the image nicely*/
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    #myVideo {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;z-index: -1;
+    }
+    video{
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+
+      top: 0;
+      left: 0;
+    }
+  </style>
+    <!-- <video autoplay muted loop id="myVideo">
+  <source src="img/1.mp4" type="video/mp4">
+</video> -->
+<div class="container main-wrapper">
   <div class="container">
-  <h1 class ="display-5" style="text-align: center;margin-top:100px;">Water Supply Marketplace</h1>
+  <h1 class ="display-5" style="text-align: center;">Water Supply Marketplace</h1>
   <p class ="display-6 fs-2 text-muted" style="text-align: center;">Log in</p>
   </div>
 <div class="container">
-  <form class ="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+  <form class ="form-horizontal-3" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
       <span style ="color:red"><?php echo $whiteSpaceError;  ?></span>
       <span style ="color:red"><?php echo $logInFailError; ?></span>
       <div class="form-floating mt-3 mb-3 ">
@@ -65,6 +111,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       </div>
       <p>Not registered? <a href="signupHome.php">Sign up now.</a></p>
   </form>
+</div>
 </div>
 <?php include_once('jsLinks.php');?>
 
