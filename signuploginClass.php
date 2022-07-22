@@ -45,6 +45,24 @@ class SignUp{
 
   }
 
+  function checkUniqueName() //check if Company name is unique
+  {
+    $sql = "SELECT * FROM Company WHERE name='$this->name'";
+
+    $result = $this->conn->query($sql);
+
+    $num = mysqli_num_rows($result);
+
+    if($num > 0)
+    {
+      return false;
+    }
+    else{
+      return true;
+    }
+
+  }
+
   function checkUniqueIDAdmin() //check if username is unique for admin
   {
     $sql = "SELECT * FROM Admin WHERE username='$this->username'";

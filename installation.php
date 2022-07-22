@@ -3,18 +3,26 @@
 include "conn.php";
 include_once "classes.php";
 include_once "logInCheck.php";
-
+  // echo '<pre>' . print_r($_SESSION) . '</pre>';
 $name = $_SESSION["name"];
 $phone = $_SESSION["phone"];
 $email = $_SESSION["email"];
 $address = $_SESSION["address"];
 $postal_code = $_SESSION["postal_code"];
 $booking_success = "";
+$booking_failed = "";
 $homeowner = new Homeowner();
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand']) {
-  $homeowner->insertBooking($_SESSION["company_name"],$_POST["date"],$_POST["comments"],"installation");
-  $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_SESSION['company_name']."!";
+  if($homeowner->checkClientExists($_SESSION["ID"],$_SESSION["company_ID"]) == True)
+  {
+    $homeowner->insertBooking($_SESSION["company_name"],$_POST["date"],$_POST["comments"],"installation");
+    $homeowner->addClient($_SESSION["company_ID"],$_POST["date"]);
+    $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_SESSION['company_name']."!";
+  }
+  else{
+    $booking_failed = "You already are a client of ". $_SESSION['company_name']."! Please check your bookings for your previous installation booking.";
+  }
 }
 
 ?>
@@ -104,6 +112,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
         <input type="submit" class="btn btn-primary" value="Submit">
     </div>
     <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $booking_success;?></div>
+    <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $booking_failed;?></div>
 
     </form>
 </div>

@@ -63,7 +63,7 @@ class Company{
              ON comp.company_ID = cs.company_ID
              JOIN Services As serv
              ON cs.service_ID = serv.service_ID
-             GROUP BY name";
+             GROUP BY company_ID";
    $result = mysqli_query($this->conn, $query);
 
     if ($result->num_rows > 0) {
@@ -507,6 +507,18 @@ class Homeowner{
 
 }
 
+function checkClientExists($homeowner_ID,$company_ID)
+{
+  $sql = "SELECT client_ID FROM Clients where homeowner_ID = '$homeowner_ID' and company_ID = '$company_ID'";
+  $result = mysqli_query($this->conn, $sql);
+  if (mysqli_num_rows($result) < 1) {
+    return True;
+  }
+  else {
+    return False;
+  }
+}
+
 function insertBooking($company_name,$date,$details,$booking_type)
 {
   // get company_ID from company name
@@ -538,6 +550,35 @@ function insertBooking($company_name,$date,$details,$booking_type)
   }
 }
 
+function addClient($company_ID,$date)
+{
+  $homeowner_ID = $_SESSION['ID'];
+
+  try
+  {
+    $sql = "SELECT discount_ID FROM discounts where company_ID = '$company_ID'";
+    $result = mysqli_query($this->conn, $sql);
+
+   if ($result->num_rows > 0) {
+      $discount_ID = $row['discount_ID'];
+      $sql = "INSERT INTO Clients (company_ID, homeowner_ID, discount_ID,start_date) VALUES ( '$company_ID', '$homeowner_ID', '$discount_ID', '$date')";
+      $result = mysqli_query($this->conn, $sql);
+    }
+  else{
+    $sql = "INSERT INTO Clients (company_ID, homeowner_ID,start_date) VALUES ( '$company_ID', '$homeowner_ID', '$date')";
+    $result = mysqli_query($this->conn, $sql);
+  }
+  }
+  catch (mysqli_sql_exception $e)
+  {
+    echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
+    return False;
+  }
+
+
+}
+
+
 function tableHeaderBookingHome()
 {
   echo "<table class='table table-hover datatable_style' >
@@ -546,6 +587,7 @@ function tableHeaderBookingHome()
             <th>Booking #</th>
             <th>Company Name</th>
             <th>Date</th>
+            <th>Type</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -574,12 +616,14 @@ function listBookingsHomeowner(){
                  <td>".$row["booking_ID"]."</td>
                  <td>".$row["name"]."</td>
                  <td>".$row["booking_date"]."</td>
+                 <td>".$row["booking_type"]."</td>
                  <td>".$row["booking_status"]."</td>
                  ".'<input type ="hidden" value ="'.$row["booking_ID"].'" name ="booking_ID"/>'.
                    '<input type ="hidden" value ="'.$row["name"].'" name ="company_name"/>'.
                    '<input type ="hidden" value ="'.$row["booking_date"].'" name ="booking_date"/>'.
-                   '<input type ="hidden" value ="'.$row["booking_status"].'" name ="booking_status"/>'.
                    '<input type ="hidden" value ="'.$row["booking_description"].'" name ="booking_description"/>'.
+                   '<input type ="hidden" value ="'.$row["booking_type"].'" name ="booking_type"/>'.
+                   '<input type ="hidden" value ="'.$row["booking_status"].'" name ="booking_status"/>'.
                  "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' value='Details'></td>
                </tr>
              </form>";
@@ -623,4 +667,40 @@ try {
 
 }
 
+}
+
+class Universal{
+
+  private $conn = NULL;
+
+  function __construct() {
+    include("conn.php");
+    $this->conn = $conn;
+  }
+
+
+  function servicesCheckBoxes(){
+      $sql = "SELECT * FROM Services
+              ORDER BY service_ID ASC";
+      $result = mysqli_query($this->conn, $sql);
+
+       if ($result->num_rows > 0) {
+         // output data of each row
+         while($row = $result->fetch_assoc()) {
+           echo '
+           <div class ="col-6 ">
+           <div class="form-check form-check-inline">
+
+             <input class="form-check-input" type="checkbox" name="services[]" value="'.$row["service_name"].'">
+             <label class="form-check-label" for="services">'.$row["service_name"].'</label>
+           </div>
+           </div>
+
+           ';
+         }
+         echo '
+         <div class ="col-6 "></div>';
+       }
+
+  }
 }
