@@ -63,6 +63,7 @@ class Company{
              ON comp.company_ID = cs.company_ID
              JOIN Services As serv
              ON cs.service_ID = serv.service_ID
+             WHERE comp.verified = 1
              GROUP BY company_ID";
    $result = mysqli_query($this->conn, $query);
 
