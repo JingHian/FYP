@@ -46,7 +46,7 @@ class Company{
     echo "<table class='table table-hover datatable_style' >
             <thead>
             <tr class='table-padding'>
-              <th>Company Name</th>
+              <th>Name</th>
               <th>Services Offered</th>
               <th>Address</th>
               <th>Ratings</th>
@@ -63,7 +63,6 @@ class Company{
              ON comp.company_ID = cs.company_ID
              JOIN Services As serv
              ON cs.service_ID = serv.service_ID
-             WHERE comp.verified = 1
              GROUP BY company_ID";
    $result = mysqli_query($this->conn, $query);
 
@@ -665,6 +664,234 @@ try {
 }  catch (mysqli_sql_exception $e) {
   echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
 }
+
+}
+
+
+
+function tableHeaderBills()
+{
+  echo "<table class='table table-hover datatable_style' >
+          <thead>
+          <tr class='table-padding'>
+            <th>Bill #</th>
+            <th>Company Name</th>
+            <th>Bill Date</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody class='search-table'>";
+}
+
+
+function listBillsHomeowner(){
+  $ID = $_SESSION['ID'];
+
+ $query = "SELECT bill.*,comp.company_ID,comp.name,comp.address,comp.postal_code
+           FROM Bills AS bill
+           JOIN Company AS comp
+           ON bill.company_ID = comp.company_ID
+           WHERE homeowner_ID = '$ID'";
+
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderBills();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+     echo "
+               <tr class='table-padding' >
+                 <form method='post' action='viewBillDetails.php'>
+                 <td>".$row["bill_ID"]."</td>
+                 <td>".$row["name"]."</td>
+                 <td>".$row["bill_date"]."</td>
+                 <td>".$row["bill_due_date"]."</td>
+                 <td>".$row["bill_status"]."</td>
+                 ".'<input type ="hidden" value ="'.$row["bill_ID"].'" name ="bill_ID"/>'.
+                   '<input type ="hidden" value ="'.$row["name"].'" name ="company_name"/>'.
+                   '<input type ="hidden" value ="'.$row["bill_date"].'" name ="bill_date"/>'.
+                   '<input type ="hidden" value ="'.$row["bill_due_date"].'" name ="bill_due_date"/>'.
+                   '<input type ="hidden" value ="'.$row["bill_status"].'" name ="bill_status"/>'.
+                   '<input type ="hidden" value ="'.$row["company_ID"].'" name ="company_ID"/>'.
+                   '<input type ="hidden" value ="'.$row["address"].'" name ="company_address"/>'.
+                   '<input type ="hidden" value ="'.$row["postal_code"].'" name ="company_postal"/>'.
+                 "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' value='Details'></td>
+               </tr>
+             </form>";
+     }
+     echo "
+     </tbody></table>";
+   } else {
+     echo "No Bills Found";
+   }
+
+}
+
+
+function tableHeaderBillDetails()
+{
+  echo "<table class='table table-borderless datatable_style2' >
+          <thead>
+            <tr class='table-padding'>
+              <th>Description</th>
+              <th>Usage</th>
+              <th>Date</th>
+              <th>Price per m³</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody class='search-table'>";
+}
+
+function listBillDetailsHomeowner(){
+  $ID = $_SESSION['ID'];
+  $CID = $_SESSION['company_ID'];
+  $month = $_SESSION['bill_month'];
+  $total_price = 0;
+
+// echo '<pre>' . print_r($_SESSION) . '</pre>';
+
+  $query = "SELECT price FROM Company_services WHERE service_ID = '1' AND company_ID = '$CID'";
+  $result = mysqli_query($this->conn, $query);
+  $row = $result->fetch_assoc();
+  $water_price = $row["price"];
+
+
+  $query = "SELECT water.*,SUM(water.water_usage) AS total_water,comp.*
+            FROM Water_Tracking AS water
+            JOIN Company AS comp
+            ON water.company_ID = comp.company_ID
+            WHERE water.homeowner_ID = '$ID'
+            AND comp.company_ID = '$CID'
+            AND MONTH(water.usage_date) = '$month'";
+
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderBillDetails();
+      while($row = $result->fetch_assoc()) {
+      echo "
+              <tr class='table-padding' >
+                <form method='post' action='viewBillDetails.php'>";
+                echo "<td>Water Usage</td>";
+                echo "<td>".$row["total_water"]."m³</td>";
+                echo "<td></td>";
+                echo "<td>".$water_price."</td>";
+                echo "<td>".$water_price * $row["total_water"]."</td>";
+                $total_price += $water_price * $row["total_water"]; //add up the prices
+
+
+       echo "
+                </tr>
+              </form>";
+      }
+    } else {
+      echo "<td>No Water usage found</td>";
+    }
+
+
+
+
+  $query = "SELECT price FROM Company_services WHERE service_ID = '2' AND company_ID = '$CID'";
+  $result = mysqli_query($this->conn, $query);
+  $row = $result->fetch_assoc();
+  $maint_price = $row["price"];
+
+
+ $query = "SELECT book.*,comp.*
+           FROM Bookings AS book
+           JOIN Company AS comp
+           ON book.company_ID = comp.company_ID
+           WHERE book.homeowner_ID = '$ID'
+           AND comp.company_ID = '$CID'
+           AND MONTH(book.booking_date) = '$month'";
+
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+     echo "
+             <tr class='table-padding' >
+               <form method='post' action='viewBillDetails.php'>";
+               if ($row["booking_type"] == 'installation' or $row["booking_type"] == 'problem')
+               {
+                 echo "<td>Maintenance Services";
+                 echo "<td>".ucfirst($row["booking_type"])."</td>";
+                 echo "<td>".$row["booking_date"]."</td>";
+                 echo "<td>".$maint_price."</td>";
+                 $total_price += $maint_price; //add up the prices
+                 // echo $total_price;
+               }
+
+      echo "
+               </tr>
+             </form>";
+     }
+     echo "
+     <tr class='table-padding' >
+     <td></td>
+     </tr>
+     <tr class='table-padding' >
+      <th></th>
+      <th></th>
+      <th></th>
+      <th class = 'border border-dark border-start-0 border-end-0 border-3'>Total Price:</th>
+      <th class = 'border border-dark border-start-0 border-end-0 border-3'>$total_price</th>
+      </tr>
+
+    </tbody> </table>";
+   } else {
+   echo "<td>No Maintenance usage found</td>";
+   }
+
+}
+
+
+
+function addWaterUsage($company_name,$water_usage,$date)
+{
+  $homeowner_ID = $_SESSION['ID'];
+
+  // get company_ID from company name
+  $sql = "SELECT company_ID from Company where name= '$company_name'";
+  $result = mysqli_query($this->conn, $sql);
+  $row = mysqli_fetch_assoc($result);
+  $company_ID = $row['company_ID'];
+
+  try
+  {
+    $sql = "SELECT * FROM Water_Tracking
+    WHERE homeowner_ID ='$homeowner_ID'
+    AND company_ID ='$company_ID '
+    AND usage_date ='$date'";
+    $result = mysqli_query($this->conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    // echo $row['water_usage'];
+   if ($result->num_rows > 0) {
+      // echo "inside update";
+      // echo $water_usage;
+      $query = "UPDATE Water_Tracking
+                SET
+                water_usage ='$water_usage'
+                WHERE homeowner_ID ='$homeowner_ID'
+                AND company_ID ='$company_ID '
+                AND usage_date ='$date'";
+      $result = mysqli_query($this->conn, $query);
+      // printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
+    }
+  else{
+    $sql = "INSERT INTO Water_Tracking (company_ID, homeowner_ID, usage_date, water_usage) VALUES ( '$company_ID', '$homeowner_ID', '$date','$water_usage')";
+    $result = mysqli_query($this->conn, $sql);
+  }
+  }
+  catch (mysqli_sql_exception $e)
+  {
+    echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
+  }
+
 
 }
 

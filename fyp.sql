@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2022 at 03:04 PM
+-- Generation Time: Jul 27, 2022 at 03:10 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -49,6 +49,30 @@ INSERT INTO `admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bills`
+--
+
+CREATE TABLE `bills` (
+  `bill_ID` int(11) NOT NULL,
+  `company_ID` int(11) NOT NULL,
+  `homeowner_ID` int(11) NOT NULL,
+  `bill_date` date DEFAULT NULL,
+  `bill_due_date` date NOT NULL,
+  `bill_status` varchar(20) NOT NULL DEFAULT 'pending',
+  `bill_payment_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bills`
+--
+
+INSERT INTO `bills` (`bill_ID`, `company_ID`, `homeowner_ID`, `bill_date`, `bill_due_date`, `bill_status`, `bill_payment_date`) VALUES
+(1, 1, 5, '2022-07-30', '2022-08-01', 'pending', '0000-00-00'),
+(3, 1, 5, '2022-08-30', '2022-09-01', 'pending', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `bookings`
 --
 
@@ -73,7 +97,10 @@ INSERT INTO `bookings` (`booking_ID`, `company_ID`, `homeowner_ID`, `staff_ID`, 
 (26, 1, 3, NULL, '2022-07-27', 'asd', 'problem', 'In Progress'),
 (28, 1, 5, NULL, '2022-07-23', 'Hi', 'installation', 'In Progress'),
 (31, 3, 5, NULL, '2022-07-28', 'sadasdasdasd', 'installation', 'In Progress'),
-(32, 4, 5, NULL, '2022-07-27', 'sadasdasd', 'installation', 'In Progress');
+(32, 4, 5, NULL, '2022-07-27', 'sadasdasd', 'installation', 'In Progress'),
+(37, 1, 5, NULL, '2022-07-21', '123123123', 'problem', 'In Progress'),
+(38, 4, 5, NULL, '2022-07-27', '123', 'installation', 'In Progress'),
+(39, 1, 5, NULL, '2022-08-23', 'This is an augest booking', 'problem', 'In Progress');
 
 -- --------------------------------------------------------
 
@@ -160,10 +187,7 @@ INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `p
 (2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'Hello we are company 2', 'company', 0, 0),
 (3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'Hello we are company three', 'company', 0, 0),
 (4, 'company12', '$2y$10$ASJ5hTD3X9gbM4MSBnAGLuh8IallE5CFYJLqV8G6PM6tyZT0lizOC', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '', 'company', 0, 0),
-(5, 'company123', '$2y$10$ijz4kqRcEosIPROHnPkzCefVfATA1x5qSy8RKqWPPDJFwsHW3i5Ou', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '', 'company', 0, 0),
-(6, 'company14', '$2y$10$Cihrh5Nn/NIVhPyalBsBquydkdeMKxBq/4BnRDbBGPXURuCFQI.d2', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'No description has been set by the company yet', 'company', 0, 0),
-(7, 'company3333', '$2y$10$nZHjSch735EnwnpEwv6emeyTzHe3eApQfkecxN1YaF67EWtBr7Jfq', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'No description has been set by the company yet', 'company', 0, 0),
-(8, 'company52', '$2y$10$o679Y1PfnQYNkKUB6NXkZuqiZExDiFHtjD3Qk9nJ0p8PqsXBrIS5q', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'No description has been set by the company yet', 'company', 0, 0);
+(14, 'company11234', '$2y$10$lVPrR/4MzTK9bGIJgxTO1OQjDi7tUtzcJ9/1.zv76HrviujI3TxrW', 'Test312321', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'No description has been set by the company yet', 'company', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -195,19 +219,10 @@ INSERT INTO `company_services` (`cs_ID`, `service_ID`, `company_ID`, `price`) VA
 (10, 77, 3, NULL),
 (11, 78, 3, NULL),
 (12, 1, 4, NULL),
-(14, 1, 5, NULL),
-(16, 1, 6, NULL),
-(18, 1, 7, NULL),
-(19, 2, 7, NULL),
-(20, 1, 8, NULL),
-(21, 2, 8, NULL),
-(22, 7, 8, NULL),
-(23, 49, 8, NULL),
-(24, 52, 8, NULL),
-(25, 73, 8, NULL),
-(26, 77, 8, NULL),
-(27, 78, 8, NULL),
-(29, 99, 8, NULL);
+(41, 1, 14, NULL),
+(42, 7, 14, NULL),
+(43, 52, 14, NULL),
+(44, 73, 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -426,6 +441,33 @@ INSERT INTO `services` (`service_ID`, `service_name`) VALUES
 (99, 'Testing'),
 (1, 'Water Supply');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `water_tracking`
+--
+
+CREATE TABLE `water_tracking` (
+  `tracking_ID` int(11) NOT NULL,
+  `company_ID` int(11) NOT NULL,
+  `homeowner_ID` int(11) NOT NULL,
+  `usage_date` date NOT NULL,
+  `water_usage` double(11,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `water_tracking`
+--
+
+INSERT INTO `water_tracking` (`tracking_ID`, `company_ID`, `homeowner_ID`, `usage_date`, `water_usage`) VALUES
+(3, 1, 5, '2022-07-27', 24.00),
+(4, 2, 5, '2022-07-30', 24.00),
+(5, 1, 5, '2022-07-28', 42.23),
+(6, 1, 5, '2022-08-04', 22.00),
+(7, 1, 2, '2022-07-27', 72.00),
+(8, 1, 2, '2022-07-28', 23.00),
+(9, 1, 5, '2022-08-27', 242.00);
+
 --
 -- Indexes for dumped tables
 --
@@ -435,6 +477,14 @@ INSERT INTO `services` (`service_ID`, `service_name`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`admin_ID`);
+
+--
+-- Indexes for table `bills`
+--
+ALTER TABLE `bills`
+  ADD PRIMARY KEY (`bill_ID`),
+  ADD KEY `FK_bills_company_ID` (`company_ID`),
+  ADD KEY `FK_bills_homeowner_ID` (`homeowner_ID`);
 
 --
 -- Indexes for table `bookings`
@@ -522,6 +572,14 @@ ALTER TABLE `services`
   ADD UNIQUE KEY `service_name` (`service_name`);
 
 --
+-- Indexes for table `water_tracking`
+--
+ALTER TABLE `water_tracking`
+  ADD PRIMARY KEY (`tracking_ID`),
+  ADD KEY `FK_watertracking_company_ID` (`company_ID`),
+  ADD KEY `FK_watertracking_homeowner_ID` (`homeowner_ID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -532,10 +590,16 @@ ALTER TABLE `admin`
   MODIFY `admin_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `bills`
+--
+ALTER TABLE `bills`
+  MODIFY `bill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `cases`
@@ -547,19 +611,19 @@ ALTER TABLE `cases`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `company_services`
 --
 ALTER TABLE `company_services`
-  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `discounts`
@@ -601,11 +665,24 @@ ALTER TABLE `maintenance_staff`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+
+--
+-- AUTO_INCREMENT for table `water_tracking`
+--
+ALTER TABLE `water_tracking`
+  MODIFY `tracking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `bills`
+--
+ALTER TABLE `bills`
+  ADD CONSTRAINT `FK_bills_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_bills_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `bookings`
@@ -641,6 +718,13 @@ ALTER TABLE `company_services`
 ALTER TABLE `homeowner_services`
   ADD CONSTRAINT `FK_homeowner_services_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_homeowner_services_service_ID` FOREIGN KEY (`service_ID`) REFERENCES `services` (`service_ID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `water_tracking`
+--
+ALTER TABLE `water_tracking`
+  ADD CONSTRAINT `FK_watertracking_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_watertracking_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
