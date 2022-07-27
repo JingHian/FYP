@@ -217,6 +217,36 @@ class LogIn extends SignUp{
     $this->password = $password;
   }
 
+  function checkVerified()
+  {
+    $sql = "SELECT verified,password FROM Homeowners WHERE username = '$this->username'
+      UNION SELECT verified,password FROM Company WHERE username = '$this->username'
+      UNION SELECT verified,password FROM Admin WHERE username = '$this->username'";
+    $result = $this->conn->query($sql);
+
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+    if(mysqli_num_rows($result)==1)
+    {
+      $hashed_password = $row['password'];
+      if(password_verify($this->password, $hashed_password))
+      { //if password is correct
+        if ($row['verified'] == 0 ){
+          return "pending";
+        }
+        else if ($row['verified'] == 1 ){
+          return "verified";
+        }
+        else if ($row['verified'] == 2 ){
+          return "rejected";
+      }
+    } else{
+      return "wrongpw";
+    }
+    }
+
+  }
+
   function selectFromTable()
   {
     $sql = "SELECT homeowner_ID as ID,password,name,email,phone,address,postal_code,home_type,user_type FROM Homeowners WHERE username = '$this->username'
@@ -241,6 +271,7 @@ class LogIn extends SignUp{
             $_SESSION["postal_code"] = $row['postal_code'];
             $_SESSION["home_type"] = $row['home_type'];
             $_SESSION["user_type"] = $row['user_type'];
+            $_SESSION["verified"] = $row['verified'];
             header("location: welcome.php");
       }
       else{

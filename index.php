@@ -11,6 +11,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 $logInFailError = "";
 $whiteSpaceError = "";
 $username = "";
+$verificationError = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
   $validate = new Validation();
@@ -21,11 +22,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   {
     $username = $validate->trimAndStrip($_POST["username"]);
     $password =$validate->trimAndStrip($_POST["password"]);
+
     $login = new LogIn($username,$password);
-    $checkLogin = $login->selectFromTable();
-    if ($checkLogin == false)
+
+    $checkVerified = $login->checkVerified();
+    if ($checkVerified == 'verified')
     {
-      $logInFailError = "Invalid username or password!";
+      $checkLogin = $login->selectFromTable();
+      if ($checkLogin == false)
+        {
+          $logInFailError = "Invalid username or password!";
+        }
+    }
+    else if ($checkVerified =='pending')
+    {
+      $verificationError = "Your account has not been verified yet, please check back again soon.";
+    }
+    else if ($checkVerified =='rejected')
+    {
+      $verificationError = "Your account creation request has been rejected, please apply again.";
+    }
+    else if ($checkVerified =='wrongpw')
+    {
+      $verificationError = "You have entered an invalid password, please try again.";
     }
   }
   else {
@@ -89,7 +108,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     .logo {
         width: 100%;
-        margin: 30px 0 60px 0;
     }
   </style>
     <!-- <video autoplay muted loop id="myVideo">
@@ -119,6 +137,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           <input type="submit" class="btn  btn-primary" value="Login">
       </div>
       <p>Not registered? <a href="signupHome.php">Sign up now.</a></p>
+      <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $verificationError;?></div>
   </form>
 </div>
 </div>

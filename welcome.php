@@ -4,15 +4,20 @@ session_start();
 // Check if the user is logged in, if not then redirect him to login page
 
 include_once "logInCheck.php";
+include_once "conn.php";
 // echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
+
+$companyName = $_SESSION["name"];
+$companyId = $_SESSION["ID"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <?php include_once('cssLinks.php');?>
     <title>Welcome</title>
+    <?php include_once('cssLinks.php');?>
+
 </head>
 <body>
     <?php include_once('navbar.php');?>

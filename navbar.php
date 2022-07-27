@@ -10,7 +10,7 @@
           <?php
             if($_SESSION["user_type"] =="admin"){
               echo '<a class="nav-link " href="#" >View Profiles</a>';
-              echo '<a class="nav-link " href="#" >Verify Companies</a>';
+              echo '<a class="nav-link " href="verifyCompanies.php" >Verify Companies</a>';
               echo '<a class="nav-link " href="#" >Enquiries</a>';
               echo '<a class="nav-link " href="#" >Service Categories</a>';
             }

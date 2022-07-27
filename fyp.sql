@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2022 at 03:10 PM
+-- Generation Time: Jul 27, 2022 at 11:15 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -36,15 +36,16 @@ CREATE TABLE `admin` (
   `name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `phone` int(11) NOT NULL,
-  `user_type` varchar(20) NOT NULL
+  `user_type` varchar(20) NOT NULL,
+  `verified` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone`, `user_type`) VALUES
-(2, 'admin1', '$2y$10$PzVZrvMbbN8/ANiT2.9OBu2j1/exOdblgYA.l8UF/NHAC2Q7Y/5Aq', 'Test', 'test@mail.com', 98765432, 'admin');
+INSERT INTO `admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone`, `user_type`, `verified`) VALUES
+(2, 'admin1', '$2y$10$PzVZrvMbbN8/ANiT2.9OBu2j1/exOdblgYA.l8UF/NHAC2Q7Y/5Aq', 'Test', 'test@mail.com', 98765432, 'admin', 1);
 
 -- --------------------------------------------------------
 
@@ -183,8 +184,8 @@ CREATE TABLE `company` (
 --
 
 INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `description`, `user_type`, `suspended`, `verified`) VALUES
-(1, 'company1', '$2y$10$0AJV74vgbUUuNMg6kaUSh.dINaglwMnDBc8KtrbC.8ch5TAHTFlD.', 'Company One', 'test@mail.com', 98765432, '123 Test A42111', 123521, 'Testing', 'company', 0, 0),
-(2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'Hello we are company 2', 'company', 0, 0),
+(1, 'company1', '$2y$10$0AJV74vgbUUuNMg6kaUSh.dINaglwMnDBc8KtrbC.8ch5TAHTFlD.', 'Company One', 'test@mail.com', 98765432, '123 Test A42111', 123521, 'Testing', 'company', 0, 1),
+(2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'Hello we are company 2', 'company', 0, 1),
 (3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'Hello we are company three', 'company', 0, 0),
 (4, 'company12', '$2y$10$ASJ5hTD3X9gbM4MSBnAGLuh8IallE5CFYJLqV8G6PM6tyZT0lizOC', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '', 'company', 0, 0),
 (14, 'company11234', '$2y$10$lVPrR/4MzTK9bGIJgxTO1OQjDi7tUtzcJ9/1.zv76HrviujI3TxrW', 'Test312321', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'No description has been set by the company yet', 'company', 0, 0);
@@ -296,21 +297,22 @@ CREATE TABLE `homeowners` (
   `postal_code` int(11) NOT NULL,
   `home_type` varchar(30) NOT NULL,
   `user_type` varchar(20) NOT NULL,
-  `suspended` tinyint(1) NOT NULL DEFAULT 0
+  `suspended` tinyint(1) NOT NULL DEFAULT 0,
+  `verified` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `homeowners`
 --
 
-INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `home_type`, `user_type`, `suspended`) VALUES
-(2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'exec', 'homeowner', 0),
-(3, 'homeowner5', '$2y$10$BXkqQo2q2zqQPH2HE9ju8OmGO4njqP/WmjEF1y5oMr7bV.yQiZgJe', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0),
-(4, 'homeowner1111', '$2y$10$v4wKpvpubMGqaJKIuJpMQOmoe8B8D8teLdXM1UXcxsBzqIlMAj9x2', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '4room', 'homeowner', 0),
-(5, 'homeowner1', '$2y$10$A70oK8EuIeeGvOXv7vNxBOT9HiCDp5c8IcPNIGSUZoxWmHf8zc1ri', 'Mark Lee', 'Marklee@mail.com', 98765432, '421 Test Avenue 122 #64-21213', 1239422, 'exec', 'homeowner', 0),
-(6, 'homeowner3', '$2y$10$pggC5TgFDNr4Wjf4vRpB2u5ZXP19CpJc0ALhc7YgOAqfbSnnyONGa', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '2room', 'homeowner', 0),
-(7, 'homeowner111', '$2y$10$RvgLuyLM.eY5M2wIXbXRUeOKn/CSscJ8Zat4CS8n/0NyGNUf8opCO', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0),
-(8, 'homeowner14521', '$2y$10$9CLN7Drryc2vHZeOS8oGXOnGkPnBUO/SPu1/xZYoDAqng44KwPDwm', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0);
+INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `home_type`, `user_type`, `suspended`, `verified`) VALUES
+(2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'exec', 'homeowner', 0, 1),
+(3, 'homeowner5', '$2y$10$BXkqQo2q2zqQPH2HE9ju8OmGO4njqP/WmjEF1y5oMr7bV.yQiZgJe', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0, 1),
+(4, 'homeowner1111', '$2y$10$v4wKpvpubMGqaJKIuJpMQOmoe8B8D8teLdXM1UXcxsBzqIlMAj9x2', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '4room', 'homeowner', 0, 1),
+(5, 'homeowner1', '$2y$10$A70oK8EuIeeGvOXv7vNxBOT9HiCDp5c8IcPNIGSUZoxWmHf8zc1ri', 'Mark Lee', 'Marklee@mail.com', 98765432, '421 Test Avenue 122 #64-21213', 1239422, 'exec', 'homeowner', 0, 1),
+(6, 'homeowner3', '$2y$10$pggC5TgFDNr4Wjf4vRpB2u5ZXP19CpJc0ALhc7YgOAqfbSnnyONGa', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '2room', 'homeowner', 0, 1),
+(7, 'homeowner111', '$2y$10$RvgLuyLM.eY5M2wIXbXRUeOKn/CSscJ8Zat4CS8n/0NyGNUf8opCO', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0, 1),
+(8, 'homeowner14521', '$2y$10$9CLN7Drryc2vHZeOS8oGXOnGkPnBUO/SPu1/xZYoDAqng44KwPDwm', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0, 1);
 
 -- --------------------------------------------------------
 
