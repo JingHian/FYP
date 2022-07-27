@@ -46,11 +46,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   <style>
     .main-wrapper{
       background-color: white;
-      width: 35%;
-      padding:80px 0  80px 0;
-      margin-top: 200px;
-      border-radius: 15px;
+      width: 22%;
+
+      padding:0 0  80px 0;
       box-shadow: 0px 0px 11px -3px rgba(0,0,0,0.75);
+    }
+
+    .main-container{
+      height:100%;
     }
 
     .form-horizontal-3{
@@ -84,12 +87,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       top: 0;
       left: 0;
     }
+    .logo {
+        width: 100%;
+        margin: 30px 0 60px 0;
+    }
   </style>
     <!-- <video autoplay muted loop id="myVideo">
   <source src="img/1.mp4" type="video/mp4">
 </video> -->
-<div class="container main-wrapper">
+<div class="container main-wrapper min-vh-100 float-start">
+  <div class="main-container">
   <div class="container">
+    <img class ="logo" src ="img/undraw_fishing_hoxa.png" alt="fishing">
   <h1 class ="display-5" style="text-align: center;">Water Supply Marketplace</h1>
   <p class ="display-6 fs-2 text-muted" style="text-align: center;">Log in</p>
   </div>
@@ -111,6 +120,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       </div>
       <p>Not registered? <a href="signupHome.php">Sign up now.</a></p>
   </form>
+</div>
 </div>
 </div>
 <?php include_once('jsLinks.php');?>

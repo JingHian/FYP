@@ -1,6 +1,11 @@
 body{
   font-family: 'Karla', sans-serif !important;
   background-color:#F5F5F5 !important;
+  font-size: 18px;
+}
+
+table.dataTable.no-footer {
+    border-bottom: none !important;
 }
 
 pre{
@@ -9,8 +14,20 @@ pre{
   font-size: 16px !important;
 }
 
+.form-control {
+  font-size: 18px;
+}
+
 .navbar{
   padding:0px;
+}
+
+/* font size for datatables */
+table.dataTable th {
+  font-size: 18px;
+}
+table.dataTable td {
+  font-size: 18px;
 }
 
 .nav-link{

@@ -158,7 +158,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
   </form>
   <?php include_once('jsLinks.php');?>
-  <script>
+  <!-- <script>
   $( "#sign-up" ).click(function() {
 
   if($('#services-checkbox :checkbox:checked').length > 0 == false){
@@ -169,6 +169,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $('#check-error').text('Please check at least one service!');
   }
   });
-  </script>
+  </script> -->
 </body>
 </html>

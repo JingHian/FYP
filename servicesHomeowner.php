@@ -40,12 +40,12 @@ include_once "logInCheck.php";
           </a>
         <div class="col-3"></div>
         <div class="col-3"></div>
-        <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-start-0 border-top-0 border-bottom-0 border-dark border-3 pt-3  height-200">
+          <a class ="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-2 border border-start-0 border-top-0 border-bottom-0 border-dark border-3 pt-3   height-200" href="viewBills.php">
           <div class =" text-center">
             <span class="material-symbols-outlined   icon-size">request_quote</span>
             <p class="usage-font"> Bills/History </p>
           </div>
-        </button>
+          </a>
         <button class="btn no-rounded-border d-flex align-items-center justify-content-center col-2 border border-top-0  border-start-0 border-bottom-0 border-end-0 border-dark border-3 pt-3  height-200">
           <div class =" text-center">
             <span class="material-symbols-outlined  icon-size">grade</span>

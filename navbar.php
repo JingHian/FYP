@@ -27,7 +27,7 @@
               echo '<a class="nav-link " href="servicesHomeowner.php" >My Services</a>';
               echo '<a class="nav-link " href="viewBookingsHomeowner.php" >Bookings</a>';
               echo '<a class="nav-link " href="viewEnquiries.php" >Enquiries</a>';
-              echo '<a class="nav-link " href="#" >Add Water Usage</a>';
+              echo '<a class="nav-link " href="addWaterUsage.php" >Add Water Usage</a>';
             }
           ?>
         </div>
