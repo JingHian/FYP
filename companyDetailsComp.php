@@ -97,7 +97,6 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Company Details</title>
 </head>
 <body>
@@ -166,7 +165,7 @@
 
           <h2 class ="fw-bold mb-3">Contact Us</h2>
           <pre>Email: <?php echo $_SESSION['email'];?>     Phone Number: <?php echo $_SESSION['phone'] ;?></pre>
-            <a class='btn btn-small btn-primary text-white me-4' href="userInfo.php" value='Back'>Back</a>
+            <a class='btn  btn-primary text-white me-4' href="userInfo.php" value='Back'>Back</a>
 
         </div>
     </div>

@@ -64,7 +64,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
   </form>
   <div class="form-group mt-3 text-center form-horizontal">
-      <input type="button" onClick="history.go(-1);" class="btn btn-primary" value="Back">
+      <input type="button" onClick="history.go(-1);" class="btn btn-lg btn-primary" value="Back">
   </div>
 </div>
 

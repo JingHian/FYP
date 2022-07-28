@@ -109,7 +109,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
       </div>
     </div>
     <div class="form-group mt-3 text-center">
-        <input type="submit" class="btn btn-primary" value="Submit">
+        <input type="submit" class="btn btn-lg btn-primary" value="Submit">
     </div>
     <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $booking_success;?></div>
     <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $booking_failed;?></div>

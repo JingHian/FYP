@@ -5,7 +5,9 @@ session_start();
 
 include_once "logInCheck.php";
 include_once "conn.php";
-include_once('navbar.php')
+include_once ("classes.php");
+include_once('navbar.php');
+$verify = new Admin();
 ?>
 
 <!DOCTYPE html>
@@ -16,44 +18,26 @@ include_once('navbar.php')
     <?php include_once('cssLinks.php');?>
 </head>
 <body>
-  <?php include_once('jsLinks.php');?>
+  <div class="container" >
+      <h1 class ="display-5 text-center" style="margin-top:50px;">Verify Companies</h1>
+      <div class="row justify-content-center">
+          <div class="col-6 text-center">
+              <p class ="display-6 fs-5">Check details and approve or reject requests.</p>
+          </div>
+      </div>
+  </div>
+
+  <div class="container mt-3">
+  <div class="d-flex justify-content-around bg-secondary mb-3">
+    <input class="form-control rounded-0 search-for" type="text" placeholder="Search..">
+  </div>
+</div>
+<div class="container justify-content-center text-center">
   <?php
-    try {
-        $query = "select company_ID, name, email, phone, postal_code from company where verified = 0";
-    
-        $result = mysqli_query($conn, $query);
-
-        if (mysqli_num_rows($result) < 1) {
-            echo "<br><br>No Companies is currently waiting for approval.<br><br>";
-        } else {
-
-            echo "<table border = '1px solid black' style='width:70%'>";
-            echo "<th>Company ID</th>" . "<th>Company Name</th>" . "<th>Email</th>" . "<th>Phone</th>" . "<th>Postal Code</th>" . "<th>Status</th>" . "<th>Action</th>";
-            while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
-
-                echo "<tr><td>" . $Row['company_ID']?? "" . "</td>";
-                echo "<td>" . $Row['name'] . "</td>";
-                echo "<td>" . $Row['email'] . "</td>";
-                echo "<td>" . $Row['phone'] . "</td>";
-                echo "<td>" . $Row['postal_code'] ."</td>";
-                echo "<td>" . "Awaiting" ."</td>";
-                //echo "<td>" . "<a href = 'companyWaitingToBeVerified.php?id'>View</a>" . "</td>";
-                //echo "<td>" . $Row['extendedcostper. "</td></tr>";
-                ?> 
-                        
-                <td>
-                    <a href="companyWaitingToBeVerified.php?id=<?php echo $Row['company_ID'];?>">View</a>
-                </td>
-                </tr>
-
-                <?php
-            }
-            echo "</table>";
-        }
-    } catch (Exception $e){
-        echo "<br><br>Companies is found<br><br>";
-    }
+    $verify->verifyCompanies();
   ?>
+</div>
 
+<?php include_once('jsLinks.php');?>
 </body>
 </html>

@@ -83,8 +83,8 @@ else {
                 <div class="form-group mt-3 text-center">
                     <input type ="hidden" name="edit_values" value = "true" />
                     <input type ="hidden" name="staff_ID" value =" <?php echo $_SESSION['staff_ID']?> "/>
-                    <input type="submit" class="btn btn-primary" name="submit" value="Save Changes">
-                    <a class="btn btn-primary" href="viewStaff.php">Back to Staff List</a>
+                    <input type="submit" class="btn btn-lg btn-primary" name="submit" value="Save Changes">
+                    <a class="btn btn-lg btn-primary" href="viewStaff.php">Back to Staff List</a>
                 </div>
                   <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $edit_success;?></div>
             </form>

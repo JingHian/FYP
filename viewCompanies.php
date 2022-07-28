@@ -42,23 +42,13 @@
 <h1 class ="display-5 text-center" style="margin-top:50px;">Companies</h1>
 <div class="row justify-content-center">
   <div class="col-6 text-center">
-<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">Here you can view companies currently registered on our platform.</p>
+<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View companies currently registered on our platform.</p>
 </div>
 </div>
 </div>
 		<div class="container mt-3">
 			<div class="d-flex justify-content-around bg-secondary mb-3">
-				<input class="form-control search-for" type="text" placeholder="Search..">
-				<div class="dropdown d-flex justify-content-end">
-					<button class="btn btn-secondary dropdown-toggle align-text-top" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-						Category
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">Category1</a></li>
-						<li><a class="dropdown-item" href="#">Category2</a></li>
-						<li><a class="dropdown-item" href="#">Category3</a></li>
-					</ul>
-				</div>
+<input class="form-control rounded-0 search-for" type="text" placeholder="Search..">
 			</div>
 		</div>
     <div class="container justify-content-center text-center">

@@ -1,22 +1,23 @@
 <?php
 session_start();
- include_once('conn.php');
- include_once('navbar.php');
- include_once('cssLinks.php');
- include_once "logInCheck.php";
+include_once ("conn.php");
+include_once ("classes.php");
+include_once('navbar.php');
+include_once('cssLinks.php');
+include_once "logInCheck.php";
 
-  if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $_SESSION['staff_ID'] = $_POST['staff_ID'];
-    $_SESSION['staff_name'] = $_POST['staff_name'];
-    $_SESSION['staff_email'] = $_POST['staff_email'];
-    $_SESSION['staff_phone'] = $_POST['staff_phone'];
-    $_SESSION['staff_role'] = $_POST['staff_role'];
-    $staff_ID = $_SESSION['staff_ID'];
-    $staff_name = $_SESSION['staff_name'];
-    $staff_email = $_SESSION['staff_email'];
-    $staff_phone = $_SESSION['staff_phone'];
-    $staff_role = $_SESSION['staff_role'];
-  }
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+  $_SESSION['staff_ID'] = $_POST['staff_ID'];
+  $_SESSION['staff_name'] = $_POST['staff_name'];
+  $_SESSION['staff_email'] = $_POST['staff_email'];
+  $_SESSION['staff_phone'] = $_POST['staff_phone'];
+  $_SESSION['staff_role'] = $_POST['staff_role'];
+  $staff_ID = $_SESSION['staff_ID'];
+  $staff_name = $_SESSION['staff_name'];
+  $staff_email = $_SESSION['staff_email'];
+  $staff_phone = $_SESSION['staff_phone'];
+  $staff_role = $_SESSION['staff_role'];
+}
 ?>
 
 
@@ -77,8 +78,8 @@ session_start();
                 <div class="form-group mt-3 text-center">
                   <input type ="hidden" name="edit_values" value = "false" />
                   <input type ="hidden" name="staff_ID" value = "<?php echo $_SESSION['staff_ID']?>" />
-                  <input type="submit" class="btn btn-primary" name="submit" value="Edit">
-                  <a href="deleteStaff.php" class="btn btn-primary" name="remove" value="Remove">Delete</a>
+                  <input type="submit" class="btn btn-lg btn-primary" name="submit" value="Edit">
+                  <a href="deleteStaff.php" class="btn btn-lg btn-primary" name="remove" value="Remove">Delete</a>
                 </div>
             </form>
         </div>

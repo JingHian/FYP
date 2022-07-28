@@ -42,12 +42,7 @@
 </div>
 		<div class="container mt-3">
 			<div class="d-flex justify-content-around bg-secondary mb-3">
-				<input class="form-control search-for" type="text" placeholder="Search..">
-				<div class="dropdown d-flex justify-content-end">
-					<button class="btn btn-secondary dropdown-toggle align-text-top" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-						Category
-					</button>
-				</div>
+				<input class="form-control rounded-0 search-for" type="text" placeholder="Search..">
 			</div>
 		</div>
     <div class="container justify-content-center text-center">

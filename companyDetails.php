@@ -82,7 +82,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
     <title>Company Details</title>
 </head>
 <body>
@@ -153,8 +153,8 @@
           <h2 class ="fw-bold mb-3">Contact Us</h2>
           <pre>Email: <?php echo $_SESSION['company_email'];?>     Phone Number: <?php echo $_SESSION['company_phone'] ;?></pre>
             <form action="#" method="post">
-            <button type='submit' class='btn btn-small btn-primary text-white me-4' name="goTo" value='Hire'>Hire</button>
-            <button type='submit' class='btn btn-small btn-info text-white' name="goTo" value='Send Enquiry'>Send Enquiry</button>
+            <button type='submit' class='btn  btn-primary text-white me-4' name="goTo" value='Hire'>Hire</button>
+            <button type='submit' class='btn  btn-info text-white' name="goTo" value='Send Enquiry'>Send Enquiry</button>
           </form>
         </div>
     </div>

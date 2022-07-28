@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
       </div>
           <div class="form-group mb-2 mt-3 text-center">
-              <a class="btn btn-primary" href="viewCases.php">Return to Case List</a>
+              <a class="btn btn-lg btn-primary" href="viewCases.php">Return to Case List</a>
           </div>
     </div>
 

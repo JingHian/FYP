@@ -125,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               <label for="address">Postal Code</label>
             </div>
             <div class="form-group mb-2 mt-3 ninety-five">
-              <button type="button" class="btn btn-primary" data-bs-target="#carousel-one" data-bs-slide-to="1" >Next</button>
+              <button type="button" class="btn btn-lg btn-primary" data-bs-target="#carousel-one" data-bs-slide-to="1" >Next</button>
             </div>
             <p class="ninety-five">Have an account? <a href="index.php">Log in now</a>.
             <br>Not a company? <a href="signupHome.php">Homeowner sign up here</a>.

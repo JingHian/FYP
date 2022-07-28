@@ -28,7 +28,7 @@ $company = new Company();
     </div>
       </div>
           <div class="form-group mb-2 mt-3 text-center">
-              <a class="btn btn-primary" href="viewEquipment.php">Return to Equipment List</a>
+              <a class="btn btn-lg btn-primary" href="viewEquipment.php">Return to Equipment List</a>
           </div>
     </div>
 

@@ -88,8 +88,8 @@ session_start();
                 <div class="form-group mt-3 text-center">
                   <input type ="hidden" name="edit_values" value = "false" />
                   <input type ="hidden" name="equipment_ID" value = "<?php echo $_SESSION['equipment_ID']?>" />
-                  <input type="submit" class="btn btn-primary" name="submit" value="Edit">
-                  <a href="deleteEquipment.php" class="btn btn-primary" name="remove" value="Remove">Delete</a>
+                  <input type="submit" class="btn btn-lg btn-primary" name="submit" value="Edit">
+                  <a href="deleteEquipment.php" class="btn btn-lg btn-primary" name="remove" value="Remove">Delete</a>
                 </div>
             </form>
         </div>
