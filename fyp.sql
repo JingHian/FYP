@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2022 at 11:15 PM
+-- Generation Time: Jul 29, 2022 at 12:16 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -37,15 +37,16 @@ CREATE TABLE `admin` (
   `email` varchar(50) NOT NULL,
   `phone` int(11) NOT NULL,
   `user_type` varchar(20) NOT NULL,
-  `verified` int(11) NOT NULL DEFAULT 1
+  `suspended` tinyint(1) NOT NULL DEFAULT 0,
+  `verified` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone`, `user_type`, `verified`) VALUES
-(2, 'admin1', '$2y$10$PzVZrvMbbN8/ANiT2.9OBu2j1/exOdblgYA.l8UF/NHAC2Q7Y/5Aq', 'Test', 'test@mail.com', 98765432, 'admin', 1);
+INSERT INTO `admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone`, `user_type`, `suspended`, `verified`) VALUES
+(2, 'admin1', '$2y$10$PzVZrvMbbN8/ANiT2.9OBu2j1/exOdblgYA.l8UF/NHAC2Q7Y/5Aq', 'Test', 'test@mail.com', 98765432, 'admin', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -155,7 +156,6 @@ CREATE TABLE `clients` (
 
 INSERT INTO `clients` (`client_ID`, `company_ID`, `homeowner_ID`, `discount_ID`, `start_date`) VALUES
 (1, 1, 5, 1, '2022-07-23'),
-(3, 3, 5, 6, '2022-07-28'),
 (8, 4, 5, NULL, '2022-06-29');
 
 -- --------------------------------------------------------
@@ -184,11 +184,11 @@ CREATE TABLE `company` (
 --
 
 INSERT INTO `company` (`company_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `description`, `user_type`, `suspended`, `verified`) VALUES
-(1, 'company1', '$2y$10$0AJV74vgbUUuNMg6kaUSh.dINaglwMnDBc8KtrbC.8ch5TAHTFlD.', 'Company One', 'test@mail.com', 98765432, '123 Test A42111', 123521, 'Testing', 'company', 0, 1),
+(1, 'company1', '$2y$10$0AJV74vgbUUuNMg6kaUSh.dINaglwMnDBc8KtrbC.8ch5TAHTFlD.', 'Company One', 'test@mail.com', 98765432, '123 Test A42111', 123520, 'Testing', 'company', 0, 1),
 (2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'Hello we are company 2', 'company', 0, 1),
 (3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'Hello we are company three', 'company', 0, 0),
-(4, 'company12', '$2y$10$ASJ5hTD3X9gbM4MSBnAGLuh8IallE5CFYJLqV8G6PM6tyZT0lizOC', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '', 'company', 0, 0),
-(14, 'company11234', '$2y$10$lVPrR/4MzTK9bGIJgxTO1OQjDi7tUtzcJ9/1.zv76HrviujI3TxrW', 'Test312321', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'No description has been set by the company yet', 'company', 0, 0);
+(4, 'company4', '$2y$10$ASJ5hTD3X9gbM4MSBnAGLuh8IallE5CFYJLqV8G6PM6tyZT0lizOC', 'Company Four', 'test@mail.com', 98765432, '93 Lorum Avenue 1 #52', 52821, 'No description has been set by the company yet', 'company', 0, 2),
+(15, 'company5', '$2y$10$.YFGFGMcLbK1Sq66S5G.6e/YpicGLLJDyQ7BqsAxkCwbcecKlS5TO', 'Company Five', 'company5@mail.com', 89876544, '358 Random Lane 7 #2-223', 798628, 'No description has been set by the company yet', 'company', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -220,10 +220,9 @@ INSERT INTO `company_services` (`cs_ID`, `service_ID`, `company_ID`, `price`) VA
 (10, 77, 3, NULL),
 (11, 78, 3, NULL),
 (12, 1, 4, NULL),
-(41, 1, 14, NULL),
-(42, 7, 14, NULL),
-(43, 52, 14, NULL),
-(44, 73, 14, NULL);
+(45, 1, 15, NULL),
+(46, 2, 15, NULL),
+(47, 78, 15, NULL);
 
 -- --------------------------------------------------------
 
@@ -247,9 +246,9 @@ CREATE TABLE `discounts` (
 --
 
 INSERT INTO `discounts` (`discount_ID`, `company_ID`, `homeowner_ID`, `discount_name`, `discount_start_date`, `discount_end_date`, `discount_description`, `discount_modifier`) VALUES
-(1, 1, NULL, 'Sign up bonus', '2022-07-14', '2022-07-30', 'Sign up and get 10% off', 10),
+(1, 1, NULL, 'Sign up bonus1', '2022-07-14', '2022-07-30', 'Sign up and get 10% off', 10),
 (5, 2, NULL, 'Sign up bonus', '2022-07-15', '2022-08-01', 'Sign up now and get 15% off', 15),
-(6, 3, NULL, '30% off your Total bill', '2022-07-01', '2022-09-28', 'Get 30% off your Total bill when you sign up now!', 30);
+(12, 15, NULL, 'Sign up bonus', '2022-07-01', '2022-08-31', 'Sign up by August and get 25% off your Bill for life!', 25);
 
 -- --------------------------------------------------------
 
@@ -298,7 +297,7 @@ CREATE TABLE `homeowners` (
   `home_type` varchar(30) NOT NULL,
   `user_type` varchar(20) NOT NULL,
   `suspended` tinyint(1) NOT NULL DEFAULT 0,
-  `verified` int(11) NOT NULL
+  `verified` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -306,13 +305,11 @@ CREATE TABLE `homeowners` (
 --
 
 INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `home_type`, `user_type`, `suspended`, `verified`) VALUES
-(2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'exec', 'homeowner', 0, 1),
-(3, 'homeowner5', '$2y$10$BXkqQo2q2zqQPH2HE9ju8OmGO4njqP/WmjEF1y5oMr7bV.yQiZgJe', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0, 1),
-(4, 'homeowner1111', '$2y$10$v4wKpvpubMGqaJKIuJpMQOmoe8B8D8teLdXM1UXcxsBzqIlMAj9x2', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '4room', 'homeowner', 0, 1),
-(5, 'homeowner1', '$2y$10$A70oK8EuIeeGvOXv7vNxBOT9HiCDp5c8IcPNIGSUZoxWmHf8zc1ri', 'Mark Lee', 'Marklee@mail.com', 98765432, '421 Test Avenue 122 #64-21213', 1239422, 'exec', 'homeowner', 0, 1),
-(6, 'homeowner3', '$2y$10$pggC5TgFDNr4Wjf4vRpB2u5ZXP19CpJc0ALhc7YgOAqfbSnnyONGa', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '2room', 'homeowner', 0, 1),
-(7, 'homeowner111', '$2y$10$RvgLuyLM.eY5M2wIXbXRUeOKn/CSscJ8Zat4CS8n/0NyGNUf8opCO', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0, 1),
-(8, 'homeowner14521', '$2y$10$9CLN7Drryc2vHZeOS8oGXOnGkPnBUO/SPu1/xZYoDAqng44KwPDwm', 'Ang Jing Hian', 'Angjinghian@gmail.com', 97307997, 'Block 511 Ang Mo Kio Avenue 8 #11-2770', 560511, '2room', 'homeowner', 0, 1);
+(2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Test', 'test@mail.com', 92658976, '123 Test Avenue 12 #4-2192', 123942, 'exec', 'homeowner', 1, 1),
+(3, 'homeowner5', '$2y$10$BXkqQo2q2zqQPH2HE9ju8OmGO4njqP/WmjEF1y5oMr7bV.yQiZgJe', 'Ang Jing Hian', 'jh@mail.com', 98762826, 'Block 241 Ang Mo Kio Avenue 12 #2-2420', 560241, '2room', 'homeowner', 0, 1),
+(4, 'homeowner4', '$2y$10$v4wKpvpubMGqaJKIuJpMQOmoe8B8D8teLdXM1UXcxsBzqIlMAj9x2', 'Jamie Poh', 'four@mail.com', 86532469, '24 Poh Avenue 2 #02-451', 526975, '4room', 'homeowner', 0, 1),
+(5, 'homeowner1', '$2y$10$A70oK8EuIeeGvOXv7vNxBOT9HiCDp5c8IcPNIGSUZoxWmHf8zc1ri', 'Mark Lee', 'Marklee@mail.com', 98765432, '421 Lee Avenue 92 #6-2123', 123456, 'exec', 'homeowner', 0, 1),
+(6, 'homeowner3', '$2y$10$pggC5TgFDNr4Wjf4vRpB2u5ZXP19CpJc0ALhc7YgOAqfbSnnyONGa', 'Test', 'test@mail.com', 98764892, '123 Random Street 7 #16-24', 416123, '2room', 'homeowner', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -338,18 +335,7 @@ INSERT INTO `homeowner_services` (`hs_ID`, `service_ID`, `homeowner_ID`) VALUES
 (7, 1, 5),
 (8, 2, 5),
 (10, 1, 6),
-(11, 2, 6),
-(12, 1, 7),
-(14, 1, 7),
-(15, 1, 8),
-(16, 2, 8),
-(17, 7, 8),
-(18, 49, 8),
-(19, 52, 8),
-(20, 73, 8),
-(21, 77, 8),
-(22, 78, 8),
-(24, 99, 8);
+(11, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -398,7 +384,7 @@ CREATE TABLE `maintenance_staff` (
   `staff_name` varchar(60) NOT NULL,
   `email` varchar(30) NOT NULL,
   `phone` int(20) NOT NULL,
-  `status` varchar(30) DEFAULT NULL
+  `status` varchar(30) DEFAULT 'Not Assigned'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -406,15 +392,15 @@ CREATE TABLE `maintenance_staff` (
 --
 
 INSERT INTO `maintenance_staff` (`staff_ID`, `company_ID`, `staff_role`, `staff_name`, `email`, `phone`, `status`) VALUES
-(11, 1, 'Customer Service', 'John Doe', 'jd@mail.sg', 98762521, ''),
-(12, 1, 'Plumber', 'Jane Smith', 'js@mail.sg', 46109281, ''),
-(16, 1, 'Customer Service', 'Tan Ah Kow', 'TaK@mail.com', 95719243, ''),
-(21, 2, 'Customer Service', 'Jing Hian', 'jh@mail.com', 92837621, ''),
-(22, 2, 'Plumber', 'John Doe', 'test@mail.com', 12345678, ''),
-(23, 1, 'Customer Service', 'John Doe', 'test@mail.com', 12345678, ''),
-(24, 1, 'Plumber', 'Jane Smith', 'dsad@mail.com', 98765432, ''),
-(25, 1, 'Customer Service', 'John Doe', 'test@mail.com', 89735145, ''),
-(26, 1, 'Plumber', 'Tan Ah Kow', 'Angjinghian@gmail.com', 98785474, ''),
+(11, 1, 'Customer Service', 'John Doe', 'jd@mail.sg', 98762521, 'Not Assigned'),
+(12, 1, 'Plumber', 'Jane Smith', 'js@mail.sg', 46109281, 'Not Assigned'),
+(16, 1, 'Customer Service', 'Tan Ah Kow', 'TaK@mail.com', 95719243, 'Not Assigned'),
+(21, 2, 'Customer Service', 'Jing Hian', 'jh@mail.com', 92837621, 'Not Assigned'),
+(22, 2, 'Plumber', 'John Doe', 'test@mail.com', 12345678, 'Not Assigned'),
+(23, 1, 'Customer Service', 'John Doe', 'test@mail.com', 12345678, 'Not Assigned'),
+(24, 1, 'Plumber', 'Jane Smith', 'dsad@mail.com', 98765432, 'Not Assigned'),
+(25, 1, 'Customer Service', 'John Doe', 'test@mail.com', 89735145, 'Not Assigned'),
+(26, 1, 'Plumber', 'Tan Ah Kow', 'Angjinghian@gmail.com', 98785474, 'Not Assigned'),
 (27, 1, 'Plumber', 'John Doe', 'Angjinghian@gmail.com', 97846523, 'Not Assigned');
 
 -- --------------------------------------------------------
@@ -619,19 +605,19 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `company_services`
 --
 ALTER TABLE `company_services`
-  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `discounts`
 --
 ALTER TABLE `discounts`
-  MODIFY `discount_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `discount_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `enquiries`
@@ -667,7 +653,7 @@ ALTER TABLE `maintenance_staff`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `water_tracking`

@@ -26,13 +26,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $login = new LogIn($username,$password);
 
     $checkVerified = $login->checkVerified();
+    if ($checkVerified == 'suspended')
+    {
+      $verificationError = "Your account has been suspended.";
+    }
     if ($checkVerified == 'verified')
     {
       $checkLogin = $login->selectFromTable();
-      if ($checkLogin == false)
-        {
-          $logInFailError = "Invalid username or password!";
-        }
     }
     else if ($checkVerified =='pending')
     {
@@ -45,6 +45,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     else if ($checkVerified =='wrongpw')
     {
       $verificationError = "You have entered an invalid password, please try again.";
+    }
+    else if ($checkVerified =='wrongusername')
+    {
+      $verificationError = "You have entered an invalid username, please try again.";
     }
   }
   else {

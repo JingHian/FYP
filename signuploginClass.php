@@ -219,9 +219,9 @@ class LogIn extends SignUp{
 
   function checkVerified()
   {
-    $sql = "SELECT verified,password FROM Homeowners WHERE username = '$this->username'
-      UNION SELECT verified,password FROM Company WHERE username = '$this->username'
-      UNION SELECT verified,password FROM Admin WHERE username = '$this->username'";
+    $sql = "SELECT suspended,verified,password FROM Homeowners WHERE username = '$this->username'
+      UNION SELECT suspended,verified,password FROM Company WHERE username = '$this->username'
+      UNION SELECT suspended,verified,password FROM Admin WHERE username = '$this->username'";
     $result = $this->conn->query($sql);
 
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -231,6 +231,10 @@ class LogIn extends SignUp{
       $hashed_password = $row['password'];
       if(password_verify($this->password, $hashed_password))
       { //if password is correct
+        if ($row['suspended'] == 1 ){
+          return "suspended";
+        }
+        
         if ($row['verified'] == 0 ){
           return "pending";
         }
@@ -243,7 +247,9 @@ class LogIn extends SignUp{
     } else{
       return "wrongpw";
     }
-    }
+  } else {
+    return "wrongusername";
+  }
 
   }
 

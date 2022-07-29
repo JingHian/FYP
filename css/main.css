@@ -19,6 +19,16 @@ pre{
   border-color:DodgerBlue !important ;
 }
 
+.btn-success{
+  background-color:LightSeaGreen !important ;
+  border-color:LightSeaGreen !important ;
+}
+
+.btn-danger{
+  background-color:IndianRed !important ;
+  border-color:IndianRed !important ;
+}
+
 .form-control {
   font-size: 18px;
 }

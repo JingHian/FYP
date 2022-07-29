@@ -9,7 +9,7 @@
           <a class="nav-link "  href="welcome.php">Home</a>
           <?php
             if($_SESSION["user_type"] =="admin"){
-              echo '<a class="nav-link " href="#" >View Profiles</a>';
+              echo '<a class="nav-link " href="userProfiles.php" >View Profiles</a>';
               echo '<a class="nav-link " href="verifyCompanies.php" >Verify Companies</a>';
               echo '<a class="nav-link " href="#" >Enquiries</a>';
               echo '<a class="nav-link " href="#" >Service Categories</a>';
@@ -40,6 +40,8 @@
             }
               else if($_SESSION["user_type"] =="homeowner"){
               echo 'href="userInfoHome.php">';
+          } else {
+            echo '>';
           }
             ?>
             <?php echo htmlspecialchars($_SESSION["name"]).'('.htmlspecialchars($_SESSION["user_type"]).')'; ?></a>
