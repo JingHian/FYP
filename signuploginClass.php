@@ -28,8 +28,26 @@ class SignUp{
 
   function checkUniqueID() //check if username is unique
   {
-    $sql = "SELECT * FROM Homeowners WHERE username='$this->username' UNION
-            SELECT * FROM Company WHERE username='$this->username'";
+    $sql = "SELECT homeowner_ID FROM Homeowners WHERE username='$this->username' UNION
+            SELECT company_ID FROM Company WHERE username='$this->username'";
+
+    $result = $this->conn->query($sql);
+
+    $num = mysqli_num_rows($result);
+
+    if($num > 0)
+    {
+      return false;
+    }
+    else{
+      return true;
+    }
+
+  }
+
+  function checkUniqueName() //check if Company name is unique
+  {
+    $sql = "SELECT * FROM Company WHERE name='$this->name'";
 
     $result = $this->conn->query($sql);
 
@@ -81,7 +99,7 @@ class SignUp{
   {
     try
     {
-      $sql = "INSERT INTO Company (username, password, name, email, phone, address,postal_code,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code','$this->user_type')";
+      $sql = "INSERT INTO Company (username, password, name, email, phone, address,postal_code,description,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code','No description has been set by the company yet','$this->user_type')";
       $result = mysqli_query($this->conn, $sql);
     }
     catch (mysqli_sql_exception $e)
@@ -199,10 +217,46 @@ class LogIn extends SignUp{
     $this->password = $password;
   }
 
+  function checkVerified()
+  {
+    $sql = "SELECT suspended,verified,password FROM Homeowners WHERE username = '$this->username'
+      UNION SELECT suspended,verified,password FROM Company WHERE username = '$this->username'
+      UNION SELECT suspended,verified,password FROM Admin WHERE username = '$this->username'";
+    $result = $this->conn->query($sql);
+
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+    if(mysqli_num_rows($result)==1)
+    {
+      $hashed_password = $row['password'];
+      if(password_verify($this->password, $hashed_password))
+      { //if password is correct
+        if ($row['suspended'] == 1 ){
+          return "suspended";
+        }
+        
+        if ($row['verified'] == 0 ){
+          return "pending";
+        }
+        else if ($row['verified'] == 1 ){
+          return "verified";
+        }
+        else if ($row['verified'] == 2 ){
+          return "rejected";
+      }
+    } else{
+      return "wrongpw";
+    }
+  } else {
+    return "wrongusername";
+  }
+
+  }
+
   function selectFromTable()
   {
     $sql = "SELECT homeowner_ID as ID,password,name,email,phone,address,postal_code,home_type,user_type FROM Homeowners WHERE username = '$this->username'
-      UNION SELECT company_ID as ID,password,name,email,phone,address,postal_code,null,user_type FROM Company WHERE username = '$this->username'
+      UNION SELECT company_ID as ID,password,name,email,phone,address,postal_code,description,user_type FROM Company WHERE username = '$this->username'
       UNION SELECT admin_ID as ID,password,name,email,phone,null,null,null,user_type FROM Admin WHERE username = '$this->username'";
     $result = $this->conn->query($sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -215,6 +269,7 @@ class LogIn extends SignUp{
             // Store data in session variables
             $_SESSION["loggedin"] = true;
             $_SESSION["ID"] = $row['ID'];
+            $_SESSION["password"] = $row['password'];
             $_SESSION["name"] = $row['name'];
             $_SESSION["email"] = $row['email'];
             $_SESSION["phone"] = $row['phone'];
@@ -222,6 +277,7 @@ class LogIn extends SignUp{
             $_SESSION["postal_code"] = $row['postal_code'];
             $_SESSION["home_type"] = $row['home_type'];
             $_SESSION["user_type"] = $row['user_type'];
+            $_SESSION["verified"] = $row['verified'];
             header("location: welcome.php");
       }
       else{

@@ -1,309 +1,138 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <?php
-    session_start();
-    include_once ("conn.php");
-    include_once ('navbar.php');
-    include_once "logInCheck.php";
-    $name = $_SESSION["name"];
-    $usertype = $_SESSION["user_type"];
+session_start();
+include_once "logInCheck.php";
+include_once("signuploginClass.php");
+include_once("validation.php");
+include_once("classes.php");
 
-    if (isset($POST['compname']))
-    {
-        $name = $_POST['Companyname'];
 
-        $sql = "UPDATE ";
-    }
+// echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
+
+$name = $_SESSION["name"];
+$phone = $_SESSION["phone"];
+$email = $_SESSION["email"];
+$address = $_SESSION["address"];
+$postal_code = $_SESSION["postal_code"];
+$description = $_SESSION["home_type"];
+$editInfo_success = "";
+$wrong_password = "";
+$company = new Company();
+if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand']){
+  $validate = new Validation();
+  $n_password = $_POST['n_password'];
+
+  if (password_verify($_POST['o_password'],$_SESSION['password']) == false)
+  {
+    $wrong_password = "Old Password is incorrect!";
+  }
+  else if(password_verify($_POST['o_password'],$_SESSION['password']) && $n_password != "")
+  {
+    $hashed_password = password_hash($_POST['n_password'], PASSWORD_DEFAULT);
+    $company->updateInfoComp($_POST["name"],$_POST["phone"],$_POST["email"],$_POST["address"],$_POST["postal_code"],$_POST["description"],$hashed_password);
+
+    $editInfo_success = "Your details have been updated!";
+  }
+  else if (password_verify($_POST['o_password'],$_SESSION['password']) && $n_password == "")
+  {
+    $company->updateInfoComp($_POST["name"],$_POST["phone"],$_POST["email"],$_POST["address"],$_POST["postal_code"],$_POST["description"],"");
+    $editInfo_success = "Your details have been updated!";
+  }
+
+}
+
 ?>
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <?php include_once('cssLinks.php');?>
-    <title>Company Details</title>
-    </head>
-    <body>
-        <style>
-        .aboutUs, .serviceNPrice, .packages, .contactUs {
-            float: left;
-            margin-left:15px;
-            margin-right: 750px;
-        }
-
-        .hrtop {
-            border-top: 5px solid black;
-        }
-
-        .pageHeading{
-            background-color: #f0f0f0;
-            margin-left: 20px;
-        }
-
-        .review {
-            width: 700px;
-            height: 800px;
-            overflow: auto;
-            border: 5px solid black;
-            border-radius:20px;
-            position: absolute;
-            right: 10px;
-            shape-outside: content-box;
-            float: right;
-            padding: 30px;
-        }
-
-        .details {
-            margin-left: 40px;
-        }
-
-
-        .innerReviewTable, td {
-            border: 1px solid black;
-            margin-bottom: 20px;
-        }
-
-
-        h5 {
-            padding: 20px;
-        }
-
-        .buttons {
-            padding: 30px 60px;
-            margin-left: 0px;
-            margin-bottom: 10px;
-            border-radius: 20px;
-            position: absolute;
-            bottom: -200px;
-            left: 50%;
-        }
-
-        .hire {
-            padding: 30px 100px;
-            position: absolute;
-            bottom: 500%;
-            left: -1000%;
-        }
-
-        .enquiry {
-            padding: 30px 100px;
-            position: absolute;
-            bottom: 500%;
-            right: 600%;
-        }
-
-        @media screen and (max-width: 1600px) {
-
-            .hire {
-                padding: 30px 100px;
-                position: absolute;
-                bottom: -30%;
-                left: 120%;
-            }
-
-            .enquiry {
-                padding: 30px 100px;
-                position: absolute;
-                bottom: -300%;
-                left: 100%;
-            }
-        }
-
-
-        </style>
-        <div class="container">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <?php include_once('cssLinks.php');?>
+<title>Change Details</title>
+</head>
+<body>
+  <?php include_once('navbar.php');?>
+  <div class="container" >
+  <h1 class ="display-5 text-center" style="margin-top:50px;">Edit Company Info</h1>
+  <div class="row justify-content-center">
+    <div class="col-6 text-center">
+  <p class ="display-6 fs-5" name = "product" value ="avail">Change your Company Information here.</p>
+</div>
+  </div>
+</div>
+<div class="container justify-content-center"  style="text-align: center;">
+<div class="container">
+    <form class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+    <?php
+     $rand=rand();
+     $_SESSION['rand']=$rand;
+    ?>
+    <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
+    <div class="row">
+        <div class="col">
+          <div class="form-floating  mb-3 ">
+            <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $_SESSION['name']; ?>">
+            <label for="name">Name</label>
+          </div>
         </div>
 
-            <?php
-            if ($usertype == "company")
-            {
+        <div class="col">
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="phone" name="phone"placeholder="phone" value="<?php echo $_SESSION['phone']; ?>">
+          <label for="phone">Phone</label>
+        </div>
+      </div>
 
-            echo"<tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>";
-            $getdetails = "SELECT * FROM company WHERE NAME = '$name'";
-            try
-                {
-                    $Cdetails = mysqli_query($conn, $getdetails);
-                    if(mysqli_num_rows($Cdetails)> 0)
-                    {
-                        while(($row = mysqli_fetch_assoc($Cdetails)) !=FALSE)
-                        {
-                            echo "<div class=pageHeading>";
-                            echo "<td> <h1>" . $row['name'] . "</h1>"
+      </div>
+      <div class="col">
+        <div class="form-floating  mb-3 ">
+          <input type="email" class="form-control" id="email" name="email" placeholder="email" value="<?php echo $_SESSION['email']; ?>">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating  mb-3 ">
+          <input type="text" class="form-control" id="address" name="address" placeholder="address" value="<?php echo $_SESSION['address']; ?>">
+          <label for="address">Address</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="postal_code" name="postal_code"placeholder="postal_code" value="<?php echo $_SESSION['postal_code']; ?>" >
+          <label for="postal_code">Postal Code</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating mb-3">
+          <textarea style="height:128px;" class="form-control" name="description"><?php echo $_SESSION['home_type']; ?></textarea>
+          <label for="description">About Us</label>
+        </div>
+      </div>
 
-                                   . "<form action=\"userInfo.php\" method=\"post\">"
-                                   . "<br><br>Company name : <br><input type=\"text\" name = \"Companyname\" value= " . $row['name'] . ">"
-                                   . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
-                                   . "<input type =\"submit\" name=\"compname\" value = \"Edit\">"
-                                   . "</form>"
-                                   . "</td>";
-                            echo "<br>";
-                            echo "<td><h3>" . $row['address'] . " " . $row['postal_code'] . "</h3></td>";
-                            echo "<td><form action=\"userInfo.php\" method=\"post\">"
-                                   . "<br><br>Address : <br><input type=\"text\" name = \"Address\" value=>"
-                                   . "<input type =\"submit\" name=\"add\" value = \"Edit\">"
-                                   . "<br><br>Postal code : <br><input type=\"text\" name = \"postal\" value= " . $row['postal_code'] . ">"
-                                   . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
-                                   . "<input type =\"submit\" name=\"post\" value = \"Edit\">"
-                                   . "</form>"
-                                   .
-                                 "<br><br><br></td>";
-                            echo "</div>";
-                            echo "<hr class='hrtop'>";
+      <div class="row">
+          <div class="col">
+            <div class="form-floating  mb-3 ">
+              <input type="password" class="form-control" id="o_password" name="o_password" placeholder="o_password">
+              <label for="o_password">Old password</label>
+            </div>
+          </div>
 
+          <div class="col">
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="n_password" name="n_password" placeholder="n_password">
+            <label for="n_password">New password</label>
+          </div>
+        </div>
+      </div>
 
-                            echo "<div class=\"details\">";
+    <div class="form-group mb-2 mt-3 text-center">
+        <input type="submit" class="btn btn-lg btn-primary" value="Save Changes">
+        <a class="btn btn-lg btn-success" href="companyDetailsComp.php">View live page</a>
+    </div>
+      <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $editInfo_success;?></div>
+      <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $wrong_password;?></div>
+  </form>
+</div>
+<?php include_once('jsLinks.php');?>
 
-                                echo "<div class=\"aboutUs\">";
-                                echo "<h3>About us</h3>";
-                                echo "<h4> Sample Text</h4>";
-                                echo "<br><form action=\"editDetailComp.php\" method=\"post\">"
-                                       . "<br><br><textarea name = \"Abt\" rows = \"6\" cols = \"45\"> Make changes to about us here </textarea>"
-                                       . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
-                                       . "<input type =\"submit\" name=\"abt\" value = \"Edit\">"
-                                       . "</form>";
-
-                                echo "<br>";
-
-                                echo "<h3> Services and Prices </h3>";
-                                echo "<h4> Sample Text</h4>";
-                                echo "<br><form action=\"change.php\" method=\"post\">"
-                                       . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
-                                       . "<input type =\"submit\" name=\"Edit\" value = \"Edit\">"
-                                       . "</form>";
-
-                                echo "<br>";
-
-
-                                echo "<h3> Packages </h3>";
-                                echo "<h4> Sample Text</h4>";
-                                echo "<br><form action=\"change.php\" method=\"post\">"
-                                       . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
-                                       . "<input type =\"submit\" name=\"Edit\" value = \"Edit\">"
-                                       . "</form>";
-
-                                echo "<br>";
-
-                                echo "<h3>Contact Us</h3>";
-                                echo "<h4>" . $row['email'] . " " . $row['phone'] . "</h4>";
-                                echo "<br><br>Email : <br><input type=\"text\" name = \"Email\" value= " . $row['email'] . ">";
-                                echo "<br><br>Phone : <br><input type=\"text\" name = \"phone\" value= " . $row['phone'] . ">";
-                                echo "<br><form action=\"userInfo.php\" method=\"post\">"
-                                       . "<input type = \"hidden\" name=\"name\" value = " . $row['name'] . ">"
-                                       . "<input type =\"submit\" name=\"Edit\" value = \"Edit\">"
-                                       . "</form>";
-                                echo "</div>";
-
-                            echo "</div>";
-
-                            echo "<div class=\"review\">
-                            <table class=\"outerReviewTable\">
-                                <tr><th><h2>Reviews</h2><br></th><tr>
-                                <tr>
-                                    <td>
-                                        <table class=\"innerReviewTable\">
-                                            <tr>
-                                                <td>
-                                                    <h4>homeowner1</h4>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                                </h5></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <table class=\"innerReviewTable\">
-                                            <tr>
-                                                <td>
-                                                    <h4>homeowner2</h4>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                                </h5></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <table class=\"innerReviewTable\">
-                                            <tr>
-                                                <td>
-                                                    <h4>homeowner3</h4>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                                </h5></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table class=\"innerReviewTable\">
-                                            <tr>
-                                                <td>
-                                                    <h4>homeowner4</h4>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                                </h5></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>";
-                        }
-                    }
-
-                }
-                catch (mysqli_sql_exception $e)
-                {
-                    echo "error" . mysqli_error($conn);
-                    mysqli_close($conn);
-                }
-            }
-            elseif ($usertype = "homeowner")
-            {
-
-            }
-
-            ?>
-    </body>
+</body>
 </html>

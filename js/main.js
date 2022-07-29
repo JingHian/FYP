@@ -5,6 +5,18 @@ $(document).ready( function () {
     searching: false,
   });
 
+  $('.datatable_style2').DataTable({
+    // "columns": [
+    //   { "width": "30%" },
+    //   { "width": "50%" },
+    //   null
+    // ],
+    paging: false,
+    info: false,
+    ordering:  false,
+    searching: false,
+});
+
   // search script
   $(".search-for").on("keyup", function() {
     var value = $(this).val().toLowerCase();
@@ -12,6 +24,11 @@ $(document).ready( function () {
     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
   });
+
+  // hide label for enquiry replies if there is no reply
+  if (!$.trim($("#enquiry_reply").val())){
+    $("#reply-label").hide();
+  }
 
 } );
 

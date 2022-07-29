@@ -1,6 +1,8 @@
 <?php
 include_once("signuploginClass.php");
 include_once("validation.php");
+include_once("conn.php");
+include_once("classes.php");
 $username = "";
 $password= "";
 $name= "";
@@ -12,6 +14,7 @@ $signUpSuccess = "";
 $signUpFail = "";
 $whiteSpaceError = "";
 $test= "";
+$uni  = new Universal();
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $user_type="homeowner";
@@ -123,7 +126,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
               </div>
               <div class="form-group mb-2 mt-3 ninety-five">
-                <button type="button" class="btn btn-primary" data-bs-target="#carousel-one" data-bs-slide-to="1" >Next</button>
+                <button type="button" class="btn btn-lg btn-primary" data-bs-target="#carousel-one" data-bs-slide-to="1" >Next</button>
               </div>
               <p class="ninety-five">Have an account? <a href="index.php">Log in now</a>.
               <br>Not a homeowner? <a href="signupComp.php">Company sign up here</a>.
@@ -133,21 +136,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               <span style="color:green"> <?php echo $signUpSuccess;?> </span>
               <span style="color:red"> <?php echo $signUpFail;  ?> </span>
               <span style="color:red"> <?php echo $whiteSpaceError;  ?> </span>
+              <span id="check-error" style="color:red"></span>
               <p style="text-align: center;">What services are you looking for?</p>
-              <div class= "col d-flex justify-content-center">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Water Supply">
-                <label class="form-check-label" for="services">Water Supply</label>
-              </div>
-              <div class="form-check form-check-inline ">
-                <input class="form-check-input" type="checkbox" name="services[]" value="Maintenence">
-                <label class="form-check-label" for="services">Maintenence</label>
-              </div>
+              <div class= "row d-flex justify-content-center"  id="services-checkbox">
+              <?php
+                $uni ->servicesCheckBoxes();
+               ?>
             </div>
             <div class=" form-floating mt-3 mb-3  last_service"></div>
               <a id="add_service" class="ninety-five" href="#">+Add a service</a>
               <div class="form-group mb-2 mt-3 ninety-five">
-                <input type="submit" class="btn  btn-primary" value="Sign up">
+                <input type="submit" id="sign-up" class="btn  btn-primary" value="Sign up">
               </div>
               <p class="ninety-five">Have an account? <a href="index.php">Log in now</a>.
               <br>Not a homeowner? <a href="signupComp.php">Company sign up here</a>.
@@ -158,5 +157,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     </form>
     <?php include_once('jsLinks.php');?>
+    <script>
+    $( "#sign-up" ).click(function() {
+
+    if($('#services-checkbox :checkbox:checked').length > 0 == false){
+    $("#form_Comp").submit(function(e){
+        e.preventDefault();
+        $("#form_Comp").off("submit");
+    });
+      $('#check-error').text('Please check at least one service!');
+    }
+    });
+    </script>
   </body>
 </html>

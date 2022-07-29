@@ -1,6 +1,102 @@
 body{
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: 'Karla', sans-serif !important;
+  /* background-color:#F5F5F5 !important; */
+  font-size: 18px;
 }
+
+table.dataTable.no-footer {
+    border-bottom: none !important;
+}
+
+pre{
+
+  font-family: 'Karla', sans-serif !important;
+  font-size: 16px !important;
+}
+
+.btn-primary{
+  background-color:DodgerBlue !important ;
+  border-color:DodgerBlue !important ;
+}
+
+.btn-success{
+  background-color:LightSeaGreen !important ;
+  border-color:LightSeaGreen !important ;
+}
+
+.btn-danger{
+  background-color:IndianRed !important ;
+  border-color:IndianRed !important ;
+}
+
+.form-control {
+  font-size: 18px;
+}
+
+.navbar{
+  padding:0px;
+}
+
+/* font size for datatables */
+table.dataTable th {
+  font-size: 18px;
+}
+table.dataTable td {
+  font-size: 18px;
+}
+
+.nav-link{
+  padding:19px;
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+}
+
+
+ .navbar-nav .nav-link.active,
+ .navbar-nav .nav-link:hover {
+    color:#FFFF !important;
+    background-color: #00aeef !important;
+    -webkit-transition:all 0.23s ease-in;
+    -moz-transition:all  0.23s ease-in;
+    -o-transition:all  0.23s ease-in;
+    transition:all 0.23s ease-in;
+}
+
+
+
+.menu-style:not(:hover) {
+  -webkit-transition:all 0.23s ease-in;
+  -moz-transition:all  0.23s ease-in;
+  -o-transition:all  0.23s ease-in;
+  transition:all 0.23s ease-in;
+ }
+
+.menu-style:hover
+{
+  box-shadow: inset 0 -200px 0 0 #00aeef;
+  -webkit-transition:all 0.23s ease-in;
+  -moz-transition:all  0.23s ease-in;
+  -o-transition:all  0.23s ease-in;
+  transition:all 0.23s ease-in;
+  color:#FFFFFF;
+}
+
+.boxshadow
+{
+  box-shadow: 0px 0px 8px -4px rgba(0,0,0,0.75);
+}
+
+/* .navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: grey;
+} */
+
+
+/* .container
+{
+  background-color: white;
+} */
 
 .twenty {
   display: block;
@@ -22,7 +118,7 @@ body{
 
 .form-horizontal-2{
     display:block;
-    width:38%;
+    width:48%;
     margin:0 auto;
 }
 
@@ -52,7 +148,7 @@ submitLink:focus {
 }
 
 .height-200{
-  height:150px;
+  height:200px;
 }
 
 .icon-size{
@@ -61,6 +157,12 @@ submitLink:focus {
 .col-05 {
     flex: 0 0 auto;
     width: 4.16666666%;
+}
+
+.col-15
+{
+  flex: 0 0 auto;
+  width: 12.499999995%
 }
 
 .material-symbols-outlined {
@@ -73,6 +175,10 @@ submitLink:focus {
 
 .font-white{
   color:white;
+}
+
+.form-select{
+  font-size: 18px !important;
 }
 
 .font-deepskyblue{
@@ -94,4 +200,17 @@ submitLink:focus {
 
 .table-padding{
   line-height:50px;
+  background-color:SlateBlue;
+}
+
+.booking-alert,.hide-reply{
+    display: block;
+}
+.booking-alert:empty,.hide-reply:empty{
+    display: none;
+}
+
+@media (min-width: 1980px)
+.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    max-width: 1980px;
 }

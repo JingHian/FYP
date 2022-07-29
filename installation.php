@@ -1,11 +1,29 @@
 <?php session_start();
 
+include "conn.php";
+include_once "classes.php";
+include_once "logInCheck.php";
+  // echo '<pre>' . print_r($_SESSION) . '</pre>';
 $name = $_SESSION["name"];
 $phone = $_SESSION["phone"];
 $email = $_SESSION["email"];
 $address = $_SESSION["address"];
 $postal_code = $_SESSION["postal_code"];
-include_once "logInCheck.php";
+$booking_success = "";
+$booking_failed = "";
+$homeowner = new Homeowner();
+
+if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand']) {
+  if($homeowner->checkClientExists($_SESSION["ID"],$_SESSION["company_ID"]) == True)
+  {
+    $homeowner->insertBooking($_SESSION["company_name"],$_POST["date"],$_POST["comments"],"installation");
+    $homeowner->addClient($_SESSION["company_ID"],$_POST["date"]);
+    $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_SESSION['company_name']."!";
+  }
+  else{
+    $booking_failed = "You already are a client of ". $_SESSION['company_name']."! Please check your bookings for your previous installation booking.";
+  }
+}
 
 ?>
 <html>
@@ -27,11 +45,17 @@ include_once "logInCheck.php";
   </div>
 </div>
 <div class="container form-horizontal">
+    <div class="col">
+      <div class="form-floating  mb-3 ">
+        <input type="text" class="form-control" name="Company" placeholder="Company" value="<?php echo $_SESSION["company_name"]; ?>"disabled>
+        <label for="Company">Company </label>
+      </div>
+    </div>
     <div class="row">
         <div class="col">
           <div class="form-floating  mb-3 ">
-            <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $_SESSION["name"]; ?>"disabled>
-            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" placeholder="name" value="<?php echo $name; ?>"disabled>
+            <label for="name">Name </label>
           </div>
         </div>
 
@@ -42,7 +66,6 @@ include_once "logInCheck.php";
         </div>
       </div>
       </div>
-
 
       <div class="col">
         <div class="form-floating  mb-3 ">
@@ -68,22 +91,30 @@ include_once "logInCheck.php";
 
       <div class="col">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+          <?php
+           $rand=rand();
+           $_SESSION['rand']=$rand;
+          ?>
+        <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
         <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="date" name="date"placeholder="date" >
+          <input type="date" class="form-control" name="date" placeholder="date" required>
           <label for="date">Date</label>
         </div>
-        </form>
       </div>
     </div>
     <div class="col">
       <div class="form-floating  mb-3 ">
-        <textarea class="form-control" id="comments" name="comments" placeholder="comments" style="height: 200px" ></textarea>
+        <textarea class="form-control"  name="comments" placeholder="comments" style="height: 200px" ></textarea>
         <label for="comments">Additional comments</label>
       </div>
     </div>
     <div class="form-group mt-3 text-center">
-        <input type="submit" class="btn btn-primary" value="Submit">
+        <input type="submit" class="btn btn-lg btn-primary" value="Submit">
     </div>
+    <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $booking_success;?></div>
+    <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $booking_failed;?></div>
+
+    </form>
 </div>
 <?php include_once('jsLinks.php');?>
 </body>

@@ -1,6 +1,8 @@
 <?php
 include_once("signuploginClass.php");
 include_once("validation.php");
+include_once("conn.php");
+include_once("classes.php");
 $username = "";
 $password= "";
 $name= "";
@@ -11,6 +13,8 @@ $postal_code="";
 $signUpSuccess = "";
 $signUpFail = "";
 $whiteSpaceError = "";
+$nameNotUnique = "";
+$uni  = new Universal();
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $user_type="company";
@@ -29,11 +33,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $validate->trimAndStrip($_POST["phone"]);
     $address = $validate->trimAndStrip($_POST["address"]);
     $postal_code = $validate->trimAndStrip($_POST["postal_code"]);
-    $services = $_POST["services"];
+    $services = array_filter($_POST["services"]);
     $signup = new Signup($username,$password,$name,$email,$phone,$address,$postal_code,$home_type,$user_type);
 
     $checkUniqueID = $signup->checkUniqueID();
-    if ($checkUniqueID == true){
+    $checkUniqueName = $signup->checkUniqueName();
+    if ($checkUniqueID == false)
+    {
+      $signUpFail = "This Username already exists!<br>";
+    }
+    if ($checkUniqueName == false)
+    {
+      $nameNotUnique = "This Company name already exists on our System!<br>";
+    }
+
+    if ($checkUniqueID == true && $checkUniqueName ==true){
       $signup->insertIntoTableCompany();
       $signup->insertIntoServices($services);
       $signup->insertIntoCompanyServices($services);
@@ -47,7 +61,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       $email="";
     }
     else {
-      $signUpFail = "Username already exists!";
+      // $signUpFail = "Username already exists!";
     }
   }
   else {
@@ -78,9 +92,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class ="container" style="height:750px;">
   <div class="carousel-inner " >
       <div class="carousel-item active">
-            <span style="color:green"> <?php echo $signUpSuccess;?> </span>
-            <span style="color:red"> <?php echo $signUpFail;  ?> </span>
-            <span style="color:red"> <?php echo $whiteSpaceError;  ?> </span>
+        <span style="color:green"> <?php echo $signUpSuccess?> </span>
+        <span style="color:red"> <?php echo $signUpFail;  ?> </span>
+        <span style="color:red"> <?php echo $nameNotUnique;  ?> </span>
+        <span style="color:red"> <?php echo $whiteSpaceError;  ?> </span>
             <div class="form-floating mt-3 mb-3 ninety-five ">
               <input type="text" class="form-control " id="username" name="username" placeholder="username" value="<?php echo $username; ?>" required>
               <label for="username">Username</label>
@@ -110,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               <label for="address">Postal Code</label>
             </div>
             <div class="form-group mb-2 mt-3 ninety-five">
-              <button type="button" class="btn btn-primary" data-bs-target="#carousel-one" data-bs-slide-to="1" >Next</button>
+              <button type="button" class="btn btn-lg btn-primary" data-bs-target="#carousel-one" data-bs-slide-to="1" >Next</button>
             </div>
             <p class="ninety-five">Have an account? <a href="index.php">Log in now</a>.
             <br>Not a company? <a href="signupHome.php">Homeowner sign up here</a>.
@@ -119,22 +134,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="carousel-item" >
             <span style="color:green"> <?php echo $signUpSuccess;?> </span>
             <span style="color:red"> <?php echo $signUpFail;  ?> </span>
+            <span style="color:red"> <?php echo $nameNotUnique;  ?> </span>
             <span style="color:red"> <?php echo $whiteSpaceError;  ?> </span>
+            <span id="check-error" style="color:red"></span>
             <p style="text-align: center;">What services do you provide?</p>
-            <div class= "col d-flex justify-content-center">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="services[]" value="Water Supply">
-              <label class="form-check-label" for="services">Water Supply</label>
-            </div>
-            <div class="form-check form-check-inline ">
-              <input class="form-check-input" type="checkbox" name="services[]" value="Maintenence">
-              <label class="form-check-label" for="services">Maintenence</label>
-            </div>
+            <div class= "row d-flex justify-content-center" id="services-checkbox">
+              <?php
+                $uni ->servicesCheckBoxes();
+               ?>
+
           </div>
           <div class=" form-floating mt-3 mb-3  last_service"></div>
             <a id="add_service" class="ninety-five" href="#">+Add a service</a>
             <div class="form-group mb-2 mt-3 ninety-five">
-              <input type="submit" class="btn  btn-primary" value="Sign up">
+              <input type="submit" class="btn  btn-primary" id="sign-up" value="Sign up">
             </div>
             <p class="ninety-five">Have an account? <a href="index.php">Log in now</a>.
             <br>Not a company? <a href="signupHome.php">Homeowner sign up here</a>.
@@ -145,5 +158,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
   </form>
   <?php include_once('jsLinks.php');?>
+  <!-- <script>
+  $( "#sign-up" ).click(function() {
+
+  if($('#services-checkbox :checkbox:checked').length > 0 == false){
+  $("#form_Comp").submit(function(e){
+      e.preventDefault();
+      $("#form_Comp").off("submit");
+  });
+    $('#check-error').text('Please check at least one service!');
+  }
+  });
+  </script> -->
 </body>
 </html>
