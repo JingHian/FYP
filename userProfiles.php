@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <?php
     session_start();
     include_once ("conn.php");
@@ -7,6 +6,7 @@
     include_once "logInCheck.php";
     $name = $_SESSION["name"];
     $usertype = $_SESSION["user_type"];
+    $admin = new Admin();
 
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         header("location: index.php");
@@ -41,66 +41,7 @@
 		</div>
     <div class="container justify-content-center text-center">
     <?php
-        $query = "SELECT ho.homeowner_ID AS ID, ho.username, ho.name, ho.email, ho.phone, ho.user_type, ho.suspended
-                  FROM homeowners AS ho
-                  WHERE ho.verified = '1'
-                  UNION
-                  SELECT comp.company_ID AS ID, comp.username, comp.name, comp.email, comp.phone, comp.user_type, comp.suspended
-                  FROM company AS comp
-                  WHERE comp.verified = '1'";
-
-        $result = mysqli_query($conn, $query);
-
-         if ($result->num_rows > 0) {
-            echo "<table class='table table-hover datatable_style' >
-            <thead>
-            <tr class='table-padding text-white'>
-              <th>User ID</th>
-              <th>Username</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>User Type</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-            </thead>
-            <tbody class='search-table'>";
-
-           while($row = $result->fetch_assoc()) {
-                  echo "
-                  <tr class='table-padding' >
-                    <form method='post' action='EdituserProfiles.php'>
-                    <td>".$row["ID"]."</td>
-                    <td>".$row["username"]."</td>
-                    <td>".$row["name"]."</td>
-                    <td>".$row["email"]."</td>
-                    <td>".$row["phone"]."</td>
-                    <td>".$row["user_type"]."</td>";
-                    if($row["suspended"] == 0)
-                    {
-                      echo "<td>Active</td>";
-                    }
-                    else if($row["suspended"] == 1)
-                    {
-                      echo "<td>Suspended</td>";
-                    }
-                    echo '<input type ="hidden" value ="'.$row["ID"].'" name ="ID"/>'.
-                     '<input type="hidden" value ="'.$row["user_type"].'" name ="usertype"/>'.
-                     '<input type="hidden" value ="'.$row["suspended"].'" name ="suspended"/>'.
-                    "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' name='Edit' value='Edit'></td>
-                  </tr>
-                </form>";
-              }
-
-
-
-           echo "
-           </tbody></table>";
-         } else {
-           echo "No Users Found";
-         }
-
+    $admin->viewUserProfiles();
     ?>
 
     </div>
