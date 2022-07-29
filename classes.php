@@ -556,14 +556,15 @@ function addClient($company_ID,$date)
 
   try
   {
-    $sql = "SELECT discount_ID FROM discounts where company_ID = '$company_ID'";
-    $result = mysqli_query($this->conn, $sql);
-
+    $sql = "SELECT discount_ID FROM Discounts where company_ID = '$company_ID'";
+    $result = $this->conn->query($sql);
    if ($result->num_rows > 0) {
+     $row = mysqli_fetch_assoc($result);
       $discount_ID = $row['discount_ID'];
       $sql = "INSERT INTO Clients (company_ID, homeowner_ID, discount_ID,start_date) VALUES ( '$company_ID', '$homeowner_ID', '$discount_ID', '$date')";
       $result = mysqli_query($this->conn, $sql);
-    }
+
+  }
   else{
     $sql = "INSERT INTO Clients (company_ID, homeowner_ID,start_date) VALUES ( '$company_ID', '$homeowner_ID', '$date')";
     $result = mysqli_query($this->conn, $sql);
@@ -571,7 +572,7 @@ function addClient($company_ID,$date)
   }
   catch (mysqli_sql_exception $e)
   {
-    echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
+    echo "<p>Error " . mysqli_errno($this->conn). ":!!!! " . mysqli_error($this->conn) . "</p>";
     return False;
   }
 

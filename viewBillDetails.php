@@ -68,7 +68,6 @@
       </div>
       <div class="row">
         <?php $bills->listBillDetailsHomeowner(); ?>
-
       </div>
     </div>
     <?php include_once('jsLinks.php');?>
