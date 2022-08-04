@@ -5,7 +5,7 @@
     include_once ('navbar.php');
     include_once "logInCheck.php";
     $name = $_SESSION["name"];
-    $usertype = $_SESSION["user_type"];
+    $user_type = $_SESSION["user_type"];
     $admin = new Admin();
 
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){

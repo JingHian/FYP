@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
  session_start();
  include_once('conn.php');
@@ -92,7 +93,6 @@
  }
 
  ?>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
  session_start();
  include_once('conn.php');
@@ -77,7 +78,6 @@
  }
 
  ?>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
@@ -88,10 +88,28 @@
 <body>
 <style>
 
-.innerReviewTable, td {
-    border: 1px solid black;
-    margin-bottom: 20px;
+.innerReviewTable{
+  border: 1px solid SlateBlue;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
+
+.nameandreview{
+  background-color: SlateBlue;
+  color:white;
+
+}
+
+.name {
+  text-align: left;
+}
+
+.rating {
+  text-align: right;
+}
+
 
 .review {
   height:700px;
@@ -103,18 +121,108 @@
     box-shadow: 0px 0px 8px -4px rgba(0,0,0,0.75);
 }
 
+.outerreviewtable{
+  width:100%;
+}
+
 </style>
-<div class ="container  bg-dark ps-3 p-4">
+
+<?php
+    $companyID = $_SESSION['company_ID'];
+
+//count the number of reviews of a particular company
+  try {
+    $getNumberOfReviews = mysqli_query($conn, "select count(*) from ratings where company_ID = $companyID");
+    $numberOfReviews = $getNumberOfReviews->fetch_array()[0] ?? '';
+  } catch (mysqli_sql_exception $e) {
+    echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
+  }
+
+  //calcualte the average rating of a particular company
+  try {
+    $getAverageRating = mysqli_query($conn, "select avg(score) from ratings where company_ID = $companyID");
+    $averageRating = $getAverageRating->fetch_array()[0] ?? '';
+
+  } catch (mysqli_sql_exception $e) {
+    echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
+  }
+
+  //get the stars
+  $stars = $averageRating;
+    if ($stars > 0 && $stars < 1)  {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+    }
+    else if ($stars == 1) {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+  } else if ($stars > 1 && $stars < 2) {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+  } else if ($stars == 2) {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+  } else if ($stars > 2 && $stars < 3) {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+  } else if ($stars == 3) {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+  } else if ($stars > 3 && $stars < 4) {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+  } else if ($stars == 4) {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+  } else if ($stars > 4 && $stars < 5) {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>';
+
+  }else if ($stars == 5) {
+      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>';
+  }
+
+?>
+
+<div class ="container SlateBlue boxshadow ps-3 p-4">
 <div class="row">
-  <div class="col  text-white ">
+  <div class="col text-white ">
     <h1 class ="fw-bold mb-0"><?php echo $_SESSION['company_name'];?></h1>
-    <h5 class =" mb-0"><?php echo $_SESSION['company_address'] ." ". $_SESSION['company_postal'];?> </h5 >
-    <h5 class="float-start">4.5 </h5>
-    <h5 class="float-start material-symbols-outlined">star</h5>
-    <h5 class="float-start material-symbols-outlined">star</h5>
-    <h5 class="float-start material-symbols-outlined">star</h5>
-    <h5 class="float-start material-symbols-outlined">grade</h5>
-    <h5 class="float-start">(12 reviews) </h5>
+    <h5 class =""><?php echo $_SESSION['company_address'] ." ". $_SESSION['company_postal'];?> </h5 >
+    <h5 class="float-start"><?php echo number_format(floatval($averageRating), 1); ?>&nbsp;</h5>
+    <div class="float-start">&nbsp;<?php echo $stars; ?></div>
+    <h5 class="float-start"><?php echo  "(" . $numberOfReviews . ")"." "."Reviews";?> </h5>
   </div>
 </div>
 </div>
@@ -159,99 +267,108 @@
         </div>
     </div>
 
+<?php
+
+  try {
+    //$companyID = $_SESSION['company_ID'];
+    $reviews = "select homeowners.name, ratings.score, ratings.review from ratings join homeowners on ratings.homeowner_ID = homeowners.homeowner_ID where ratings.company_ID = $companyID";
+    $result = mysqli_query($conn, $reviews);
+?>
+
 <div class="col-4 ">
     <div class="review boxshadow mt-3"> <!-- can use overflow-->
-        <table class="outerReviewTable">
-            <tr><th><h2>Reviews</h2></th><tr>
-            <tr>
-                <td> <!-- later change this to php mysql select code to retrieve the data from the database-->
-                    <table class="innerReviewTable">
-                        <tr>
-                            <td>
-                                <h4>homeowner1</h4>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><p class="eachreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </p></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+      <tr><th><h2>Reviews</h2></th><tr>
+      <?php
+        if (mysqli_num_rows($result) < 1) {
+          echo "<br><br>No reviews has been given to this company.<br><br>";
+        } else {
+          while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
+            $stars = $Row['score'];
 
-            <tr>
-                <td>
-                    <table class="innerReviewTable">
-                        <tr>
-                            <td>
-                                <h4>homeowner2</h4>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><h5 class="eachreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </h5></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+            if ($stars == 1) {
+              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+            } else if ($stars == 1.5) {
+              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+            } else if ($stars == 2) {
+              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+            } else if ($stars == 2.5) {
+              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+            } else if ($stars == 3) {
+              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+            } else if ($stars == 3.5) {
+              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+            } else if ($stars == 4) {
+              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+            } else if ($stars == 4.5) {
+              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>';
+            } else if ($stars == 5) {
+              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>';
+            }
 
-            <tr>
-                <td>
-                    <table class="innerReviewTable">
-                        <tr>
-                            <td>
-                                <h4>homeowner3</h4>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><h5 class="eachreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </h5></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <table class="innerReviewTable">
-                        <tr>
-                            <td>
-                                <h4>homeowner4</h4>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><h5 class="eachreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </h5></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+            ?>
+            <table class="outerReviewTable">
+                <tr>
+                    <td>
+                        <table class="innerReviewTable">
+                            <tr class="nameandreview">
+                                <td class="name">
+                                    <h4><?php echo $Row['name']?></h4>
+                                </td>
+                                <td class="rating">
+                                    <h4><?php echo $stars;?></h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><p class="reviewdetail"><?php echo $Row['review'];?>
+                                </p></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+              <?php }} ?>
         </table>
+
+        <?php } catch (mysqli_sql_exception $e) {
+        echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);}?>
     </div>
-
 </div>
 </div>
 </div>
-
-
 </body>
 </html>

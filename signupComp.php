@@ -89,7 +89,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <button type="button" data-bs-target="#carousel-one" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carousel-one" data-bs-slide-to="1" aria-label="Slide 2"></button>
   </div>
-  <div class ="container" style="height:750px;">
+  <div class ="container" style="height:780px;">
   <div class="carousel-inner " >
       <div class="carousel-item active">
         <span style="color:green"> <?php echo $signUpSuccess?> </span>

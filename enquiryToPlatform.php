@@ -13,7 +13,7 @@ $enquiryTable = "CREATE TABLE IF NOT EXISTS Enquiries (
 enquiry_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 admin_ID INT(10) NULL, /*The id of the admin who replies the enquiry*/
 `user_ID` int(11) NOT NULL,
-usertype VARCHAR(15) NOT NULL,
+user_type VARCHAR(15) NOT NULL,
 enquiry_date VARCHAR(15) NOT NULL,
 enquiry_subject VARCHAR(30) NOT NULL,
 enquiry_description VARCHAR(500) NOT NULL,
@@ -27,7 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
 $enquirySubject = $_POST['enquirysubject'] ?? "";
 $enquiryDetails = $_POST['enquirydetails'] ?? "";
 $userID = $_SESSION['ID'] ?? "";
-$userType = $_SESSION['user_type'] ?? "";
+$user_type = $_SESSION['user_type'] ?? "";
 
 $tableName = "enquiries";
 
@@ -36,7 +36,7 @@ if ($enquirySubject == "") {
 } else {
     try {
         //userid can be homeownerid and companyid
-        $sql = "INSERT INTO $tableName (`user_ID`, usertype, enquiry_date, enquiry_subject, enquiry_description, enquiry_status) VALUES " . "('$userID', '$userType' , curdate(), '$enquirySubject', '$enquiryDetails', 'Awaiting')";
+        $sql = "INSERT INTO $tableName (`user_ID`, user_type, enquiry_date, enquiry_subject, enquiry_description, enquiry_status) VALUES " . "('$userID', '$user_type' , curdate(), '$enquirySubject', '$enquiryDetails', 'Awaiting')";
         // printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
         @mysqli_query($conn, $sql);
         $enquiry_success = "Your enquiry has been sent to our Platform!";

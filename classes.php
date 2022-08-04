@@ -71,13 +71,23 @@ class Company{
       $this->tableHeader();
       // output data of each row
       while($row = $result->fetch_assoc()) {
+
+       //calcualte the average rating of a particular company
+       $companyID = $row['company_ID'];
+          try {
+            $getAverageRating = mysqli_query($this->conn, "select avg(score) from ratings where company_ID = $companyID");
+            $averageRating = $getAverageRating->fetch_array()[0] ?? '';
+            //echo $averageRating;
+
+          } catch (mysqli_sql_exception $e) {
+            echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
+          }
       echo "
                 <tr class='table-padding' >
                   <form method='post' action=''>
                   <td>".$row["name"]."</td>
                   <td>".$row["service_grouped"]."</td>
-                  <td>".$row["address"]."</td>
-                  <td>"."4/5"." </td>
+                  <td>".$row["address"]."</td> <td>".number_format(floatval($averageRating), 1)." </td>
                   ".'<input type ="hidden" value ="'.$row["name"].'" name ="company_name"/>'.
                     '<input type ="hidden" value ="'.$row["email"].'" name ="company_email"/>'.
                     '<input type ="hidden" value ="'.$row["phone"].'" name ="company_phone"/>'.
@@ -752,7 +762,6 @@ function listBillDetailsHomeowner(){
   $month = $_SESSION['bill_month'];
   $total_price = 0;
 
-// echo '<pre>' . print_r($_SESSION) . '</pre>';
 
   $query = "SELECT price FROM Company_services WHERE service_ID = '1' AND company_ID = '$CID'";
   $result = mysqli_query($this->conn, $query);
@@ -855,7 +864,8 @@ function listBillDetailsHomeowner(){
 function addWaterUsage($company_name,$water_usage,$date)
 {
   $homeowner_ID = $_SESSION['ID'];
-
+  $date_time = strtotime($date);
+  $month= date("F",$date_time); //get name of month
   // get company_ID from company name
   $sql = "SELECT company_ID from Company where name= '$company_name'";
   $result = mysqli_query($this->conn, $sql);
@@ -867,11 +877,11 @@ function addWaterUsage($company_name,$water_usage,$date)
     $sql = "SELECT * FROM Water_Tracking
     WHERE homeowner_ID ='$homeowner_ID'
     AND company_ID ='$company_ID '
-    AND usage_date ='$date'";
+    AND usage_date ='$date'"; //check if data for selected date already exists
     $result = mysqli_query($this->conn, $sql);
     $row = mysqli_fetch_assoc($result);
     // echo $row['water_usage'];
-   if ($result->num_rows > 0) {
+   if ($result->num_rows > 0) { //if it exists, update the data in the row
       // echo "inside update";
       // echo $water_usage;
       $query = "UPDATE Water_Tracking
@@ -883,8 +893,8 @@ function addWaterUsage($company_name,$water_usage,$date)
       $result = mysqli_query($this->conn, $query);
       // printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
     }
-  else{
-    $sql = "INSERT INTO Water_Tracking (company_ID, homeowner_ID, usage_date, water_usage) VALUES ( '$company_ID', '$homeowner_ID', '$date','$water_usage')";
+  else{ // if it doesn't exist, insert new data into the table
+    $sql = "INSERT INTO Water_Tracking (company_ID, homeowner_ID, usage_date, month ,water_usage) VALUES ( '$company_ID', '$homeowner_ID', '$date','$month','$water_usage')";
     $result = mysqli_query($this->conn, $sql);
   }
   }
@@ -907,7 +917,6 @@ function __construct() {
   include("conn.php");
   $this->conn = $conn;
 }
-
 
 
 function tableHeaderVerifyCompanies()
@@ -1019,7 +1028,7 @@ function viewUserProfiles()
                 echo "<td>Suspended</td>";
               }
               echo '<input type ="hidden" value ="'.$row["ID"].'" name ="ID"/>'.
-               '<input type="hidden" value ="'.$row["user_type"].'" name ="usertype"/>'.
+               '<input type="hidden" value ="'.$row["user_type"].'" name ="user_type"/>'.
                '<input type="hidden" value ="'.$row["suspended"].'" name ="suspended"/>'.
               "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' name='Edit' value='Edit'></td>
             </tr>
@@ -1035,6 +1044,220 @@ function viewUserProfiles()
    }
 
 }
+
+
+function tableHeaderEnquiriesAdmin()
+  {
+    echo "<table class='table table-hover  datatable_style' >
+            <thead>
+            <tr class='table-padding text-white'>
+              <th>Enquiry #</th>
+              <th>User #</th>
+              <th>Name</th>
+              <th>User Type</th>
+			        <th>Subject</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody class='search-table'>";
+  }
+
+  function viewEnquiriesAdmin(){
+
+   $ID = $_SESSION['ID'];
+
+    try { //Get all homeowner enquiries and display them
+       $query = "SELECT * FROM Enquiries_homeowner as eq
+                 JOIN Homeowners as ho
+                 ON eq.homeowner_ID = ho.homeowner_ID
+                 WHERE eq.user_type ='homeowner'";
+                 // SELECT eq.*,comp.name as company_name  FROM Enquiries as eq
+                 // JOIN Company as comp
+                 // ON eq.user_ID = comp.company_ID";
+
+       $result = mysqli_query($this->conn, $query);
+
+       if (mysqli_num_rows($result) < 1) {
+           echo "<br><br>No enquiries are found.<br><br>";
+       } else {
+          $this->tableHeaderEnquiriesAdmin();
+           while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
+
+             if(  $Row['user_type'] == 'homeowner')
+             {
+               echo "
+                       <tr class='table-padding'>
+                       <form method='post' action='replyEnquiry.php'>
+                          <td>" . $Row['eh_ID'] . "</td>".
+                         "<td>" . $Row['homeowner_ID'] . "</td>".
+                         "<td>" . $Row['name'] . "</td>".
+                         "<td>" . $Row['user_type'] . "</td>".
+                         "<td>" . $Row['enquiry_subject'] . "</td>".
+                         "<td>" . $Row['enquiry_date'] ."</td>".
+                         "<td>" . $Row['enquiry_status'] ."</td>".
+                         "<input type ='hidden' value ='".$Row['eh_ID']."' name ='enquiry_ID'/>".
+                         "<input type ='hidden' value ='".$Row['homeowner_ID']."' name ='user_id'/>".
+                         "<input type ='hidden' value ='".$Row['name']."' name ='name'/>".
+                         "<input type ='hidden' value ='".$Row['enquiry_subject']."' name ='enquiry_subject'/>".
+                         "<input type ='hidden' value ='".$Row['enquiry_date']."' name ='enquiry_date'/>".
+                         "<input type ='hidden' value ='".$Row['enquiry_description']."' name ='enquiry_description'/>".
+                         "<input type ='hidden' value ='".$Row['user_type']."' name ='user_type'/>".
+                         "<input type ='hidden' value ='".$Row['enquiry_status']."' name ='enquiry_status'/>".
+                         "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' name='Details' value='Details'></td>".
+                      " </tr>
+                     </form>";
+              }
+           }
+
+        // get all company enquiries and display them
+        $query = "SELECT eq.*,comp.name FROM Enquiries_Company as eq
+                  JOIN Company as comp
+                  ON eq.company_ID = comp.company_ID
+                  WHERE eq.user_type ='company'";
+
+         $result = mysqli_query($this->conn, $query);
+
+         if (mysqli_num_rows($result) < 1) {
+             echo "<br><br>No enquiries are found.<br><br>";
+         } else {
+             while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
+
+               if(  $Row['user_type'] == 'company')
+               {
+                 echo "
+                         <tr class='table-padding'>
+                         <form method='post' action='replyEnquiry.php'>
+                            <td>" . $Row['ec_ID'] . "</td>".
+                           "<td>" . $Row['company_ID'] . "</td>".
+                           "<td>" . $Row['name'] . "</td>".
+                           "<td>" . $Row['user_type'] . "</td>".
+                           "<td>" . $Row['enquiry_subject'] . "</td>".
+                           "<td>" . $Row['enquiry_date'] ."</td>".
+                           "<td>" . $Row['enquiry_status'] ."</td>".
+                           "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' name='Details' value='Details'></td>".
+                           "<input type ='hidden' value ='".$Row['ec_ID']."' name ='enquiry_ID'/>".
+                           "<input type ='hidden' value ='".$Row['company_ID']."' name ='user_id'/>".
+                           "<input type ='hidden' value ='".$Row['name']."' name ='name'/>".
+                           "<input type ='hidden' value ='".$Row['enquiry_subject']."' name ='enquiry_subject'/>".
+                           "<input type ='hidden' value ='".$Row['enquiry_date']."' name ='enquiry_date'/>".
+                           "<input type ='hidden' value ='".$Row['enquiry_description']."' name ='enquiry_description'/>".
+                           "<input type ='hidden' value ='".$Row['user_type']."' name ='user_type'/>".
+                           "<input type ='hidden' value ='".$Row['enquiry_status']."' name ='enquiry_status'/>"."
+                         </tr>
+                       </form>";
+                }
+             }
+           }
+
+
+           echo "</tbody></table>";
+       }
+    } catch (Exception $e){
+       echo "<br><br>No enquiries are found.<br><br>";
+       echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn);
+    }
+  }
+
+   function tableHeaderServiceAdmin()
+  {
+    echo "<table class='table table-hover datatable_style' >
+            <thead>
+            <tr class='table-padding text-white'>
+              <th>Service ID #</th>
+              <th>Service Name</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody class='search-table'>";
+  }
+
+  function viewServiceAdmin(){
+   $count = 0;
+   $ID = $_SESSION['ID'];
+
+   $query = "SELECT * FROM Services
+             ORDER BY service_ID";
+
+   // $query = "SELECT serv.service_name, cs.service_ID, COUNT(*) as total
+   //           FROM Services as serv
+   //           LEFT JOIN
+   //           Company_Services as cs
+   //           ON serv.service_ID = cs.service_ID
+   //           GROUP BY service_ID
+   //           ORDER BY service_ID";
+
+   $result = mysqli_query($this->conn, $query);
+
+    if ($result->num_rows > 0) {
+      $this->tableHeaderServiceAdmin();
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+        $count += 1;
+      echo "
+                <tr class='table-padding' >
+                  <form method='post' action='deleteServiceAdmin.php'>
+                  <td>".$row["service_ID"]."</td>
+                  <td>".$row["service_name"]."</td>
+                  ".'<input type ="hidden" value ="'.$row["service_ID"].'" name ="service_ID"/>'.
+                    '<input type ="hidden" value ="'.$row["service_name"].'" name ="service_name"/>';
+              if($count < 3)
+              {
+                echo "<td></td>";
+              }
+              else{
+                echo "<td class ='align-middle'><input type='submit' class='btn btn-small btn-danger' name='Remove' value='Remove'></td>";
+              }
+              echo"</tr>
+              </form>";
+      }
+      echo "
+      </tbody></table>";
+    } else {
+      echo "No Companies Found";
+    }
+}
+
+  function deleteService($service_ID){
+    try {
+        $sql = "DELETE FROM Services WHERE service_ID= $service_ID";
+        //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
+        mysqli_query($this->conn, $sql);
+	}
+
+    catch (mysqli_sql_exception $e) {
+        echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn);
+    }
+  }
+
+
+
+  function updateEnquiry($reply,$enquiry_ID,$admin_ID,$enquiry_user_type){
+    if ($enquiry_user_type == "homeowner")
+    {
+      $query = "UPDATE Enquiries_homeowner
+                SET
+                enquiry_reply ='$reply' ,
+                admin_ID ='$admin_ID' ,
+                enquiry_status = 'Replied'
+                WHERE eh_ID ='$enquiry_ID'";
+
+      $result = mysqli_query($this->conn, $query);
+    }
+    else if ($enquiry_user_type == "company")
+    {
+      $query = "UPDATE Enquiries_Company
+                SET
+                enquiry_reply ='$reply' ,
+                admin_ID ='$admin_ID' ,
+                enquiry_status = 'Replied'
+                WHERE ec_ID ='$enquiry_ID'";
+
+      $result = mysqli_query($this->conn, $query);
+    }
+
+    }
 
 
 

@@ -5,9 +5,9 @@ include_once("classes.php");
 include_once "logInCheck.php";
 include_once ('navbar.php');
 $name = $_SESSION["name"];
-$usertype = $_SESSION["user_type"];
+$user_type = $_SESSION["user_type"];
 $UID = $_POST['ID'];
-$usertype = $_POST['usertype'];
+$user_type = $_POST['user_type'];
 $editInfo_success = "";
 $editInfo_suspended = "";
 $suspended = "";
@@ -25,7 +25,7 @@ if(isset($_POST['Edit']))
 
 if(isset($_POST['save']))
 {
-    if($usertype == 'homeowner')
+    if($user_type == 'homeowner')
     {
         $name= $_POST['name'];
         $phone = $_POST['phone'];
@@ -43,7 +43,7 @@ if(isset($_POST['save']))
             echo "Error" . $conn->error;
         }
     }
-    elseif($usertype == 'company')
+    elseif($user_type == 'company')
     {
         $name= $_POST['name'];
         $phone = $_POST['phone'];
@@ -64,7 +64,7 @@ if(isset($_POST['save']))
 }
 else if(isset($_POST['suspend']))
 {
-    if($usertype == 'homeowner')
+    if($user_type == 'homeowner')
     {
         $change = "UPDATE homeowners SET suspended = 1 WHERE homeowner_ID='$UID'";
         if ($conn->query($change) === TRUE)
@@ -77,7 +77,7 @@ else if(isset($_POST['suspend']))
             echo "Error" . $conn->error;
         }
     }
-    elseif($usertype == 'company')
+    elseif($user_type == 'company')
     {
         $change = "UPDATE company SET suspended = 1 WHERE company_ID='$UID'";
         if ($conn->query($change) === TRUE)
@@ -93,7 +93,7 @@ else if(isset($_POST['suspend']))
 }
 else if(isset($_POST['unsuspend']))
 {
-    if($usertype == 'homeowner')
+    if($user_type == 'homeowner')
     {
         $change = "UPDATE homeowners SET suspended = 0 WHERE homeowner_ID='$UID'";
         if ($conn->query($change) === TRUE)
@@ -106,7 +106,7 @@ else if(isset($_POST['unsuspend']))
             echo "Error" . $conn->error;
         }
     }
-    elseif($usertype == 'company')
+    elseif($user_type == 'company')
     {
         $change = "UPDATE company SET suspended = 0 WHERE company_ID='$UID'";
         if ($conn->query($change) === TRUE)
@@ -139,7 +139,7 @@ else if(isset($_POST['unsuspend']))
     </div>
     </div>
         <?php
-        if($usertype == 'homeowner')
+        if($user_type == 'homeowner')
         {
             $sql = "SELECT * FROM homeowners WHERE homeowner_ID = '$UID'";
             try
@@ -192,7 +192,7 @@ else if(isset($_POST['unsuspend']))
                               <label for=\"postal_code\">Postal Code</label>
                             </div>
                           </div>
-                        <input type=\"hidden\" name=\"usertype\"value='$usertype'>
+                        <input type=\"hidden\" name=\"user_type\"value='$user_type'>
                     <div class=\"col form-floating  mb-3 \">
                           <div class=\"condi-dropdown\">
                             <select id=\"home_type\" name=\"home_type\" class=\"form-select\">
@@ -228,7 +228,7 @@ else if(isset($_POST['unsuspend']))
                 mysqli_close($conn);
             }
         }
-        elseif ($usertype == 'company')
+        elseif ($user_type == 'company')
         {
             $sql = "SELECT * FROM company WHERE company_ID = '$UID'";
             try
@@ -280,7 +280,7 @@ else if(isset($_POST['unsuspend']))
                               <label for=\"postal_code\">Postal Code</label>
                             </div>
                           </div>
-                        <input type=\"hidden\" name=\"usertype\"value='$usertype'>
+                        <input type=\"hidden\" name=\"user_type\"value='$user_type'>
                         <div class=\"alert alert-success booking-alert mt-3\" role=\"alert\">$editInfo_success</div>
                         <div class=\"alert alert-danger booking-alert mt-3\" role=\"alert\">$editInfo_suspended</div>
                         <div class=\"form-group mb-2 mt-3 text-center\">

@@ -260,7 +260,7 @@ CREATE TABLE `enquiries` (
   `enquiry_ID` int(11) NOT NULL,
   `admin_ID` int(10) DEFAULT NULL,
   `user_ID` int(11) NOT NULL,
-  `usertype` varchar(15) NOT NULL,
+  `user_type` varchar(15) NOT NULL,
   `enquiry_date` varchar(15) NOT NULL,
   `enquiry_subject` varchar(30) NOT NULL,
   `enquiry_description` varchar(500) NOT NULL,
@@ -272,7 +272,7 @@ CREATE TABLE `enquiries` (
 -- Dumping data for table `enquiries`
 --
 
-INSERT INTO `enquiries` (`enquiry_ID`, `admin_ID`, `user_ID`, `usertype`, `enquiry_date`, `enquiry_subject`, `enquiry_description`, `enquiry_status`, `enquiry_reply`) VALUES
+INSERT INTO `enquiries` (`enquiry_ID`, `admin_ID`, `user_ID`, `user_type`, `enquiry_date`, `enquiry_subject`, `enquiry_description`, `enquiry_status`, `enquiry_reply`) VALUES
 (1, NULL, 5, 'homeowner', '2022-07-14', 'asdasd', '123', 'Awaiting', NULL),
 (2, NULL, 1, 'company', '2022-07-14', 'test', '123', 'Awaiting', NULL),
 (3, NULL, 1, 'company', '2022-07-14', 'test', 'asd', 'Awaiting', NULL),

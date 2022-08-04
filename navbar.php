@@ -11,8 +11,8 @@
             if($_SESSION["user_type"] =="admin"){
               echo '<a class="nav-link " href="userProfiles.php" >View Profiles</a>';
               echo '<a class="nav-link " href="verifyCompanies.php" >Verify Companies</a>';
-              echo '<a class="nav-link " href="#" >Enquiries</a>';
-              echo '<a class="nav-link " href="#" >Service Categories</a>';
+              echo '<a class="nav-link " href="viewEnquiriesAdmin.php" >Enquiries</a>';
+              echo '<a class="nav-link " href="viewServiceAdmin.php" >Service Categories</a>';
             }
             if($_SESSION["user_type"] =="company"){
               echo '<a class="nav-link " href="#" >Customers</a>';

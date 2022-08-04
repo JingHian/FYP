@@ -46,7 +46,7 @@ include_once "logInCheck.php";
             <p class="usage-font"> Bills/History </p>
           </div>
           </a>
-        <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-3 border border-top-0  border-start-0 border-bottom-0 border-end-0 border-dark border-3 pt-3  height-200">
+        <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-3 border border-top-0  border-start-0 border-bottom-0 border-end-0 border-dark border-3 pt-3  height-200" href="rateAndReviewCompany.php">
           <div class =" text-center">
             <span class="material-symbols-outlined icon-size">grade</span>
             <p class="usage-font ">Review Company </p>

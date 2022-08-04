@@ -5,7 +5,7 @@
     include_once ('navbar.php');
     include_once "logInCheck.php";
     $name = $_SESSION["name"];
-    $usertype = $_SESSION["user_type"];
+    $user_type = $_SESSION["user_type"];
       // echo '<pre>' . print_r($_SESSION) . '</pre>';
     $bills = new Homeowner();
 
