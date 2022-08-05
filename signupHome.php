@@ -98,7 +98,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
   </head>
   <body>
     <div class="container">
-      <h1 class="display-5" style="text-align: center;margin-top:100px;">Water Supply Marketplace</h1>
+      <h1 class="display-5 fw-bold" style="text-align: center;margin-top:100px;">Water Supply Marketplace</h1>
       <h2 class="display-6 fs-2 text-muted" style="text-align: center;">Homeowner Sign Up</h2>
     </div>
     <form class="form-horizontal" id="form_home" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">  <?php

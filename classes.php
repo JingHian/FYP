@@ -29,14 +29,18 @@ class Company{
 
   function StaffDropDown(){
 
-    $getcompanyname = mysqli_query($this->conn, "SELECT name FROM Company");
+      $ID = $_SESSION['ID'];
+      $getcompanyname = mysqli_query($this->conn, "SELECT * FROM maintenance_staff WHERE company_ID = '$ID' AND status = \"Not Assigned\"");
 
     echo '<div class="condi-dropdown mb-3">
-      <select id="staff_name" class="form-select" name="staff_name" form="staff_name" required>
+      <select id="staff_name" class="form-select" name="staff_name" required>
           <option value="" default disabled>Assign a Staff</option>';
-          // while (($Row = mysqli_fetch_assoc($getcompanyname)) != FALSE) {
-          //     echo '<option value="'.$Row["name"].'">'. $Row["name"].'</option>';
-          //   };
+          while (($Row = mysqli_fetch_assoc($getcompanyname)) != FALSE) {
+                       $name = $Row['staff_name'];
+                       $staffid = $Row['staff_ID'];
+                       $role = $Row['staff_role'];
+                      echo "<option value=$staffid>$name-$role</option>";
+                     };
           echo'  </select>
           </div>';
   }
@@ -516,7 +520,7 @@ function listClientsBills(){
       .'<input type ="hidden" value ="'.$row["start_date"].'" name ="start_date"/>'
       .'<input type ="hidden" value ="'.$row["address"].'" name ="client_address"/>'
       .'<input type ="hidden" value ="'.$row["postal_code"].'" name ="client_postal_code"/>'
-      ."<td class ='align-middle'><input type='submit' class='btn btn-primary me-2' name='viewbills' value='View Bills'><a href='generateBill.php' class='btn btn-primary'>Generate Bill</a></td>
+      ."<td class ='align-middle'><input type='submit' class='btn btn-primary me-2' name='viewbills' value='View Bills'></td>
   </tr>
 </form>";
      }
@@ -533,7 +537,7 @@ function tableHeaderClientBillDetails()
           <thead>
           <tr class='table-padding text-white'>
             <th>Bill #</th>
-            <th>Company Name</th>
+            <th>Client Name</th>
             <th>Bill Date</th>
             <th>Due Date</th>
             <th>Status</th>
@@ -559,6 +563,7 @@ function listClientBillDetails()
      $this->tableHeaderClientBillDetails();
      // output data of each row
      while($row = $result->fetch_assoc()) {
+
      echo "
                <tr class='table-padding' >
                  <form method='post' action='viewBillDetailsComp.php'>
@@ -1039,6 +1044,8 @@ function listBillDetailsHomeowner(){
   $CID = $_SESSION['company_ID'];
   $month = $_SESSION['bill_month'];
   $total_price = 0;
+  $no_maint = 0;
+  $no_water = 0;
 
 
   $query = "SELECT price FROM Company_services WHERE service_ID = '1' AND company_ID = '$CID'";
@@ -1047,7 +1054,7 @@ function listBillDetailsHomeowner(){
   $water_price = $row["price"];
 
 
-  $query = "SELECT water.*,SUM(water.water_usage) AS total_water,comp.*
+  $query = "SELECT water.*,SUM(water.water_usage) AS total_water
             FROM Water_Tracking AS water
             JOIN Company AS comp
             ON water.company_ID = comp.company_ID
@@ -1060,25 +1067,36 @@ function listBillDetailsHomeowner(){
    if ($result->num_rows > 0) {
      $this->tableHeaderBillDetails();
       while($row = $result->fetch_assoc()) {
-      echo "
-              <tr class='table-padding' >
-                <form method='post' action='viewBillDetails.php'>";
-                echo "<td>Water Usage</td>";
-                echo "<td>".$row["total_water"]."m³</td>";
-                echo "<td></td>";
-                echo "<td>".$water_price."</td>";
-                echo "<td>".$water_price * $row["total_water"]."</td>";
-                $total_price += $water_price * $row["total_water"]; //add up the prices
+        if (is_null($row["total_water"]))
+        {
+          echo "
+            <tr class='table-padding' ><td>No Water usage found</td>
+            </tr>";
+            $no_water = 1;
+        }
+        else {
+          echo "<tr class='table-padding' >
+                  <form method='post' action=''>";
+                  echo "<td>Water Usage</td>";
+                  echo "<td>".$row["total_water"]."m³</td>";
+                  echo "<td></td>";
+                  echo "<td>".$water_price."</td>";
+                  echo "<td>".$water_price * $row["total_water"]."</td>";
+                  $total_price += $water_price * $row["total_water"]; //add up the prices
+                  $_SESSION['total_price'] = $total_price;
 
+                  // <input type="submit" class="btn btn-lg btn-primary me-4  float-end" value="Make Payment">
+                  echo "</tr></form>";
 
-       echo "
-                </tr>
-              </form>";
+        }
+
       }
     } else {
-      echo "<td>No Water usage found</td>";
+      echo "
+        <tr class='table-padding' ><td>No Water usage found</td>
+        </tr>";
+      $no_water = 1;
     }
-
 
 
 
@@ -1132,9 +1150,18 @@ function listBillDetailsHomeowner(){
 
     </tbody> </table>";
    } else {
-   echo "<td>No Maintenance usage found</td>";
+   echo "<td>No Maintenance usage found</td>
+   </tbody> </table>";
+    $no_maint = 1;
    }
 
+   if ($no_maint == 1 && $no_water == 1)
+   {
+     return 1;
+   }
+   else {
+     return 0;
+   }
 }
 
 
@@ -1574,5 +1601,26 @@ class Universal{
          <div class ="col-md-6 "></div>';
        }
 
+  }
+
+
+
+  function MonthDropDown(){
+
+    echo '<div class="condi-dropdown mb-3">
+      <select id="bill_month" class="form-select" name="bill_month" required>
+          <option value="January" >January</option>
+          <option value="February" >February</option>
+          <option value="March" >March</option>
+          <option value="April" >April</option>
+          <option value="May" >May</option>
+          <option value="June" >June</option>
+          <option value="July" >July</option>
+          <option value="August" >August</option>
+          <option value="September" >September</option>
+          <option value="October" >October</option>
+          <option value="November" >November</option>
+          <option value="December" >December</option></select>
+          </div>';
   }
 }

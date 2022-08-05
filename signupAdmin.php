@@ -61,7 +61,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
   <div class="container" >
-  <h1 class ="display-5" style="text-align: center;margin-top:100px;">Water Supply Marketplace</h1>
+  <h1 class ="display-5 fw-bold" style="text-align: center;margin-top:100px;">Water Supply Marketplace</h1>
   <h2 class ="display-6 fs-2 text-muted" style="text-align: center;">Admin Sign Up</h2>
   </div>
 <div class="container">

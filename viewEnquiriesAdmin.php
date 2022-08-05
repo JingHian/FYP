@@ -18,7 +18,7 @@ $enquiries = new Admin();
   </head>
   <body>
       <div class="container" >
-      <h1 class ="display-5 text-center" style="margin-top:50px;">Enquiries</h1>
+      <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Enquiries</h1>
       <div class="row justify-content-center">
         <div class="col text-center">
           <p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">Here you can view the status of the Customer Enquiries.</p>

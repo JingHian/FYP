@@ -47,7 +47,7 @@ include_once ("classes.php");
     </head>
     <body>
         <div class="container" >
-            <h1 class ="display-5 text-center" style="margin-top:50px;">Add New Service Category</h1>
+            <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Add New Service Category</h1>
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center">
                     <p class ="display-6 fs-5">Enter Service Name</p>

@@ -9,6 +9,7 @@
       // echo '<pre>' . print_r($_SESSION) . '</pre>';
     $bills = new Homeowner();
 
+
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         header("location: index.php");
         exit;
@@ -38,13 +39,7 @@
     </head>
 
     <body>
-
-      <style>
-      /* .container{
-        background-color: red;
-      } */
-      </style>
-      <div class="container boxshadow p-5" style ="margin-top:100px;">
+      <div class="container clearfix boxshadow p-5" style ="margin-top:100px;">
       <div class="row" style="height: 200px;">
         <div class="col-md-4 ">
           <h2 class ="fw-bold mb-0"><?php echo $_SESSION['company_name'];?></h2>
@@ -67,9 +62,17 @@
         </div>
       </div>
       <div class="row">
-        <?php $bills->listBillDetailsHomeowner(); ?>
+        <?php $no_fees = $bills->listBillDetailsHomeowner(); ?>
+        </div>
+        <form  action="Payment.php" method="post">
+        <a class='btn btn-lg btn-primary text-white float-end mt-5' href="viewBills.php" value='Back'>Back</a>
+          <?php if($no_fees == 0 )
+          {
+            echo '<input type="submit" class="btn btn-lg btn-primary me-4 mt-5 float-end" value="Make Payment">';
+          }
+        ?>
+      </form>
       </div>
-    </div>
     <?php include_once('jsLinks.php');?>
 </body>
 </html>

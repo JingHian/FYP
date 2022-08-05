@@ -14,7 +14,7 @@ include_once "logInCheck.php";
 </head>
 <body>
   <?php include_once('navbar.php');?>
-  <h1 class ="display-5 text-center " style="margin-top:50px;margin-bottom:50px;">Services Menu</h1>
+  <h1 class ="display-5 fw-bold text-center " style="margin-top:50px;margin-bottom:50px;">Services Menu</h1>
   <div class="container">
     <div class="row ">
     <div class="col-md-15"></div>

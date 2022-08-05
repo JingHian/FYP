@@ -128,7 +128,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   <div class="main-container">
   <div class="container">
     <img class ="logo" src ="img/undraw_fishing_hoxa.png" alt="fishing">
-  <h1 class ="display-5" style="text-align: center;">Water Supply Marketplace</h1>
+  <h1 class ="display-5 fw-bold" style="text-align: center;">Water Supply Marketplace</h1>
   <p class ="display-6 fs-2 text-muted" style="text-align: center;">Log in</p>
   </div>
 <div class="container">

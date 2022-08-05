@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
 
       <?php include_once('navbar.php');?>
       <div class="container" >
-      <h1 class ="display-5 text-center" style="margin-top:50px;">Add/Edit Discount</h1>
+      <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Add/Edit Discount</h1>
       <div class="row justify-content-center">
         <div class="col-md-6 text-center">
       <p class ="display-6 fs-5" name = "product" value ="avail">Enter/Edit Discount details or delete discount here.</p>

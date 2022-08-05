@@ -261,8 +261,8 @@
           <h2 class ="fw-bold mb-3">Contact Us</h2>
           <pre>Email: <?php echo $_SESSION['company_email'];?>     Phone Number: <?php echo $_SESSION['company_phone'] ;?></pre>
             <form action="#" method="post">
-            <button type='submit' class='btn  btn-primary text-white me-4' name="goTo" value='Hire'>Hire</button>
-            <button type='submit' class='btn  btn-info text-white' name="goTo" value='Send Enquiry'>Send Enquiry</button>
+            <button type='submit' class='btn btn-lg btn-primary text-white me-4' name="goTo" value='Hire'>Hire</button>
+            <button type='submit' class='btn btn-lg btn-success text-white' name="goTo" value='Send Enquiry'>Send Enquiry</button>
           </form>
         </div>
     </div>
