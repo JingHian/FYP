@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="container" >
       <h1 class ="display-5 text-center" style="margin-top:50px;">Enquiry #<?php echo $_SESSION['enquiry_ID'] ?></h1>
       <div class="row justify-content-center">
-        <div class="col-6 text-center">
+        <div class="col-md-6 text-center">
       <div class="alert alert-primary booking-alert mt-3" role="alert">Your reply to <?php echo $_SESSION['user_name']?> was sent!</div>
     </div>
       </div>

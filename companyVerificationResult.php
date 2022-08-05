@@ -26,7 +26,7 @@
       <div class="container" >
       <h1 class ="display-5 text-center" style="margin-top:50px;">Company <?php echo $name; ?></h1>
       <div class="row justify-content-center">
-        <div class="col-6 text-center">
+        <div class="col-md-6 text-center">
       <?php
         if (isset($_POST['approve'])) {
             $query = "update company set verified = 1 where company_id = $company_ID";

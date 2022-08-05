@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="container" >
             <h1 class ="display-5 text-center" style="margin-top:50px;">Manage Pricing</h1>
             <div class="row justify-content-center">
-                <div class="col-6 text-center">
+                <div class="col-md-6 text-center">
                     <p class ="display-6 fs-5" name = "product" value ="avail">Change Pricing</p>
                 </div>
             </div>
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="container">
             <form id="ManagePrice" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
               <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
               <div class="form-floating mb-3">
                <input type="text" class="form-control" id="water_price" name="water_price" placeholder="water_price"  value = "<?php if($water_price != "none"){echo $water_price;}?>" <?php if($water_price == "none"){echo "disabled";}else{echo "required";}?>>
                <label for="water_price">Water Price</label>

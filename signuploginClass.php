@@ -85,9 +85,12 @@ class SignUp{
   {
     try
     {
-      $sql = "INSERT INTO Homeowners (username, password,name,email,phone,address,postal_code,home_type,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code', '$this->home_type', '$this->user_type')";
-      $result = mysqli_query($this->conn, $sql);
+      $stmt = $this->conn->prepare("INSERT INTO Homeowners (username, password,name,email,phone,address,postal_code,home_type,user_type,verified) VALUES ( ?,?,?,?,?,?,?,?,?,?)");
+      $one = 1;
+      $stmt->bind_param("ssssisissi", $this->username, $this->password, $this->name, $this->email, $this->phone, $this->address ,$this->postal_code, $this->home_type, $this->user_type,$one);
       //printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
+
+      $stmt->execute();
     }
     catch (mysqli_sql_exception $e)
     {
@@ -99,8 +102,10 @@ class SignUp{
   {
     try
     {
-      $sql = "INSERT INTO Company (username, password, name, email, phone, address,postal_code,description,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone', '$this->address', '$this->postal_code','No description has been set by the company yet','$this->user_type')";
-      $result = mysqli_query($this->conn, $sql);
+      $stmt = $this->conn->prepare("INSERT INTO Company (username, password, name, email, phone, address,postal_code,description,user_type) VALUES ( ?,?,?,?,?,?,?,?,?)");
+      $desc = "No description has been set by the company yet";
+      $stmt->bind_param("ssssisiss", $this->username, $this->password, $this->name, $this->email, $this->phone, $this->address ,$this->postal_code, $desc, $this->user_type);
+      $stmt->execute();
     }
     catch (mysqli_sql_exception $e)
     {
@@ -234,7 +239,7 @@ class LogIn extends SignUp{
         if ($row['suspended'] == 1 ){
           return "suspended";
         }
-        
+
         if ($row['verified'] == 0 ){
           return "pending";
         }
@@ -278,7 +283,6 @@ class LogIn extends SignUp{
             $_SESSION["home_type"] = $row['home_type'];
             $_SESSION["user_type"] = $row['user_type'];
             $_SESSION["verified"] = $row['verified'];
-            header("location: welcome.php");
       }
       else{
 

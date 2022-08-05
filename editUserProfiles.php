@@ -133,7 +133,7 @@ else if(isset($_POST['unsuspend']))
     <div class="container" >
     <h1 class ="display-5 text-center" style="margin-top:50px;">Edit/Suspend Profile</h1>
     <div class="row justify-content-center">
-      <div class="col-6 text-center">
+      <div class="col-md-6 text-center">
     <p class ="display-6 fs-5" name = "product" value ="avail">Change the details here.</p>
     </div>
     </div>
@@ -153,47 +153,47 @@ else if(isset($_POST['unsuspend']))
                     echo "<div class=\"container justify-content-center\"  style=\"text-align: center;\">
                     <div class=\"container\">
                         <form class =\"form-horizontal-2\" action='' method=\"post\">
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                               <div class=\"form-floating  mb-3 \">
                               <input type=\"text\" class=\"form-control\" id=\"ID\" name=\"ID\" value = ". $row['homeowner_ID'] ." readonly>
                               <label for=\"ID\">User ID</label>
                               </div>
                             </div>
 
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                               <div class=\"form-floating  mb-3 \">
                                 <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"name\" value= '$name'>
                                 <label for=\"name\">Name</label>
                               </div>
                             </div>
 
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                             <div class=\"form-floating mb-3\">
                               <input type=\"number\" class=\"form-control\" id=\"phone\" name=\"phone\" placeholder=\"phone\" value=". $row['phone'] .">
                               <label for=\"phone\">Phone</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating  mb-3 \">
                               <input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"email\" value=". $row['email']. ">
                               <label for=\"email\">Email</label>
                             </div>
                           </div>
 
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating  mb-3 \">
                               <input type=\"text\" class=\"form-control\" id=\"address\" name=\"address\" placeholder=\"address\" value= '$address'>
                               <label for=\"address\">Address</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating mb-3\">
                               <input type=\"number\" class=\"form-control\" id=\"postal_code\" name=\"postal_code\"placeholder=\"postal_code\" value=". $row['postal_code']." >
                               <label for=\"postal_code\">Postal Code</label>
                             </div>
                           </div>
                         <input type=\"hidden\" name=\"user_type\"value='$user_type'>
-                    <div class=\"col form-floating  mb-3 \">
+                    <div class=\"col-md form-floating  mb-3 \">
                           <div class=\"condi-dropdown\">
                             <select id=\"home_type\" name=\"home_type\" class=\"form-select\">
                               <option value=\"2room\" ".(($row['home_type']=='2room')?'selected="selected"':"").">HDB 2-room</option>
@@ -242,39 +242,39 @@ else if(isset($_POST['unsuspend']))
                     echo "<div class=\"container justify-content-center\"  style=\"text-align: center;\">
                     <div class=\"container\">
                         <form class =\"form-horizontal-2\" action='' method=\"post\">
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                               <div class=\"form-floating  mb-3 \">
                               <input type=\"text\" class=\"form-control\" id=\"ID\" name=\"ID\" value = ". $row['company_ID'] ." readonly>
                               <label for=\"ID\">User ID</label>
                               </div>
                             </div>
 
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                               <div class=\"form-floating  mb-3 \">
                                 <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"name\" value= '$name'>
                                 <label for=\"name\">Name</label>
                               </div>
                             </div>
 
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                             <div class=\"form-floating mb-3\">
                               <input type=\"number\" class=\"form-control\" id=\"phone\" name=\"phone\" placeholder=\"phone\" value=". $row['phone'] .">
                               <label for=\"phone\">Phone</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating  mb-3 \">
                               <input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"email\" value=". $row['email']. ">
                               <label for=\"email\">Email</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating  mb-3 \">
                               <input type=\"text\" class=\"form-control\" id=\"address\" name=\"address\" placeholder=\"address\" value='$address'>
                               <label for=\"address\">Address</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating mb-3\">
                               <input type=\"number\" class=\"form-control\" id=\"postal_code\" name=\"postal_code\"placeholder=\"postal_code\" value=". $row['postal_code']." >
                               <label for=\"postal_code\">Postal Code</label>
@@ -306,12 +306,14 @@ else if(isset($_POST['unsuspend']))
             }
         }
                             /*Kept as reference if implementing
-                             * <div class=\"col\">
+                             * <div class=\"col-md\">
                               <div class=\"form-floating mb-3\">
                                 <input type=\"password\" class=\"form-control\" id=\"n_password\" name=\"n_password\" placeholder=\"n_password\">
                                 <label for=\"n_password\">New password</label>
                               </div>
                             </div>*/
         ?>
+
+        <?php include_once('jsLinks.php');?>
     </body>
 </html>

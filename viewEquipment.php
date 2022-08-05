@@ -26,7 +26,7 @@
 <div class="container" >
 <h1 class ="display-5 text-center" style="margin-top:50px;">Equipment List</h1>
 <div class="row justify-content-center">
-  <div class="col-6 text-center">
+  <div class="col-md-6 text-center">
 <p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View equipment currently registed to your company.</p>
 </div>
         <form method="POST" class="mb-0" action="insertEquipment.php">

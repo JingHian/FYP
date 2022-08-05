@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
     <div class="container" >
     <h1 class ="display-5 text-center" style="margin-top:50px;">Delete Service '<?php echo $_SESSION['service_name'];?>'</h1>
     <div class="row justify-content-center">
-      <div class="col-6 text-center">
+      <div class="col-md-6 text-center">
   </div>
     </div>
   </div>
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
           echo' <input type="submit" class="btn me-5 btn-lg btn-danger"  name="Delete" value="Confirm">';
         }
       ?>
-      <a class="btn btn-lg btn-primary" href="viewEnquiriesAdmin.php">Back to Services</a>
+      <a class="btn btn-lg btn-primary" href="viewServiceAdmin.php">Back to Services</a>
     </form>
   </div>
   <?php include_once('jsLinks.php');?>

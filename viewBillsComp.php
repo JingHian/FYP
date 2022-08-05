@@ -7,7 +7,7 @@
     $name = $_SESSION["name"];
     $user_type = $_SESSION["user_type"];
 
-    $tables = new Company();
+    $bills = new Company();
 
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         header("location: index.php");
@@ -15,8 +15,6 @@
 
     }
 
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
-    }
 ?>
 <html>
     <head>
@@ -24,16 +22,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?php include_once('cssLinks.php');?>
 
-		<title>Company Details</title>
+		<title>View Bills</title>
     </head>
 	<body>
 
 
 <div class="container" >
-<h1 class ="display-5 text-center" style="margin-top:50px;">Homeowner Cases</h1>
+<h1 class ="display-5 text-center" style="margin-top:50px;">Clients</h1>
 <div class="row justify-content-center">
   <div class="col-md-6 text-center">
-<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View and reply to cases from Homeowners.</p>
+<p class ="display-6 fs-5 text-secondary" >List of Customers currently in contract with us.</p>
 </div>
 </div>
 </div>
@@ -44,7 +42,7 @@
 		</div>
     <div class="container justify-content-center text-center">
     <?php
-      $tables->listCases();
+      $bills->listClientsBills();
       ?>
 
 

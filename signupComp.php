@@ -92,10 +92,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class ="container" style="height:780px;">
   <div class="carousel-inner " >
       <div class="carousel-item active">
-        <span style="color:green"> <?php echo $signUpSuccess?> </span>
-        <span style="color:red"> <?php echo $signUpFail;  ?> </span>
-        <span style="color:red"> <?php echo $nameNotUnique;  ?> </span>
-        <span style="color:red"> <?php echo $whiteSpaceError;  ?> </span>
+        <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $signUpSuccess;?></div>
+        <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $nameNotUnique;?></div>
+        <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $signUpFail;?></div>
+        <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $whiteSpaceError;?></div>
             <div class="form-floating mt-3 mb-3 ninety-five ">
               <input type="text" class="form-control " id="username" name="username" placeholder="username" value="<?php echo $username; ?>" required>
               <label for="username">Username</label>
@@ -132,11 +132,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             </p>
           </div>
           <div class="carousel-item" >
-            <span style="color:green"> <?php echo $signUpSuccess;?> </span>
-            <span style="color:red"> <?php echo $signUpFail;  ?> </span>
-            <span style="color:red"> <?php echo $nameNotUnique;  ?> </span>
-            <span style="color:red"> <?php echo $whiteSpaceError;  ?> </span>
-            <span id="check-error" style="color:red"></span>
+            <div class="alert alert-danger booking-alert mt-3" id="check-error" role="alert"></div>
             <p style="text-align: center;">What services do you provide?</p>
             <div class= "row d-flex justify-content-center" id="services-checkbox">
               <?php
@@ -158,7 +154,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
   </form>
   <?php include_once('jsLinks.php');?>
-  <!-- <script>
+  <script>
   $( "#sign-up" ).click(function() {
 
   if($('#services-checkbox :checkbox:checked').length > 0 == false){
@@ -169,6 +165,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $('#check-error').text('Please check at least one service!');
   }
   });
-  </script> -->
+  </script>
 </body>
 </html>

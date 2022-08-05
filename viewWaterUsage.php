@@ -75,14 +75,14 @@ if ($result->num_rows > 0) {
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?php include_once('cssLinks.php');?>
-    <title>Welcome</title>
+    <title>Water Usage</title>
 </head>
 <body>
     <?php include_once('navbar.php');?>
     <h2 class ="text-center" style="margin-top:30px;margin-bottom:30px;">Water Usage</h2>
     <div class ="container">
       <div class =" row ">
-        <div class ="col-3 boxshadow bg-primary text-white p-4 height-350">
+        <div class ="col-md-3 boxshadow bg-primary text-white p-4 height-350">
           <div>
             <h3 class="usage-font"><?php echo $_SESSION['name'];?></h3>
             <h3 class="usage-font"><?php echo $_SESSION['address'];?></h3>
@@ -93,15 +93,15 @@ if ($result->num_rows > 0) {
 
           </div>
         </div>
-        <div class ="col-1"></div>
-        <div class ="col-8  height-350">
+        <div class ="col-md-1"></div>
+        <div class ="col-md-8  height-350">
             <canvas id="myChart"></canvas>
         </div>
       </div>
       <hr class ="hr-margin">
       <h2 class ="text-center" style="margin:10px 0 20px 0;">Stats</h2>
       <div class ="row height-300">
-        <div class ="col-5 bg-grey height-350 boxshadow" style="padding-bottom:80px;">
+        <div class ="col-md-5 bg-grey height-350 boxshadow" style="padding-bottom:80px;">
               <canvas id="myChart2"></canvas>
               <?php
               if ($total_water> 0 && $total_water_prev > 0 && $total_water > $total_water_prev)
@@ -124,8 +124,8 @@ if ($result->num_rows > 0) {
               }
               ?>
         </div>
-        <div class ="col-2">  </div>
-        <div class ="col-5 bg-grey height-350 boxshadow" style="padding-bottom:80px;">
+        <div class ="col-md-2">  </div>
+        <div class ="col-md-5 bg-grey height-350 boxshadow" style="padding-bottom:80px;">
           <canvas id="myChart3"></canvas>
           <?php
           if ($total_water> 0 && $total_houshold_average > 0 && $total_water > $total_houshold_average)

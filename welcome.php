@@ -22,7 +22,7 @@ $companyId = $_SESSION["ID"];
 <body>
     <?php include_once('navbar.php');?>
     <div class ="container">
-    <h1 class="my-5 display-5 text-center">Hi, <b><?php echo htmlspecialchars($_SESSION["name"])." "; ?></b>. Welcome to Water Supply Marketplace.</h1>
+    <h1 class="my-5 welcome-font text-center">Hi, <?php echo htmlspecialchars($_SESSION["name"])." "; ?>. Welcome to Water Supply Marketplace.</h1>
   </div>
   <?php include_once('jsLinks.php');?>
 </body>

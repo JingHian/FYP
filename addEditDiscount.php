@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
       <div class="container" >
       <h1 class ="display-5 text-center" style="margin-top:50px;">Add/Edit Discount</h1>
       <div class="row justify-content-center">
-        <div class="col-6 text-center">
+        <div class="col-md-6 text-center">
       <p class ="display-6 fs-5" name = "product" value ="avail">Enter/Edit Discount details or delete discount here.</p>
     </div>
       </div>
@@ -153,19 +153,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
           </div>
         </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
           <div class="form-floating mb-3">
             <input type="date" class="form-control" id="date" name = "SDate" value="<?php echo $SDate;  ?>">
             <label for="SDate">Start Date</label>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
           <div class="form-floating mb-3">
             <input type="date" class="form-control" id="date" name = "EDate" value="<?php echo $EDate;  ?>">
             <label for="EDate">End Date</label>
           </div>
         </div>
-      <div class="col-6">
+      <div class="col-md-6">
           <div class="form-floating mb-3">
             <input type="number" class="form-control" id="discount" name="discount" placeholder="discount" required min ="1" max="100" value="<?php echo $Modifier;  ?>">
             <label for="discount">Modifier</label>

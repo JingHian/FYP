@@ -1,19 +1,28 @@
 <?php
-    session_start();
-    include_once ("conn.php");
-    include_once ("classes.php");
-    include_once ('navbar.php');
-    include_once "logInCheck.php";
-    $name = $_SESSION["name"];
-    $user_type = $_SESSION["user_type"];
+  session_start();
+  include_once ("conn.php");
+  include_once ("classes.php");
+  include_once ('navbar.php');
+  include_once "logInCheck.php";
 
-    $bills = new Homeowner();
 
-    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-        header("location: index.php");
-        exit;
+  if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $client_ID = $_POST["client_ID"];
+    $client_name = $_POST["client_name"];
+    $_SESSION["client_ID"] = $_POST["client_ID"];
+    $_SESSION["client_name"] = $_POST["client_name"];
+    $_SESSION["client_address"] = $_POST["client_address"];
+    $_SESSION["client_postal_code"] = $_POST["client_postal_code"];
 
-    }
+  }
+
+  $bills = new Company();
+
+  if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+      header("location: index.php");
+      exit;
+
+  }
 
 ?>
 <html>
@@ -28,7 +37,7 @@
 
 
 <div class="container" >
-<h1 class ="display-5 text-center" style="margin-top:50px;">View Bills</h1>
+<h1 class ="display-5 text-center" style="margin-top:50px;">Client <?php echo $client_name ?>'s  Bills</h1>
 <div class="row justify-content-center">
   <div class="col-md-6 text-center">
 <p class ="display-6 fs-5 text-secondary" name = "product" value ="avail"></p>
@@ -42,7 +51,7 @@
 		</div>
     <div class="container justify-content-center text-center">
     <?php
-      $bills->listBillsHomeowner();
+      $bills->listClientBillDetails();
       ?>
 
 

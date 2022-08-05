@@ -23,7 +23,7 @@ $services = new Admin();
         <div class="col text-center">
           <p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View and edit Services currently in use.</p>
         </div>
-    <div class="col-12 text-center">
+    <div class="col-md-12 text-center">
         <a class="float-end btn btn-primary" href="insertServiceCategory.php" type="submit">Add +</a>
       </div>
       </div>

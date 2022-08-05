@@ -25,7 +25,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <div class="container" >
       <h1 class ="display-5 text-center" style="margin-top:50px;">Enquiry #<?php echo $_POST['case_ID'];?></h1>
       <div class="row justify-content-center">
-        <div class="col-6 text-center">
+        <div class="col-md-6 text-center">
       <p class ="display-6 fs-5" name = "product" value ="avail">check the details of your enquiry here.</p>
     </div>
       </div>
@@ -47,14 +47,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
           </div>
         </div>
         <div class="row">
-          <div class ="col-6">
+          <div class ="col-md-6">
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="case_date" name="case_date" placeholder="case_date" value ="<?php echo $_POST['case_date'];?>" disabled>
             <label for="case_date">Date</label>
           </div>
         </div>
 
-        <div class ="col-6">
+        <div class ="col-md-6">
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="case_status" name="case_status" placeholder="case_status" value ="<?php echo $_POST['case_status'];?>" disabled>
           <label for="case_status">Status</label>

@@ -33,6 +33,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if ($checkVerified == 'verified')
     {
       $checkLogin = $login->selectFromTable();
+      if ($_SESSION['user_type'] == "homeowner")
+      {
+        header("location: welcomeHomeowner.php");
+      }
+      else {
+        header("location: welcome.php");
+      }
     }
     else if ($checkVerified =='pending')
     {

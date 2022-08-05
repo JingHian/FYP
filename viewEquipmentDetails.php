@@ -33,7 +33,7 @@ session_start();
         <div class="container" >
             <h1 class ="display-5 text-center" style="margin-top:50px;">Equipment #<?php echo $equipment_ID;?></h1>
             <div class="row justify-content-center">
-                <div class="col-6 text-center">
+                <div class="col-md-6 text-center">
                     <p class ="display-6 fs-5">Equipment Details</p>
                 </div>
             </div>

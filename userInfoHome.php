@@ -54,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
   <div class="container" >
   <h1 class ="display-5 text-center" style="margin-top:50px;">Edit Profile</h1>
   <div class="row justify-content-center">
-    <div class="col-6 text-center">
+    <div class="col-md-6 text-center">
   <p class ="display-6 fs-5" name = "product" value ="avail">Change your details here.</p>
 </div>
   </div>

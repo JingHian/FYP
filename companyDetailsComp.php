@@ -133,7 +133,7 @@
 </div>
 <div class ="container">
     <div class="row">
-      <div class="col-8 ">
+      <div class="col-md-8 ">
         <div class="aboutUs mt-3">
             <h2 class ="fw-bold">About Us</h2>
             <p><?php echo $_SESSION['home_type'];?>
@@ -170,7 +170,7 @@
         </div>
     </div>
 
-<div class="col-4 ">
+<div class="col-md-4 ">
     <div class="review boxshadow mt-3"> <!-- can use overflow-->
         <table class="outerReviewTable">
             <tr><th><h2>Reviews</h2></th><tr>

@@ -6,16 +6,18 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link "  href="welcome.php">Home</a>
           <?php
+
             if($_SESSION["user_type"] =="admin"){
+              echo '<a class="nav-link "  href="welcome.php">Home</a>';
               echo '<a class="nav-link " href="userProfiles.php" >View Profiles</a>';
               echo '<a class="nav-link " href="verifyCompanies.php" >Verify Companies</a>';
               echo '<a class="nav-link " href="viewEnquiriesAdmin.php" >Enquiries</a>';
               echo '<a class="nav-link " href="viewServiceAdmin.php" >Service Categories</a>';
             }
             if($_SESSION["user_type"] =="company"){
-              echo '<a class="nav-link " href="#" >Customers</a>';
+              echo '<a class="nav-link "  href="welcome.php">Home</a>';
+              echo '<a class="nav-link " href="viewClients.php" >Customers</a>';
               echo '<a class="nav-link " href="servicesCompany.php" >Services</a>';
               echo '<a class="nav-link " href="viewEquipment.php" >Equipment</a>';
               echo '<a class="nav-link " href="viewStaff.php" >Staff</a>';
@@ -23,6 +25,7 @@
               echo '<a class="nav-link " href="viewBookingsComp.php" >Bookings</a>';
             }
             if($_SESSION["user_type"] =="homeowner"){
+              echo '<a class="nav-link "  href="welcomeHomeowner.php">Home</a>';
               echo '<a class="nav-link " href="viewCompanies.php" >View Companies</a>';
               echo '<a class="nav-link " href="servicesHomeowner.php" >My Services</a>';
               echo '<a class="nav-link " href="viewBookingsHomeowner.php" >Bookings</a>';

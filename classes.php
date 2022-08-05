@@ -433,6 +433,284 @@ try {
 }
 
 
+
+function tableHeaderClient()
+{
+  echo "<table class='table table-hover datatable_style' >
+  <thead>
+  <tr class='table-padding text-white'>
+    <th>Client ID</th>
+    <th>Name</th>
+    <th>Start Date</th>
+  </tr>
+  </thead>
+  <tbody class='search-table'>";
+}
+
+function listClients(){
+  $company_ID = $_SESSION['ID'];
+  $query = "SELECT cl.client_ID, cl.homeowner_ID,cl.start_date,ho.name
+            FROM Clients as cl
+            JOIN Homeowners AS ho
+            ON cl.homeowner_ID = ho.homeowner_ID
+            WHERE cl.company_ID = $company_ID";
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderClient();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+      echo "<tr class='table-padding' >";
+      echo "<form method='post' action=''>";
+      echo "<td>".$row["client_ID"]."</td>";
+      echo "<td>".$row["name"]."</td>";
+      echo '<td>'.$row["start_date"].'</td>'
+      .'<input type ="hidden" value ="'.$row["client_ID"].'" name ="client_ID"/>'
+      .'<input type ="hidden" value ="'.$row["name"].'" name ="name"/>'
+      .'<input type ="hidden" value ="'.$row["start_date"].'" name ="start_date"/>'."</td>
+  </tr>
+</form>";
+     }
+     echo "</tbody></table>";
+   } else {
+     echo "No Customers Found";
+   }
+
+}
+
+
+function tableHeaderListClientBills()
+{
+  echo "<table class='table table-hover datatable_style' >
+  <thead>
+  <tr class='table-padding text-white'>
+    <th>Client ID</th>
+    <th>Name</th>
+    <th>Contract Date</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody class='search-table'>";
+}
+
+function listClientsBills(){
+  $company_ID = $_SESSION['ID'];
+  $query = "SELECT cl.client_ID, cl.homeowner_ID,cl.start_date,ho.name,ho.address,ho.postal_code
+            FROM Clients as cl
+            JOIN Homeowners AS ho
+            ON cl.homeowner_ID = ho.homeowner_ID
+            WHERE cl.company_ID = $company_ID";
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderListClientBills();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+      echo "<tr class='table-padding' >";
+      echo "<form method='post' action='viewBillsClients.php'>";
+      echo "<td>".$row["client_ID"]."</td>";
+      echo "<td>".$row["name"]."</td>";
+      echo '<td>'.$row["start_date"].'</td>'
+      .'<input type ="hidden" value ="'.$row["client_ID"].'" name ="client_ID"/>'
+      .'<input type ="hidden" value ="'.$row["name"].'" name ="client_name"/>'
+      .'<input type ="hidden" value ="'.$row["start_date"].'" name ="start_date"/>'
+      .'<input type ="hidden" value ="'.$row["address"].'" name ="client_address"/>'
+      .'<input type ="hidden" value ="'.$row["postal_code"].'" name ="client_postal_code"/>'
+      ."<td class ='align-middle'><input type='submit' class='btn btn-primary me-2' name='viewbills' value='View Bills'><a href='generateBill.php' class='btn btn-primary'>Generate Bill</a></td>
+  </tr>
+</form>";
+     }
+     echo "</tbody></table>";
+   } else {
+     echo "No Customers Found";
+   }
+
+}
+
+function tableHeaderClientBillDetails()
+{
+  echo "<table class='table table-hover datatable_style' >
+          <thead>
+          <tr class='table-padding text-white'>
+            <th>Bill #</th>
+            <th>Company Name</th>
+            <th>Bill Date</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody class='search-table'>";
+}
+
+function listClientBillDetails()
+{
+  $ID = $_SESSION['ID'];
+  $client_ID = $_SESSION["client_ID"];
+  $client_name = $_SESSION["client_name"];
+
+ $query = "SELECT bill.*
+           FROM Bills AS bill
+           WHERE client_ID = '$client_ID'";
+
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderClientBillDetails();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+     echo "
+               <tr class='table-padding' >
+                 <form method='post' action='viewBillDetailsComp.php'>
+                 <td>".$row["bill_ID"]."</td>
+                 <td>".$client_name."</td>
+                 <td>".$row["bill_date"]."</td>
+                 <td>".$row["bill_due_date"]."</td>
+                 <td>".$row["bill_status"]."</td>
+                 ".'<input type ="hidden" value ="'.$row["bill_ID"].'" name ="bill_ID"/>'.
+                   '<input type ="hidden" value ="'.$client_name.'" name ="company_name"/>'.
+                   '<input type ="hidden" value ="'.$row["bill_date"].'" name ="bill_date"/>'.
+                   '<input type ="hidden" value ="'.$row["bill_due_date"].'" name ="bill_due_date"/>'.
+                   '<input type ="hidden" value ="'.$row["bill_status"].'" name ="bill_status"/>'.
+                   '<input type ="hidden" value ="'.$row["homeowner_ID"].'" name ="homeowner_ID"/>'.
+                   '<input type ="hidden" value ="'.$_SESSION["address"].'" name ="company_address"/>'.
+                   '<input type ="hidden" value ="'.$_SESSION["postal_code"].'" name ="company_postal"/>'.
+                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+               </tr>
+             </form>";
+     }
+     echo "
+     </tbody></table>";
+   } else {
+     echo "No Bills Found";
+   }
+
+}
+
+
+
+
+function tableHeaderBillDetails()
+{
+  echo "<table class='table table-borderless datatable_style2' >
+          <thead>
+            <tr class='table-padding text-white'>
+              <th>Description</th>
+              <th>Usage</th>
+              <th>Date</th>
+              <th>Price per m³</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody class='search-table'>";
+}
+
+function listBillDetailsCompany(){
+  $ID = $_SESSION['ID'];
+  $HID = $_SESSION['homeowner_ID'];
+  $month = $_SESSION['bill_month'];
+  $total_price = 0;
+
+
+  $query = "SELECT price FROM Company_services WHERE service_ID = '1' AND company_ID = '$ID'";
+  $result = mysqli_query($this->conn, $query);
+  $row = $result->fetch_assoc();
+  $water_price = $row["price"];
+
+
+  $query = "SELECT water.*,SUM(water.water_usage) AS total_water,comp.*
+            FROM Water_Tracking AS water
+            JOIN Company AS comp
+            ON water.company_ID = comp.company_ID
+            WHERE water.homeowner_ID = '$HID'
+            AND comp.company_ID = '$ID'
+            AND MONTH(water.usage_date) = '$month'";
+
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderBillDetails();
+      while($row = $result->fetch_assoc()) {
+      echo "
+              <tr class='table-padding' >
+                <form method='post' action='viewBillDetails.php'>";
+                echo "<td>Water Usage</td>";
+                echo "<td>".$row["total_water"]."m³</td>";
+                echo "<td></td>";
+                echo "<td>".$water_price."</td>";
+                echo "<td>".$water_price * $row["total_water"]."</td>";
+                $total_price += $water_price * $row["total_water"]; //add up the prices
+
+
+       echo "
+                </tr>
+              </form>";
+      }
+    } else {
+      echo "<td>No Water usage found</td>";
+    }
+
+
+
+
+  $query = "SELECT price FROM Company_services WHERE service_ID = '2' AND company_ID = '$ID'";
+  $result = mysqli_query($this->conn, $query);
+  $row = $result->fetch_assoc();
+  $maint_price = $row["price"];
+
+
+ $query = "SELECT book.*,comp.*
+           FROM Bookings AS book
+           JOIN Company AS comp
+           ON book.company_ID = comp.company_ID
+           WHERE book.homeowner_ID = '$HID'
+           AND comp.company_ID = '$ID'
+           AND MONTH(book.booking_date) = '$month'";
+
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+     echo "
+             <tr class='table-padding' >
+               <form method='post' action='viewBillDetails.php'>";
+               if ($row["booking_type"] == 'installation' or $row["booking_type"] == 'problem')
+               {
+                 echo "<td>Maintenance Services";
+                 echo "<td>".ucfirst($row["booking_type"])."</td>";
+                 echo "<td>".$row["booking_date"]."</td>";
+                 echo "<td>".$maint_price."</td>";
+                 $total_price += $maint_price; //add up the prices
+                 // echo $total_price;
+               }
+
+      echo "
+               </tr>
+             </form>";
+     }
+     echo "
+     <tr class='table-padding' >
+     <td></td>
+     </tr>
+     <tr class='table-padding' >
+      <th></th>
+      <th></th>
+      <th></th>
+      <th class = 'border border-dark border-start-0 border-end-0 border-3'>Total Price:</th>
+      <th class = 'border border-dark border-start-0 border-end-0 border-3'>$total_price</th>
+      </tr>
+
+    </tbody> </table>";
+   } else {
+   echo "<td>No Maintenance usage found</td>";
+   }
+
+}
+
+
+
+
 }
 
 class Homeowner{
@@ -1282,7 +1560,7 @@ class Universal{
          // output data of each row
          while($row = $result->fetch_assoc()) {
            echo '
-           <div class ="col-6 ">
+           <div class ="col-md-6 ">
            <div class="form-check form-check-inline">
 
              <input class="form-check-input" type="checkbox" name="services[]" value="'.$row["service_name"].'">
@@ -1293,7 +1571,7 @@ class Universal{
            ';
          }
          echo '
-         <div class ="col-6 "></div>';
+         <div class ="col-md-6 "></div>';
        }
 
   }

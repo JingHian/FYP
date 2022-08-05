@@ -23,7 +23,7 @@ $enquiries = new Admin();
         <div class="col text-center">
           <p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">Here you can view the status of the Customer Enquiries.</p>
         </div>
-    <div class="col-12 text-center">
+    <div class="col-md-12 text-center">
 
       </div>
       </div>
