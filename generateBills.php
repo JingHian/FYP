@@ -60,7 +60,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['generate'])) {
       <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Generate Bill for Client <?php echo $_SESSION['client_name'];?>.</h1>
       <div class="row justify-content-center">
         <div class="col-6 text-center">
-      <p class ="display-6 fs-5" name = "product" value ="avail">Bills will be auto generated for the last day of the month and due the lat day of next month.</p>
+      <p class ="display-6 fs-5" name = "product" value ="avail">Bills will be auto generated for the last day of the month and due the last day of next month.</p>
     </div>
       </div>
     </div>

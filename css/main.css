@@ -338,8 +338,11 @@ opacity: .75 !important;
     border:none !important;
     border-top:3px solid black !important;
   }
-}
 
+  .hide-box{
+    display:none;
+  }
+}
 
 
 @media (min-width: 1980px){
