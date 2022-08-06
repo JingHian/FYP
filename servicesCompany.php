@@ -44,7 +44,7 @@ include_once "logInCheck.php";
 
         <div class="col-md-15"></div>
         <div class="col-md-15"></div>
-          <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-top-0 border-start-0 border-bottom-0 border-dark border-3 pt-3  height-200 bg-white" href="viewCases.php">
+          <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-top-0 border-start-0 border-bottom-0 border-dark border-3 pt-3  height-200" href="viewCases.php">
 
             <div class =" text-center">
               <span class="material-symbols-outlined   icon-size">contact_support</span>
@@ -52,14 +52,14 @@ include_once "logInCheck.php";
             </div>
           </a>
 
-            <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center  justify-content-center col-md-3 border border-dark border-0 pt-3  height-200 bg-white" href="viewBookingsComp.php">
+            <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center  justify-content-center col-md-3 border border-dark border-0 pt-3  height-200 " href="viewBookingsComp.php">
               <div class =" text-center">
                 <span class="material-symbols-outlined  icon-size">event_available</span>
                 <p class="usage-font ">Homeowner Bookings </p>
               </div>
             </a>
 
-            <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-top-0 border-bottom-0 border-end-0 border-dark border-3 pt-3  height-200 bg-white" href="viewBillsComp.php">
+            <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-top-0 border-bottom-0 border-end-0 border-dark border-3 pt-3  height-200 " href="viewBillsComp.php">
               <div class =" text-center">
                 <span class="material-symbols-outlined   icon-size">request_quote</span>
                 <p class="usage-font">Homeowner Bills </p>
@@ -68,7 +68,7 @@ include_once "logInCheck.php";
             </a>
             <div class="col-md-15"></div>
             <div class="col-md-15"></div>
-              <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-dark border-start-0 border-bottom-0 border-3 pt-3  height-200 bg-white" href="managePrice.php">
+              <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-dark border-start-0 border-bottom-0 border-3 pt-3  height-200 " href="managePrice.php">
 
                 <div class =" text-center">
                   <span class="material-symbols-outlined   icon-size">price_change</span>
@@ -76,7 +76,7 @@ include_once "logInCheck.php";
                 </div>
               </a>
 
-              <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border  border-start-0 border-end-0 border-bottom-0  border-dark border-3 pt-3  height-200 bg-white"  href="addEditDiscount.php">
+              <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border  border-start-0 border-end-0 border-bottom-0  border-dark border-3 pt-3  height-200 "  href="addEditDiscount.php">
 
                   <div class =" text-center">
                     <span class="material-symbols-outlined  icon-size">inventory_2</span>
@@ -84,7 +84,7 @@ include_once "logInCheck.php";
                   </div>
                 </a>
 
-                <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center  justify-content-center col-md-3 border border-dark border-bottom-0 border-end-0 border-3 pt-3  height-200 bg-white" href="enquiryToPlatform.php">
+                <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center  justify-content-center col-md-3 border border-dark border-bottom-0 border-end-0 border-3 pt-3  height-200 " href="enquiryToPlatform.php">
 
                   <div class =" text-center">
                     <span class="material-symbols-outlined   icon-size">contact_support</span>

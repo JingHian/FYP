@@ -8,7 +8,7 @@ $company = new Company();
 $uni = new Universal();
 $already_exists = "";
 
-echo '<pre>' . print_r($_SESSION) . '</pre>';
+// echo '<pre>' . print_r($_SESSION) . '</pre>';
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['generate'])) {
   $CID = $_SESSION['ID'];

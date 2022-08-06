@@ -5,7 +5,7 @@
   include_once ('navbar.php');
   include_once "logInCheck.php";
 
-echo '<pre>' . print_r($_SESSION) . '</pre>';
+// echo '<pre>' . print_r($_SESSION) . '</pre>';
 
   if($_SERVER["REQUEST_METHOD"] == "POST") {
     $client_ID = $_POST["client_ID"];
