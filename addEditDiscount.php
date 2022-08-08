@@ -5,6 +5,7 @@ include_once("classes.php");
 include_once "logInCheck.php";
 
 $company = new Company();
+$DID = "";
 $Packname = "";
 $Packdesc = "";
 $SDate = "";
@@ -21,6 +22,7 @@ try {
     $result = $conn->query($sql);
     $row = $result -> fetch_assoc();
     if ($result->num_rows > 0) {
+      $DID = $row['discount_ID'];
       $Packname = $row['discount_name'];
       $Packdesc = $row['discount_description'];
       $SDate = $row['discount_start_date'];
@@ -104,6 +106,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
       {
+
+            $sql = "UPDATE Clients SET discount_ID = NULL WHERE discount_ID = '$DID'";
+            $result = mysqli_query($conn, $sql);
+
             $sql = "DELETE FROM Discounts WHERE company_ID = '$CID'";
             if ($conn->query($sql) === TRUE) {
               $discount_deleted = "Discount has been Deleted!";

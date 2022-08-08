@@ -30,7 +30,7 @@ class Company{
   function StaffDropDown(){
 
       $ID = $_SESSION['ID'];
-      $getcompanyname = mysqli_query($this->conn, "SELECT * FROM maintenance_staff WHERE company_ID = '$ID' AND status = \"Not Assigned\"");
+      $getcompanyname = mysqli_query($this->conn, "SELECT * FROM Maintenance_Staff WHERE company_ID = '$ID' AND status = \"Not Assigned\"");
 
     echo '<div class="condi-dropdown mb-3">
       <select id="staff_name" class="form-select" name="staff_name" required>
@@ -79,7 +79,7 @@ class Company{
        //calcualte the average rating of a particular company
        $companyID = $row['company_ID'];
           try {
-            $getAverageRating = mysqli_query($this->conn, "select avg(score) from ratings where company_ID = $companyID");
+            $getAverageRating = mysqli_query($this->conn, "select avg(score) from Ratings where company_ID = $companyID");
             $averageRating = $getAverageRating->fetch_array()[0] ?? '';
             //echo $averageRating;
 
@@ -261,7 +261,7 @@ function listStaff(){
   $company_ID = $_SESSION['ID'];
   $query = "SELECT staff.staff_ID, staff.staff_name, staff.email, staff.phone, staff.staff_role, staff.status
             FROM Maintenance_Staff as staff
-            JOIN company AS comp
+            JOIN Company AS comp
             ON staff.company_ID = comp.company_ID
             WHERE staff.company_ID = $company_ID";
   $result = mysqli_query($this->conn, $query);
@@ -299,7 +299,7 @@ function updateStaff($staff_ID,$staff_name,$staff_email,$staff_phone,$staff_role
 
 try {
 
-  $sql = "UPDATE maintenance_staff set staff_role = '$staff_role', staff_name = '$staff_name', email = '$staff_email', phone = '$staff_phone' where staff_ID = $staff_ID";
+  $sql = "UPDATE Maintenance_Staff set staff_role = '$staff_role', staff_name = '$staff_name', email = '$staff_email', phone = '$staff_phone' where staff_ID = $staff_ID";
   //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
   mysqli_query($this->conn, $sql);
 
@@ -311,7 +311,7 @@ try {
 
 function deleteStaff($staff_ID){
     try {
-        $sql = "DELETE FROM maintenance_staff WHERE staff_ID =$staff_ID";
+        $sql = "DELETE FROM Maintenance_Staff WHERE staff_ID =$staff_ID";
         //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
         mysqli_query($this->conn, $sql);
 
@@ -341,8 +341,8 @@ function tableHeaderEquipment()
 function listEquipment(){
   $company_ID = $_SESSION['ID'];
     $query = "SELECT equip.equipment_ID, equip.company_ID, equip.equipment_name, equip.quantity, equip.installation_date, equip.warranty_date, equip.expiry_date
-              FROM maintenance_equipment AS equip
-              JOIN company AS comp
+              FROM Maintenance_Equipment AS equip
+              JOIN Company AS comp
               ON equip.company_ID = comp.company_ID
               WHERE equip.company_ID = $company_ID";
     $result = mysqli_query($this->conn, $query);
@@ -382,7 +382,7 @@ function updateEquipment($equipment_ID,$equipment_name,$quantity,$installation_d
 
 try {
 
-  $sql = "UPDATE maintenance_equipment set  equipment_name = '$equipment_name', quantity = '$quantity', installation_date = '$installation_date' ,warranty_date = '$warranty_date' ,expiry_date = '$expiry_date' where equipment_ID = $equipment_ID";
+  $sql = "UPDATE Maintenance_Equipment set  equipment_name = '$equipment_name', quantity = '$quantity', installation_date = '$installation_date' ,warranty_date = '$warranty_date' ,expiry_date = '$expiry_date' where equipment_ID = $equipment_ID";
   //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
   mysqli_query($this->conn, $sql);
 
@@ -394,7 +394,7 @@ try {
 
 function deleteEquipment($equipment_ID){
     try {
-        $sql = "DELETE FROM maintenance_equipment WHERE equipment_ID =$equipment_ID";
+        $sql = "DELETE FROM Maintenance_Equipment WHERE equipment_ID =$equipment_ID";
         //printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
         mysqli_query($this->conn, $sql);
 
@@ -580,7 +580,8 @@ function listClientBillDetails()
                    '<input type ="hidden" value ="'.$row["homeowner_ID"].'" name ="homeowner_ID"/>'.
                    '<input type ="hidden" value ="'.$_SESSION["address"].'" name ="company_address"/>'.
                    '<input type ="hidden" value ="'.$_SESSION["postal_code"].'" name ="company_postal"/>'.
-                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'>
+                 </td>
                </tr>
              </form>";
      }
@@ -615,9 +616,11 @@ function listBillDetailsCompany(){
   $HID = $_SESSION['homeowner_ID'];
   $month = $_SESSION['bill_month'];
   $total_price = 0;
+  $no_maint = 0;
+  $no_water = 0;
 
 
-  $query = "SELECT price FROM Company_services WHERE service_ID = '1' AND company_ID = '$ID'";
+  $query = "SELECT price FROM Company_Services WHERE service_ID = '1' AND company_ID = '$ID'";
   $result = mysqli_query($this->conn, $query);
   $row = $result->fetch_assoc();
   $water_price = $row["price"];
@@ -635,33 +638,48 @@ function listBillDetailsCompany(){
 
    if ($result->num_rows > 0) {
      $this->tableHeaderBillDetails();
-      while($row = $result->fetch_assoc()) {
-      echo "
-              <tr class='table-padding' >
-                <form method='post' action='viewBillDetails.php'>";
-                echo "<td>Water Usage</td>";
-                echo "<td>".$row["total_water"]."m³</td>";
-                echo "<td></td>";
-                echo "<td>".$water_price."</td>";
-                echo "<td>".$water_price * $row["total_water"]."</td>";
-                $total_price += $water_price * $row["total_water"]; //add up the prices
+     while($row = $result->fetch_assoc()) {
+       if (is_null($row["total_water"]))
+       {
+         echo "
+           <tr class='table-padding' ><td>No Water usage found</td>
+           </tr>";
+           $no_water = 1;
+       }
+       else {
+         echo "<tr class='table-padding' >
+                 <form method='post' action=''>";
+                 echo "<td>Water Usage</td>";
+                 echo "<td>".$row["total_water"]."m³</td>";
+                 echo "<td></td>";
+                 echo "<td>".$water_price."</td>";
+                 echo "<td>".$water_price * $row["total_water"]."</td>";
+                 $total_price += $water_price * $row["total_water"]; //add up the prices
+                 $_SESSION['total_price'] = $total_price;
+
+                 // <input type="submit" class="btn btn-lg btn-primary me-4  float-end" value="Make Payment">
+                 echo "</tr></form>";
+
+       }
+
+     }
+   } else {
+     echo "
+       <tr class='table-padding' ><td>No Water usage found</td>
+       </tr>";
+     $no_water = 1;
+   }
 
 
-       echo "
-                </tr>
-              </form>";
-      }
-    } else {
-      echo "<td>No Water usage found</td>";
-    }
 
 
-
-
-  $query = "SELECT price FROM Company_services WHERE service_ID = '2' AND company_ID = '$ID'";
+  $query = "SELECT price FROM Company_Services WHERE service_ID = '2' AND company_ID = '$ID'";
   $result = mysqli_query($this->conn, $query);
   $row = $result->fetch_assoc();
-  $maint_price = $row["price"];
+  if($result->num_rows > 0)
+  {
+    $maint_price = $row["price"];
+  }
 
 
  $query = "SELECT book.*,comp.*
@@ -710,6 +728,60 @@ function listBillDetailsCompany(){
    } else {
    echo "<td>No Maintenance usage found</td>";
    }
+
+
+    $query = "SELECT discount_ID FROM Clients WHERE homeowner_ID = '$HID' AND company_ID = '$ID'";
+    $result = mysqli_query($this->conn, $query);
+    $row = $result->fetch_assoc();
+    $discount_ID = $row["discount_ID"];
+
+
+    $query = "SELECT discount_name,discount_modifier
+              FROM Discounts
+              WHERE discount_ID ='$discount_ID'
+              AND company_ID = '$ID'";
+
+    $result = mysqli_query($this->conn, $query);
+
+     if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "<tr class='table-padding' >
+                    <form method='post' action=''>";
+                    echo "<td>Discount</td>";
+                    echo "<td>".$row["discount_name"]."</td>";
+                    echo "<td></td>";
+                    echo "<td></td>";
+                    echo "<td>".$row["discount_modifier"]."%</td>";
+                    // <input type="submit" class="btn btn-lg btn-primary me-4  float-end" value="Make Payment">
+                    echo "</tr></form>";
+                   $total_price = $total_price * ((100 - $row["discount_modifier"])/100); //get discounted price
+
+
+        }
+        echo "
+        <tr class='table-padding' >
+        <td></td>
+        </tr>
+        <tr class='table-padding' >
+         <th></th>
+         <th></th>
+         <th></th>
+         <th class = 'border border-dark border-start-0 border-end-0 border-3'>Total Price:</th>
+         <th class = 'border border-dark border-start-0 border-end-0 border-3'>$".number_format($total_price, 2)."</th>
+         </tr>
+
+       </tbody> </table>";
+      } else {
+      echo" </tbody> </table>";
+      }
+
+    if ($no_maint == 1 && $no_water == 1)
+    {
+      return 1;
+    }
+    else {
+      return 0;
+    }
 
 }
 
@@ -820,27 +892,33 @@ function insertBooking($company_name,$date,$details,$booking_type)
   $row = mysqli_fetch_assoc($result);
   $company_ID = $row['company_ID'];
   $ID = $_SESSION['ID'];
-  //
-  // echo '<pre>' . print_r($_SESSION) . '</pre>';
-  // echo $date;
-  // echo $details;
-  // echo $booking_type;
-  // echo $company_name;
-  // echo $company_ID;
 
-  try
-  {
-    $sql = "INSERT INTO Bookings (company_ID, homeowner_ID, booking_date,booking_description,booking_type,booking_status) VALUES ( '$company_ID', '$ID', '$date', '$details', '$booking_type', 'In Progress')";
-    $result = mysqli_query($this->conn, $sql);
-    // printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
-    return True;
 
+  $sql = "SELECT client_ID from Clients where company_ID = '$company_ID' AND homeowner_ID='$ID'";
+  $result = mysqli_query($this->conn, $sql);
+  if (mysqli_num_rows($result) == 1) {
+    $row = mysqli_fetch_assoc($result);
+    $client_ID = $row['client_ID'];
+
+    try
+    {
+      $sql = "INSERT INTO Bookings (company_ID, homeowner_ID,client_ID, booking_date,booking_description,booking_type,booking_status) VALUES ( '$company_ID', '$ID','$client_ID', '$date', '$details', '$booking_type', 'In Progress')";
+      $result = mysqli_query($this->conn, $sql);
+      // printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
+      return True;
+
+    }
+    catch (mysqli_sql_exception $e)
+    {
+      echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
+      return False;
+    }
   }
-  catch (mysqli_sql_exception $e)
-  {
-    echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
+  else {
     return False;
   }
+
+
 }
 
 function addClient($company_ID,$date)
@@ -1032,8 +1110,8 @@ function tableHeaderBillDetails()
               <th>Description</th>
               <th>Usage</th>
               <th>Date</th>
-              <th>Price per m³</th>
               <th>Price</th>
+              <th>Total Price</th>
             </tr>
           </thead>
           <tbody class='search-table'>";
@@ -1048,7 +1126,7 @@ function listBillDetailsHomeowner(){
   $no_water = 0;
 
 
-  $query = "SELECT price FROM Company_services WHERE service_ID = '1' AND company_ID = '$CID'";
+  $query = "SELECT price FROM Company_Services WHERE service_ID = '1' AND company_ID = '$CID'";
   $result = mysqli_query($this->conn, $query);
   $row = $result->fetch_assoc();
   $water_price = $row["price"];
@@ -1099,12 +1177,13 @@ function listBillDetailsHomeowner(){
     }
 
 
-
-  $query = "SELECT price FROM Company_services WHERE service_ID = '2' AND company_ID = '$CID'";
+  $query = "SELECT price FROM Company_Services WHERE service_ID = '2' AND company_ID = '$CID'";
   $result = mysqli_query($this->conn, $query);
   $row = $result->fetch_assoc();
-  $maint_price = $row["price"];
-
+  if($result->num_rows > 0)
+  {
+    $maint_price = $row["price"];
+  }
 
  $query = "SELECT book.*,comp.*
            FROM Bookings AS book
@@ -1136,24 +1215,56 @@ function listBillDetailsHomeowner(){
                </tr>
              </form>";
      }
-     echo "
-     <tr class='table-padding' >
-     <td></td>
-     </tr>
-     <tr class='table-padding' >
-      <th></th>
-      <th></th>
-      <th></th>
-      <th class = 'border border-dark border-start-0 border-end-0 border-3'>Total Price:</th>
-      <th class = 'border border-dark border-start-0 border-end-0 border-3'>$total_price</th>
-      </tr>
-
-    </tbody> </table>";
    } else {
-   echo "<td>No Maintenance usage found</td>
-   </tbody> </table>";
+   echo "<td>No Maintenance usage found</td>";
     $no_maint = 1;
    }
+
+
+   $query = "SELECT discount_ID FROM Clients WHERE homeowner_ID = '$ID' AND company_ID = '$CID'";
+   $result = mysqli_query($this->conn, $query);
+   $row = $result->fetch_assoc();
+   $discount_ID = $row["discount_ID"];
+
+
+   $query = "SELECT discount_name,discount_modifier
+             FROM Discounts
+             WHERE discount_ID ='$discount_ID'
+             AND company_ID = '$CID'";
+
+   $result = mysqli_query($this->conn, $query);
+
+    if ($result->num_rows > 0) {
+       while($row = $result->fetch_assoc()) {
+           echo "<tr class='table-padding' >
+                   <form method='post' action=''>";
+                   echo "<td>Discount</td>";
+                   echo "<td>".$row["discount_name"]."</td>";
+                   echo "<td></td>";
+                   echo "<td></td>";
+                   echo "<td>".$row["discount_modifier"]."%</td>";
+                   // <input type="submit" class="btn btn-lg btn-primary me-4  float-end" value="Make Payment">
+                   echo "</tr></form>";
+                  $total_price = $total_price * ((100 - $row["discount_modifier"])/100); //get discounted price
+
+
+       }
+       echo "
+       <tr class='table-padding' >
+       <td></td>
+       </tr>
+       <tr class='table-padding' >
+        <th></th>
+        <th></th>
+        <th></th>
+        <th class = 'border border-dark border-start-0 border-end-0 border-3'>Total Price:</th>
+        <th class = 'border border-dark border-start-0 border-end-0 border-3'>$".number_format($total_price, 2)."</th>
+        </tr>
+
+      </tbody> </table>";
+     } else {
+     echo" </tbody> </table>";
+     }
 
    if ($no_maint == 1 && $no_water == 1)
    {
@@ -1162,6 +1273,7 @@ function listBillDetailsHomeowner(){
    else {
      return 0;
    }
+
 }
 
 
@@ -1244,7 +1356,7 @@ function tableHeaderVerifyCompanies()
 
 function verifyCompanies(){
   try {
-      $query = "select company_ID, name, email, phone, address, postal_code from company where verified = 0";
+      $query = "SELECT company_ID, name, email, phone, address, postal_code from Company where verified = 0";
 
       $result = mysqli_query($this->conn, $query);
 
@@ -1303,11 +1415,11 @@ function viewUserProfiles()
 {
 
   $query = "SELECT ho.homeowner_ID AS ID, ho.username, ho.name, ho.email, ho.phone, ho.user_type, ho.suspended
-            FROM homeowners AS ho
+            FROM Homeowners AS ho
             WHERE ho.verified = '1'
             UNION
             SELECT comp.company_ID AS ID, comp.username, comp.name, comp.email, comp.phone, comp.user_type, comp.suspended
-            FROM company AS comp
+            FROM Company AS comp
             WHERE comp.verified = '1'";
 
   $result = mysqli_query($this->conn, $query);
@@ -1374,7 +1486,7 @@ function tableHeaderEnquiriesAdmin()
    $ID = $_SESSION['ID'];
 
     try { //Get all homeowner enquiries and display them
-       $query = "SELECT * FROM Enquiries_homeowner as eq
+       $query = "SELECT * FROM Enquiries_Homeowner as eq
                  JOIN Homeowners as ho
                  ON eq.homeowner_ID = ho.homeowner_ID
                  WHERE eq.user_type ='homeowner'";
@@ -1541,7 +1653,7 @@ function tableHeaderEnquiriesAdmin()
   function updateEnquiry($reply,$enquiry_ID,$admin_ID,$enquiry_user_type){
     if ($enquiry_user_type == "homeowner")
     {
-      $query = "UPDATE Enquiries_homeowner
+      $query = "UPDATE Enquiries_Homeowner
                 SET
                 enquiry_reply ='$reply' ,
                 admin_ID ='$admin_ID' ,

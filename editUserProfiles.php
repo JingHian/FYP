@@ -33,7 +33,7 @@ if(isset($_POST['save']))
         $address = $_POST['address'];
         $postcode = $_POST['postal_code'];
         $hometype = $_POST['home_type'];
-        $change = "UPDATE homeowners SET name='$name', email='$email', phone='$phone', address='$address', postal_code='$postcode', home_type='$hometype' WHERE homeowner_ID='$UID'";
+        $change = "UPDATE Homeowners SET name='$name', email='$email', phone='$phone', address='$address', postal_code='$postcode', home_type='$hometype' WHERE homeowner_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $editInfo_success = "Your details have been updated!";
@@ -50,7 +50,7 @@ if(isset($_POST['save']))
         $email = $_POST['email'];
         $address = $_POST['address'];
         $postcode = $_POST['postal_code'];
-        $change = "UPDATE company SET name='$name', email='$email', phone='$phone', address='$address', postal_code='$postcode' WHERE company_ID='$UID'";
+        $change = "UPDATE Company SET name='$name', email='$email', phone='$phone', address='$address', postal_code='$postcode' WHERE company_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $editInfo_success = "Your details have been updated!";
@@ -66,7 +66,7 @@ else if(isset($_POST['suspend']))
 {
     if($user_type == 'homeowner')
     {
-        $change = "UPDATE homeowners SET suspended = 1 WHERE homeowner_ID='$UID'";
+        $change = "UPDATE Homeowners SET suspended = 1 WHERE homeowner_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $suspended = 1;
@@ -79,7 +79,7 @@ else if(isset($_POST['suspend']))
     }
     elseif($user_type == 'company')
     {
-        $change = "UPDATE company SET suspended = 1 WHERE company_ID='$UID'";
+        $change = "UPDATE Company SET suspended = 1 WHERE company_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $suspended = 1;
@@ -95,7 +95,7 @@ else if(isset($_POST['unsuspend']))
 {
     if($user_type == 'homeowner')
     {
-        $change = "UPDATE homeowners SET suspended = 0 WHERE homeowner_ID='$UID'";
+        $change = "UPDATE Homeowners SET suspended = 0 WHERE homeowner_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $suspended = 0;
@@ -108,7 +108,7 @@ else if(isset($_POST['unsuspend']))
     }
     elseif($user_type == 'company')
     {
-        $change = "UPDATE company SET suspended = 0 WHERE company_ID='$UID'";
+        $change = "UPDATE Company SET suspended = 0 WHERE company_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $suspended = 0;
@@ -141,7 +141,7 @@ else if(isset($_POST['unsuspend']))
         <?php
         if($user_type == 'homeowner')
         {
-            $sql = "SELECT * FROM homeowners WHERE homeowner_ID = '$UID'";
+            $sql = "SELECT * FROM Homeowners WHERE homeowner_ID = '$UID'";
             try
             {
                 $getdata = mysqli_query($conn, $sql);
@@ -230,7 +230,7 @@ else if(isset($_POST['unsuspend']))
         }
         elseif ($user_type == 'company')
         {
-            $sql = "SELECT * FROM company WHERE company_ID = '$UID'";
+            $sql = "SELECT * FROM Company WHERE company_ID = '$UID'";
             try
             {
                 $getdata = mysqli_query($conn, $sql);

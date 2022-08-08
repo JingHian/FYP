@@ -5,6 +5,7 @@ include_once("classes.php");
 $company = new Company();
 $homeowner = new Homeowner();
 $booking_success = "";
+$booking_failed = "";
 
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: index.php");
@@ -16,6 +17,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
   if($homeowner->insertBooking($_POST['company_name'],$_POST['date'],$_POST['problem_details'],$_POST['booking_type']))
   {
     $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_POST['company_name']."!";
+  }
+  else {
+    $booking_failed = "You are not a client of ". $_POST['company_name']."!";
   }
 
 }
@@ -84,6 +88,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
           <input type="submit" class="btn btn-lg btn-primary" value="Submit Booking">
       </div>
       <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $booking_success;?></div>
+      <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $booking_failed;?></div>
         </form>
       </div>
       <?php include_once('jsLinks.php');?>

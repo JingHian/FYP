@@ -29,13 +29,13 @@
         <div class="col-md-6 text-center">
       <?php
         if (isset($_POST['approve'])) {
-            $query = "update company set verified = 1 where company_id = $company_ID";
+            $query = "update Company set verified = 1 where company_id = $company_ID";
             $approve = mysqli_query($conn, $query);
             //mail($companyEmail,"Verification result",$approvalMsg);
             echo '<p class="alert alert-success booking-alert mt-3" role="alert">Company '.$name.'\'s verification request has been approved.</p>';
 
         } else if (isset($_POST['reject'])) {
-            $query = "update company set verified = 2 where company_id = $company_ID";
+            $query = "update Company set verified = 2 where company_id = $company_ID";
             $approve = mysqli_query($conn, $query);
             //mail($companyEmail,"Verification Result",$rejectionMsg);
             echo '<p class="alert alert-danger booking-alert mt-3" role="alert">Company '.$name.'\'s verification request has been rejected.</p>';

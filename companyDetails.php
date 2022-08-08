@@ -11,7 +11,7 @@
  try
  {
    //get prices of water supply
-  $query = "SELECT price FROM Company_services as cs
+  $query = "SELECT price FROM Company_Services as cs
             JOIN Services as serv
             ON cs.service_ID = serv.service_ID
             WHERE company_ID =$CID AND service_name ='Water Supply'";
@@ -25,7 +25,7 @@
       $water_price = "none";
     }
    //get prices Maintenance
-    $query = "SELECT price FROM Company_services as cs
+    $query = "SELECT price FROM Company_Services as cs
               JOIN Services as serv
               ON cs.service_ID = serv.service_ID
               WHERE company_ID =$CID AND service_name ='Maintenance'";
@@ -132,7 +132,7 @@
 
 //count the number of reviews of a particular company
   try {
-    $getNumberOfReviews = mysqli_query($conn, "select count(*) from ratings where company_ID = $companyID");
+    $getNumberOfReviews = mysqli_query($conn, "select count(*) from Ratings where company_ID = $companyID");
     $numberOfReviews = $getNumberOfReviews->fetch_array()[0] ?? '';
   } catch (mysqli_sql_exception $e) {
     echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
@@ -140,7 +140,7 @@
 
   //calcualte the average rating of a particular company
   try {
-    $getAverageRating = mysqli_query($conn, "select avg(score) from ratings where company_ID = $companyID");
+    $getAverageRating = mysqli_query($conn, "select avg(score) from Ratings where company_ID = $companyID");
     $averageRating = $getAverageRating->fetch_array()[0] ?? '';
 
   } catch (mysqli_sql_exception $e) {
@@ -259,7 +259,7 @@
         <div class="contactUs">
 
           <h2 class ="fw-bold mb-3">Contact Us</h2>
-          <pre>Email: <?php echo $_SESSION['company_email'];?>     Phone Number: <?php echo $_SESSION['company_phone'] ;?></pre>
+          <pre>Email: <?php echo $_SESSION['company_email'];?>   Phone Number: <?php echo $_SESSION['company_phone'] ;?></pre>
             <form action="#" method="post">
             <button type='submit' class='btn btn-lg btn-primary text-white me-4' name="goTo" value='Hire'>Hire</button>
             <button type='submit' class='btn btn-lg btn-success text-white' name="goTo" value='Send Enquiry'>Send Enquiry</button>
@@ -271,7 +271,7 @@
 
   try {
     //$companyID = $_SESSION['company_ID'];
-    $reviews = "select homeowners.name, ratings.score, ratings.review from ratings join homeowners on ratings.homeowner_ID = homeowners.homeowner_ID where ratings.company_ID = $companyID";
+    $reviews = "SELECT Homeowners.name, Ratings.score, Ratings.review from Ratings join Homeowners on Ratings.homeowner_ID = Homeowners.homeowner_ID where Ratings.company_ID = $companyID";
     $result = mysqli_query($conn, $reviews);
 ?>
 

@@ -25,7 +25,7 @@ include_once ("classes.php");
     $email = $_POST['staffemail'] ?? "";
     $phoneNumber = $_POST['staffphonenumber'] ?? "";
     $role = $_POST['staffrole'] ?? "";
-    $tableName = "maintenance_staff";
+    $tableName = "Maintenance_Staff";
     $companyName = $_SESSION['name'] ?? "";
 
   if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){

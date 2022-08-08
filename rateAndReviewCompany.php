@@ -16,7 +16,7 @@ mysqli_query($conn, $ratingTable);
 
 $homeownerID = $_SESSION['ID'];
 
-$companiesList = "select company.name from clients join company on clients.company_ID = company.company_ID where clients.homeowner_ID = $homeownerID";
+$companiesList = "select Company.name from Clients join Company on Clients.company_ID = Company.company_ID where Clients.homeowner_ID = $homeownerID";
 $result = mysqli_query($conn, $companiesList);
 ?>
 
@@ -88,11 +88,11 @@ $reviewDetails = $_POST['reviewdetails'] ?? "";
 
 if (isset($_POST['submit'])) {
 
-    $getCompanyID = mysqli_query($conn, "select company_ID from company where name = '$chosenCompany'");
+    $getCompanyID = mysqli_query($conn, "select company_ID from Company where name = '$chosenCompany'");
     $companyID = $getCompanyID->fetch_array()[0] ?? '';
 
     try {
-        $storeReview = "insert into ratings (company_ID, homeowner_ID, score, review) values ($companyID, $homeownerID, $ratingGiven, '$reviewDetails')";
+        $storeReview = "insert into Ratings (company_ID, homeowner_ID, score, review) values ($companyID, $homeownerID, $ratingGiven, '$reviewDetails')";
         mysqli_query($conn, $storeReview);
 
         echo "review has been sent to $chosenCompany";

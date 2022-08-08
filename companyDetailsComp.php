@@ -11,7 +11,7 @@
  try
  {
    //get prices of water supply
-  $query = "SELECT price FROM Company_services as cs
+  $query = "SELECT price FROM Company_Services as cs
             JOIN Services as serv
             ON cs.service_ID = serv.service_ID
             WHERE company_ID =$CID AND service_name ='Water Supply'";
@@ -25,7 +25,7 @@
       $water_price = "none";
     }
    //get prices Maintenance
-    $query = "SELECT price FROM Company_services as cs
+    $query = "SELECT price FROM Company_Services as cs
               JOIN Services as serv
               ON cs.service_ID = serv.service_ID
               WHERE company_ID =$CID AND service_name ='Maintenance'";

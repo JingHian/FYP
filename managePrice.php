@@ -10,7 +10,7 @@ $CID = $_SESSION['ID'];
 try
 {
   //get prices of water supply
- $query = "SELECT price FROM Company_services as cs
+ $query = "SELECT price FROM Company_Services as cs
            JOIN Services as serv
            ON cs.service_ID = serv.service_ID
            WHERE company_ID =$CID AND service_name ='Water Supply'";
@@ -24,7 +24,7 @@ try
      $water_price = "none";
    }
   //get prices Maintenance
-   $query = "SELECT price FROM Company_services as cs
+   $query = "SELECT price FROM Company_Services as cs
              JOIN Services as serv
              ON cs.service_ID = serv.service_ID
              WHERE company_ID =$CID AND service_name ='Maintenance'";
@@ -51,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     try
     {
-        $wprice = "UPDATE company_services SET price = '$water_price' WHERE company_ID = '$CID' AND service_ID = '1'";
-        $mprice = "UPDATE company_services SET price = '$maintenance_price' WHERE company_ID = '$CID' AND service_ID = '2'";
+        $wprice = "UPDATE Company_Services SET price = '$water_price' WHERE company_ID = '$CID' AND service_ID = '1'";
+        $mprice = "UPDATE Company_Services SET price = '$maintenance_price' WHERE company_ID = '$CID' AND service_ID = '2'";
         @mysqli_query($conn, $wprice);
         @mysqli_query($conn, $mprice);
 

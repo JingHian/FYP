@@ -7,6 +7,7 @@ include_once "logInCheck.php";
 $company = new Company();
 $uni = new Universal();
 $already_exists = "";
+$generated = "";
 
 // echo '<pre>' . print_r($_SESSION) . '</pre>';
 
@@ -14,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['generate'])) {
   $CID = $_SESSION['ID'];
   $bill_month = $_POST['bill_month'];
   $bill_month_no = date('m', strtotime("$bill_month"));
-  echo $bill_month_no;
+  // echo $bill_month_no;
   $current_year = date("Y");
   $client_ID = $_SESSION["client_ID"];
   $last_day =  date("Y-m-d", strtotime("Last day of $bill_month $current_year"));
@@ -32,11 +33,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['generate'])) {
          $result = $stmt->get_result();
          $row = $result->fetch_assoc();
          $HID = $row['homeowner_ID'];
-         echo $HID;
+         // echo $HID;
          $stmt = $conn->prepare("INSERT INTO Bills (company_ID,homeowner_ID,client_ID,bill_date,bill_due_date,bill_status) VALUES ( ?,?,?,?,?,?)");
          $pending = "pending";
          $stmt->bind_param("iiisss", $CID,$HID,$client_ID,$last_day,$payment_date,$pending);
          $stmt->execute();
+         $generated = "A bill for ". $bill_month. " has been generated!";
     } else {
       $already_exists = "A bill for ". $bill_month. " for this client has already been generated!";
     }
@@ -79,7 +81,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['generate'])) {
         <button type="submit" class="btn  btn-primary" name ="generate">Generate</button>
         <a class='btn  btn-primary text-white me-4' href="viewBillsComp.php" value='Back'>Back</a>
     </div>
-    <div class="alert alert-primary booking-alert mt-3" role="alert"><?php echo $already_exists;?></div>
+    <div class="alert alert-primary booking-alert mt-3" role="alert"><?php echo $generated;?></div>
+    <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $already_exists;?></div>
   </form>
 </div>
     </body>

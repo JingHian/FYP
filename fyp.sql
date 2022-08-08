@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2022 at 09:39 PM
+-- Generation Time: Aug 08, 2022 at 11:51 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -51,10 +51,10 @@ INSERT INTO `Admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bills`
+-- Table structure for table `Bills`
 --
 
-CREATE TABLE `bills` (
+CREATE TABLE `Bills` (
   `bill_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL,
   `homeowner_ID` int(11) NOT NULL,
@@ -66,25 +66,26 @@ CREATE TABLE `bills` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `bills`
+-- Dumping data for table `Bills`
 --
 
-INSERT INTO `bills` (`bill_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `bill_date`, `bill_due_date`, `bill_status`, `bill_payment_date`) VALUES
-(1, 1, 1, 3, '2022-07-30', '2022-08-01', 'Paid', '2022-08-05'),
-(3, 1, 1, 3, '2022-08-30', '2022-09-01', 'pending', NULL),
-(4, 1, 2, 4, '2022-01-31', '2022-02-28', 'pending', NULL),
-(12, 1, 2, 4, '2022-02-28', '2022-03-31', 'pending', NULL);
+INSERT INTO `Bills` (`bill_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `bill_date`, `bill_due_date`, `bill_status`, `bill_payment_date`) VALUES
+(13, 4, 1, 1, '2022-08-31', '2022-09-30', 'pending', NULL),
+(16, 1, 1, 7, '2022-06-30', '2022-07-31', 'Paid', '2022-08-08'),
+(18, 1, 1, 7, '2022-04-30', '2022-05-31', 'pending', NULL),
+(19, 1, 1, 7, '2022-02-28', '2022-03-31', 'pending', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bookings`
+-- Table structure for table `Bookings`
 --
 
-CREATE TABLE `bookings` (
+CREATE TABLE `Bookings` (
   `booking_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL,
   `homeowner_ID` int(11) NOT NULL,
+  `client_ID` int(11) NOT NULL,
   `staff_ID` int(11) DEFAULT NULL,
   `booking_date` date NOT NULL,
   `booking_description` varchar(255) NOT NULL,
@@ -94,28 +95,21 @@ CREATE TABLE `bookings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `bookings`
+-- Dumping data for table `Bookings`
 --
 
-INSERT INTO `bookings` (`booking_ID`, `company_ID`, `homeowner_ID`, `staff_ID`, `booking_date`, `booking_description`, `booking_type`, `booking_status`, `completion_date`) VALUES
-(1, 1, 3, 3, '2022-07-27', 'asd', 'problem', 'Completed', '2022-08-05'),
-(2, 1, 1, 6, '2022-07-23', 'Hi', 'installation', 'Assigned', NULL),
-(3, 3, 2, NULL, '2022-06-30', 'Pipes Broken', 'problem', 'In Progress', NULL),
-(4, 1, 1, 1, '2022-07-21', '123123123', 'problem', 'Assigned', NULL),
-(5, 1, 1, 2, '2022-08-23', 'This is an augest booking', 'problem', 'Assigned', NULL),
-(6, 2, 3, NULL, '2022-10-05', 'testing booking', 'problem', 'In Progress', NULL),
-(7, 3, 1, NULL, '2022-07-28', 'sadasdasdasd', 'installation', 'In Progress', NULL),
-(8, 4, 1, NULL, '2022-07-27', 'sadasdasd', 'installation', 'In Progress', NULL),
-(9, 1, 1, NULL, '2022-08-23', 'Installation from Homeowner one to Company One', 'installation', 'In Progress', NULL),
-(10, 1, 2, NULL, '2022-08-04', 'asd', 'installation', 'In Progress', NULL);
+INSERT INTO `Bookings` (`booking_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `staff_ID`, `booking_date`, `booking_description`, `booking_type`, `booking_status`, `completion_date`) VALUES
+(14, 1, 1, 7, NULL, '2022-08-12', '123', 'installation', 'In Progress', NULL),
+(15, 1, 1, 7, NULL, '2022-08-26', 'dsa', 'problem', 'In Progress', NULL),
+(16, 1, 1, 7, NULL, '2022-08-26', 'asd', 'problem', 'In Progress', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cases`
+-- Table structure for table `Cases`
 --
 
-CREATE TABLE `cases` (
+CREATE TABLE `Cases` (
   `case_ID` int(11) NOT NULL,
   `case_subject` varchar(30) NOT NULL,
   `company_ID` int(11) NOT NULL,
@@ -127,10 +121,10 @@ CREATE TABLE `cases` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `cases`
+-- Dumping data for table `Cases`
 --
 
-INSERT INTO `cases` (`case_ID`, `case_subject`, `company_ID`, `homeowner_ID`, `case_date`, `case_status`, `case_description`, `case_reply`) VALUES
+INSERT INTO `Cases` (`case_ID`, `case_subject`, `company_ID`, `homeowner_ID`, `case_date`, `case_status`, `case_description`, `case_reply`) VALUES
 (24, '123', 1, 2, '2022-06-24', 'Replied', '123', 'hu'),
 (25, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
 (26, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
@@ -161,9 +155,8 @@ CREATE TABLE `Clients` (
 
 INSERT INTO `Clients` (`client_ID`, `company_ID`, `homeowner_ID`, `discount_ID`, `start_date`) VALUES
 (1, 4, 1, NULL, '2022-06-29'),
-(2, 5, 1, 12, '2022-07-08'),
-(3, 1, 1, 13, '2022-08-23'),
-(4, 1, 2, 13, '2022-08-04');
+(2, 5, 1, NULL, '2022-07-08'),
+(7, 1, 1, 14, '2022-08-12');
 
 -- --------------------------------------------------------
 
@@ -195,15 +188,15 @@ INSERT INTO `Company` (`company_ID`, `username`, `password`, `name`, `email`, `p
 (2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'Hello we are company 2', 'company', 0, 1),
 (3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'Hello we are company three', 'company', 0, 1),
 (4, 'company4', '$2y$10$ASJ5hTD3X9gbM4MSBnAGLuh8IallE5CFYJLqV8G6PM6tyZT0lizOC', 'Company Four', 'test@mail.com', 98765432, '93 Lorum Avenue 1 #52', 52821, 'No description has been set by the company yet', 'company', 0, 1),
-(5, 'company5', '$2y$10$.YFGFGMcLbK1Sq66S5G.6e/YpicGLLJDyQ7BqsAxkCwbcecKlS5TO', 'Company Five', 'company5@mail.com', 89876544, '358 Random Lane 7 #2-223', 798628, 'No description has been set by the company yet', 'company', 0, 1);
+(5, 'company5', '$2y$10$.YFGFGMcLbK1Sq66S5G.6e/YpicGLLJDyQ7BqsAxkCwbcecKlS5TO', 'Company Five', 'company5@mail.com', 89876544, '358 Random Lane 7 #2-223', 798628, 'No description has been set by the company yet', 'company', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `company_services`
+-- Table structure for table `Company_Services`
 --
 
-CREATE TABLE `company_services` (
+CREATE TABLE `Company_Services` (
   `cs_ID` int(11) NOT NULL,
   `service_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL,
@@ -211,10 +204,10 @@ CREATE TABLE `company_services` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `company_services`
+-- Dumping data for table `Company_Services`
 --
 
-INSERT INTO `company_services` (`cs_ID`, `service_ID`, `company_ID`, `price`) VALUES
+INSERT INTO `Company_Services` (`cs_ID`, `service_ID`, `company_ID`, `price`) VALUES
 (1, 1, 1, 14.20),
 (2, 2, 1, 12.56),
 (3, 4, 1, NULL),
@@ -233,13 +226,12 @@ INSERT INTO `company_services` (`cs_ID`, `service_ID`, `company_ID`, `price`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `discounts`
+-- Table structure for table `Discounts`
 --
 
-CREATE TABLE `discounts` (
+CREATE TABLE `Discounts` (
   `discount_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL,
-  `homeowner_ID` int(11) DEFAULT NULL,
   `discount_name` varchar(100) NOT NULL,
   `discount_start_date` varchar(15) NOT NULL,
   `discount_end_date` varchar(15) NOT NULL,
@@ -248,39 +240,20 @@ CREATE TABLE `discounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `discounts`
+-- Dumping data for table `Discounts`
 --
 
-INSERT INTO `discounts` (`discount_ID`, `company_ID`, `homeowner_ID`, `discount_name`, `discount_start_date`, `discount_end_date`, `discount_description`, `discount_modifier`) VALUES
-(5, 2, NULL, 'Sign up bonus', '2022-07-15', '2022-08-01', 'Sign up now and get 15% off', 15),
-(12, 15, NULL, 'Sign up bonus', '2022-07-01', '2022-08-31', 'Sign up by August and get 25% off your Bill for life!', 25),
-(13, 1, NULL, '30% off your Total bill', '2022-07-07', '2022-07-30', 'test', 12);
+INSERT INTO `Discounts` (`discount_ID`, `company_ID`, `discount_name`, `discount_start_date`, `discount_end_date`, `discount_description`, `discount_modifier`) VALUES
+(5, 2, 'Sign up bonus', '2022-07-15', '2022-08-01', 'Sign up now and get 15% off', 15),
+(14, 1, '30% off your Total bill', '2022-08-05', '2022-09-06', 'Test', 15);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Enquiries`
+-- Table structure for table `Enquiries_Company`
 --
 
-CREATE TABLE `Enquiries` (
-  `enquiry_ID` int(11) NOT NULL,
-  `admin_ID` int(10) DEFAULT NULL,
-  `user_ID` int(11) NOT NULL,
-  `user_type` varchar(15) NOT NULL,
-  `enquiry_date` varchar(15) NOT NULL,
-  `enquiry_subject` varchar(30) NOT NULL,
-  `enquiry_description` varchar(500) NOT NULL,
-  `enquiry_status` varchar(10) NOT NULL,
-  `enquiry_reply` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `enquiries_company`
---
-
-CREATE TABLE `enquiries_company` (
+CREATE TABLE `Enquiries_Company` (
   `ec_ID` int(11) NOT NULL,
   `admin_ID` int(10) DEFAULT NULL,
   `company_ID` int(11) NOT NULL,
@@ -293,10 +266,10 @@ CREATE TABLE `enquiries_company` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `enquiries_company`
+-- Dumping data for table `Enquiries_Company`
 --
 
-INSERT INTO `enquiries_company` (`ec_ID`, `admin_ID`, `company_ID`, `user_type`, `enquiry_date`, `enquiry_subject`, `enquiry_description`, `enquiry_status`, `enquiry_reply`) VALUES
+INSERT INTO `Enquiries_Company` (`ec_ID`, `admin_ID`, `company_ID`, `user_type`, `enquiry_date`, `enquiry_subject`, `enquiry_description`, `enquiry_status`, `enquiry_reply`) VALUES
 (100, NULL, 1, 'company', '2022-07-14', 'test', '123', 'Awaiting', NULL),
 (101, 2, 1, 'company', '2022-07-14', 'test', 'asd', 'Replied', 'Test Company Enquiry Reply'),
 (102, NULL, 1, 'company', '2022-07-15', 'test', '123', 'Awaiting', NULL),
@@ -305,10 +278,10 @@ INSERT INTO `enquiries_company` (`ec_ID`, `admin_ID`, `company_ID`, `user_type`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `enquiries_homeowner`
+-- Table structure for table `Enquiries_Homeowner`
 --
 
-CREATE TABLE `enquiries_homeowner` (
+CREATE TABLE `Enquiries_Homeowner` (
   `eh_ID` int(11) NOT NULL,
   `admin_ID` int(10) DEFAULT NULL,
   `homeowner_ID` int(11) NOT NULL,
@@ -321,20 +294,20 @@ CREATE TABLE `enquiries_homeowner` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `enquiries_homeowner`
+-- Dumping data for table `Enquiries_Homeowner`
 --
 
-INSERT INTO `enquiries_homeowner` (`eh_ID`, `admin_ID`, `homeowner_ID`, `user_type`, `enquiry_date`, `enquiry_subject`, `enquiry_description`, `enquiry_status`, `enquiry_reply`) VALUES
+INSERT INTO `Enquiries_Homeowner` (`eh_ID`, `admin_ID`, `homeowner_ID`, `user_type`, `enquiry_date`, `enquiry_subject`, `enquiry_description`, `enquiry_status`, `enquiry_reply`) VALUES
 (200, 2, 1, 'homeowner', '2022-07-14', 'asdasd', '123', 'Replied', 'Test ENQUIRY homeowner Reply'),
 (201, NULL, 1, 'homeowner', '2022-07-15', 'test', 'asdasd', 'Awaiting', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `homeowners`
+-- Table structure for table `Homeowners`
 --
 
-CREATE TABLE `homeowners` (
+CREATE TABLE `Homeowners` (
   `homeowner_ID` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -350,10 +323,10 @@ CREATE TABLE `homeowners` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `homeowners`
+-- Dumping data for table `Homeowners`
 --
 
-INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `home_type`, `user_type`, `suspended`, `verified`) VALUES
+INSERT INTO `Homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `home_type`, `user_type`, `suspended`, `verified`) VALUES
 (1, 'homeowner1', '$2y$10$A70oK8EuIeeGvOXv7vNxBOT9HiCDp5c8IcPNIGSUZoxWmHf8zc1ri', 'Mark Lee', 'Marklee@mail.com', 98765432, '421 Lee Avenue 92 #6-2123', 123456, 'exec', 'homeowner', 0, 1),
 (2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Test', 'test@mail.com', 92658976, '123 Test Avenue 12 #4-2192', 123942, 'exec', 'homeowner', 0, 1),
 (3, 'homeowner5', '$2y$10$BXkqQo2q2zqQPH2HE9ju8OmGO4njqP/WmjEF1y5oMr7bV.yQiZgJe', 'Ang Jing Hian', 'jh@mail.com', 98762826, 'Block 241 Ang Mo Kio Avenue 12 #2-2420', 560241, '2room', 'homeowner', 0, 1),
@@ -365,20 +338,20 @@ INSERT INTO `homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email
 -- --------------------------------------------------------
 
 --
--- Table structure for table `homeowner_services`
+-- Table structure for table `Homeowner_Services`
 --
 
-CREATE TABLE `homeowner_services` (
+CREATE TABLE `Homeowner_Services` (
   `hs_ID` int(11) NOT NULL,
   `service_ID` int(11) NOT NULL,
   `homeowner_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `homeowner_services`
+-- Dumping data for table `Homeowner_Services`
 --
 
-INSERT INTO `homeowner_services` (`hs_ID`, `service_ID`, `homeowner_ID`) VALUES
+INSERT INTO `Homeowner_Services` (`hs_ID`, `service_ID`, `homeowner_ID`) VALUES
 (1, 1, 2),
 (2, 1, 3),
 (3, 1, 4),
@@ -393,10 +366,10 @@ INSERT INTO `homeowner_services` (`hs_ID`, `service_ID`, `homeowner_ID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `maintenance_equipment`
+-- Table structure for table `Maintenance_Equipment`
 --
 
-CREATE TABLE `maintenance_equipment` (
+CREATE TABLE `Maintenance_Equipment` (
   `equipment_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL,
   `equipment_name` varchar(30) NOT NULL,
@@ -407,10 +380,10 @@ CREATE TABLE `maintenance_equipment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `maintenance_equipment`
+-- Dumping data for table `Maintenance_Equipment`
 --
 
-INSERT INTO `maintenance_equipment` (`equipment_ID`, `company_ID`, `equipment_name`, `quantity`, `installation_date`, `warranty_date`, `expiry_date`) VALUES
+INSERT INTO `Maintenance_Equipment` (`equipment_ID`, `company_ID`, `equipment_name`, `quantity`, `installation_date`, `warranty_date`, `expiry_date`) VALUES
 (1, 1, 'iansutarjieq', 4, '2022-06-22', '2022-06-23', '2022-06-10'),
 (2, 1, 'eq1', 33, '2022-07-06', '2022-07-14', '2022-07-12'),
 (3, 1, 'ianeeqqqq', 1234321, '2022-06-29', '2022-06-30', '2022-07-07'),
@@ -427,10 +400,10 @@ INSERT INTO `maintenance_equipment` (`equipment_ID`, `company_ID`, `equipment_na
 -- --------------------------------------------------------
 
 --
--- Table structure for table `maintenance_staff`
+-- Table structure for table `Maintenance_Staff`
 --
 
-CREATE TABLE `maintenance_staff` (
+CREATE TABLE `Maintenance_Staff` (
   `staff_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL,
   `booking_ID` int(11) DEFAULT NULL,
@@ -442,10 +415,10 @@ CREATE TABLE `maintenance_staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `maintenance_staff`
+-- Dumping data for table `Maintenance_Staff`
 --
 
-INSERT INTO `maintenance_staff` (`staff_ID`, `company_ID`, `booking_ID`, `staff_role`, `staff_name`, `email`, `phone`, `status`) VALUES
+INSERT INTO `Maintenance_Staff` (`staff_ID`, `company_ID`, `booking_ID`, `staff_role`, `staff_name`, `email`, `phone`, `status`) VALUES
 (1, 1, 4, 'Customer Service', 'John Doe', 'jd@mail.sg', 98762521, 'Assigned'),
 (2, 1, 5, 'Plumber', 'Jane Smith', 'js@mail.sg', 46109281, 'Assigned'),
 (3, 1, 1, 'Customer Service', 'Tan Ah Kow', 'TaK@mail.com', 95719243, 'Not Assigned'),
@@ -551,27 +524,28 @@ ALTER TABLE `Admin`
   ADD PRIMARY KEY (`admin_ID`);
 
 --
--- Indexes for table `bills`
+-- Indexes for table `Bills`
 --
-ALTER TABLE `bills`
+ALTER TABLE `Bills`
   ADD PRIMARY KEY (`bill_ID`),
   ADD KEY `FK_bills_company_ID` (`company_ID`),
   ADD KEY `FK_bills_homeowner_ID` (`homeowner_ID`),
   ADD KEY `FK_bills_client_ID` (`client_ID`);
 
 --
--- Indexes for table `bookings`
+-- Indexes for table `Bookings`
 --
-ALTER TABLE `bookings`
+ALTER TABLE `Bookings`
   ADD PRIMARY KEY (`booking_ID`),
   ADD KEY `FK_bookings_company_ID` (`company_ID`),
   ADD KEY `FK_bookings_homeowner_ID` (`homeowner_ID`),
-  ADD KEY `FK_bookings_staff_ID` (`staff_ID`);
+  ADD KEY `FK_bookings_staff_ID` (`staff_ID`),
+  ADD KEY `FK_bookings_client_ID` (`client_ID`);
 
 --
--- Indexes for table `cases`
+-- Indexes for table `Cases`
 --
-ALTER TABLE `cases`
+ALTER TABLE `Cases`
   ADD PRIMARY KEY (`case_ID`),
   ADD KEY `FK_cases_homeowner_ID` (`homeowner_ID`);
 
@@ -592,64 +566,59 @@ ALTER TABLE `Company`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `company_services`
+-- Indexes for table `Company_Services`
 --
-ALTER TABLE `company_services`
+ALTER TABLE `Company_Services`
   ADD PRIMARY KEY (`cs_ID`),
   ADD KEY `FK_company_services_company_ID` (`company_ID`),
   ADD KEY `FK_company_services_service_ID` (`service_ID`);
 
 --
--- Indexes for table `discounts`
+-- Indexes for table `Discounts`
 --
-ALTER TABLE `discounts`
-  ADD PRIMARY KEY (`discount_ID`);
+ALTER TABLE `Discounts`
+  ADD PRIMARY KEY (`discount_ID`),
+  ADD KEY `FK_discounts_company_ID` (`company_ID`);
 
 --
--- Indexes for table `Enquiries`
+-- Indexes for table `Enquiries_Company`
 --
-ALTER TABLE `Enquiries`
-  ADD PRIMARY KEY (`enquiry_ID`);
-
---
--- Indexes for table `enquiries_company`
---
-ALTER TABLE `enquiries_company`
+ALTER TABLE `Enquiries_Company`
   ADD PRIMARY KEY (`ec_ID`),
   ADD KEY `FK_enquiriescomp_company_ID` (`company_ID`);
 
 --
--- Indexes for table `enquiries_homeowner`
+-- Indexes for table `Enquiries_Homeowner`
 --
-ALTER TABLE `enquiries_homeowner`
+ALTER TABLE `Enquiries_Homeowner`
   ADD PRIMARY KEY (`eh_ID`),
   ADD KEY `FK_enquirieshome_homeowner_ID` (`homeowner_ID`);
 
 --
--- Indexes for table `homeowners`
+-- Indexes for table `Homeowners`
 --
-ALTER TABLE `homeowners`
+ALTER TABLE `Homeowners`
   ADD PRIMARY KEY (`homeowner_ID`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `homeowner_services`
+-- Indexes for table `Homeowner_Services`
 --
-ALTER TABLE `homeowner_services`
+ALTER TABLE `Homeowner_Services`
   ADD PRIMARY KEY (`hs_ID`),
   ADD KEY `FK_homeowner_services_homeowner_ID` (`homeowner_ID`),
   ADD KEY `FK_homeowner_services_service_ID` (`service_ID`);
 
 --
--- Indexes for table `maintenance_equipment`
+-- Indexes for table `Maintenance_Equipment`
 --
-ALTER TABLE `maintenance_equipment`
+ALTER TABLE `Maintenance_Equipment`
   ADD PRIMARY KEY (`equipment_ID`);
 
 --
--- Indexes for table `maintenance_staff`
+-- Indexes for table `Maintenance_Staff`
 --
-ALTER TABLE `maintenance_staff`
+ALTER TABLE `Maintenance_Staff`
   ADD PRIMARY KEY (`staff_ID`),
   ADD KEY `FK_staff_company_ID` (`company_ID`);
 
@@ -685,28 +654,28 @@ ALTER TABLE `Admin`
   MODIFY `admin_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `bills`
+-- AUTO_INCREMENT for table `Bills`
 --
-ALTER TABLE `bills`
-  MODIFY `bill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE `Bills`
+  MODIFY `bill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `bookings`
+-- AUTO_INCREMENT for table `Bookings`
 --
-ALTER TABLE `bookings`
-  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `Bookings`
+  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `cases`
+-- AUTO_INCREMENT for table `Cases`
 --
-ALTER TABLE `cases`
+ALTER TABLE `Cases`
   MODIFY `case_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `Clients`
 --
 ALTER TABLE `Clients`
-  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `Company`
@@ -715,57 +684,51 @@ ALTER TABLE `Company`
   MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `company_services`
+-- AUTO_INCREMENT for table `Company_Services`
 --
-ALTER TABLE `company_services`
+ALTER TABLE `Company_Services`
   MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
--- AUTO_INCREMENT for table `discounts`
+-- AUTO_INCREMENT for table `Discounts`
 --
-ALTER TABLE `discounts`
-  MODIFY `discount_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+ALTER TABLE `Discounts`
+  MODIFY `discount_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `Enquiries`
+-- AUTO_INCREMENT for table `Enquiries_Company`
 --
-ALTER TABLE `Enquiries`
-  MODIFY `enquiry_ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `enquiries_company`
---
-ALTER TABLE `enquiries_company`
+ALTER TABLE `Enquiries_Company`
   MODIFY `ec_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
--- AUTO_INCREMENT for table `enquiries_homeowner`
+-- AUTO_INCREMENT for table `Enquiries_Homeowner`
 --
-ALTER TABLE `enquiries_homeowner`
+ALTER TABLE `Enquiries_Homeowner`
   MODIFY `eh_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
 
 --
--- AUTO_INCREMENT for table `homeowners`
+-- AUTO_INCREMENT for table `Homeowners`
 --
-ALTER TABLE `homeowners`
+ALTER TABLE `Homeowners`
   MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `homeowner_services`
+-- AUTO_INCREMENT for table `Homeowner_Services`
 --
-ALTER TABLE `homeowner_services`
+ALTER TABLE `Homeowner_Services`
   MODIFY `hs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `maintenance_equipment`
+-- AUTO_INCREMENT for table `Maintenance_Equipment`
 --
-ALTER TABLE `maintenance_equipment`
+ALTER TABLE `Maintenance_Equipment`
   MODIFY `equipment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `maintenance_staff`
+-- AUTO_INCREMENT for table `Maintenance_Staff`
 --
-ALTER TABLE `maintenance_staff`
+ALTER TABLE `Maintenance_Staff`
   MODIFY `staff_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
@@ -791,25 +754,26 @@ ALTER TABLE `Water_Tracking`
 --
 
 --
--- Constraints for table `bills`
+-- Constraints for table `Bills`
 --
-ALTER TABLE `bills`
+ALTER TABLE `Bills`
   ADD CONSTRAINT `FK_bills_client_ID` FOREIGN KEY (`client_ID`) REFERENCES `Clients` (`client_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_bills_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_bills_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `bookings`
+-- Constraints for table `Bookings`
 --
-ALTER TABLE `bookings`
+ALTER TABLE `Bookings`
+  ADD CONSTRAINT `FK_bookings_client_ID` FOREIGN KEY (`client_ID`) REFERENCES `Clients` (`client_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_bookings_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_bookings_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_bookings_staff_ID` FOREIGN KEY (`staff_ID`) REFERENCES `maintenance_staff` (`staff_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `cases`
+-- Constraints for table `Cases`
 --
-ALTER TABLE `cases`
+ALTER TABLE `Cases`
   ADD CONSTRAINT `FK_cases_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -817,39 +781,44 @@ ALTER TABLE `cases`
 --
 ALTER TABLE `Clients`
   ADD CONSTRAINT `FK_clients_company_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_clients_discounts_discount_ID` FOREIGN KEY (`discount_ID`) REFERENCES `discounts` (`discount_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_clients_homeowners_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `company_services`
+-- Constraints for table `Company_Services`
 --
-ALTER TABLE `company_services`
+ALTER TABLE `Company_Services`
   ADD CONSTRAINT `FK_company_services_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_company_services_service_ID` FOREIGN KEY (`service_ID`) REFERENCES `services` (`service_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `enquiries_company`
+-- Constraints for table `Discounts`
 --
-ALTER TABLE `enquiries_company`
+ALTER TABLE `Discounts`
+  ADD CONSTRAINT `FK_discounts_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `Company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `Enquiries_Company`
+--
+ALTER TABLE `Enquiries_Company`
   ADD CONSTRAINT `FK_enquiriescomp_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `enquiries_homeowner`
+-- Constraints for table `Enquiries_Homeowner`
 --
-ALTER TABLE `enquiries_homeowner`
+ALTER TABLE `Enquiries_Homeowner`
   ADD CONSTRAINT `FK_enquirieshome_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `homeowner_services`
+-- Constraints for table `Homeowner_Services`
 --
-ALTER TABLE `homeowner_services`
+ALTER TABLE `Homeowner_Services`
   ADD CONSTRAINT `FK_homeowner_services_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_homeowner_services_service_ID` FOREIGN KEY (`service_ID`) REFERENCES `services` (`service_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `maintenance_staff`
+-- Constraints for table `Maintenance_Staff`
 --
-ALTER TABLE `maintenance_staff`
+ALTER TABLE `Maintenance_Staff`
   ADD CONSTRAINT `FK_staff_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `Company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

@@ -8,14 +8,14 @@ include_once ("classes.php");
  $insertService_success = "";
 
     //automatically create the services table if not exist yet when the company clicks add service category
-   $servicesTable = "CREATE TABLE IF NOT EXISTS services (
+   $servicesTable = "CREATE TABLE IF NOT EXISTS Services (
         service_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         service_name VARCHAR(60) NOT NULL)";
 
     mysqli_query($conn, $servicesTable);
 
     $name = $_POST['servicename'] ?? "";
-    $tableName = "services";
+    $tableName = "Services";
 
   if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
         if ($name == "") {
