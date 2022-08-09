@@ -65,7 +65,7 @@ include_once "logInCheck.php";
                   <p class="usage-font ">View Hired Companies</p>
                 </div>
               </a>
-          <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-start-0 border-end-0 border-bottom-0 border-dark border-3 pt-3  height-200 "  href="addEditDiscount.php">
+          <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-start-0 border-end-0 border-bottom-0 border-dark border-3 pt-3  height-200 "  href="viewServiceHomeownerAndCompany.php">
               <div class =" text-center">
                 <span class="material-symbols-outlined  icon-size">design_services</span>
                 <p class="usage-font ">Service Categories</p>

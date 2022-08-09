@@ -22,19 +22,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?php include_once('cssLinks.php');?>
 
-		<title>View Bills</title>
+		<title>View Past Bills</title>
     </head>
 	<body>
 
 
 <div class="container" >
-<h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Bills</h1>
+<h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Bill History</h1>
 <div class="row justify-content-center">
   <div class="col-md-12 text-center">
-  <p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View your unpaid bills</p>
+  <p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View your paid bills</p>
   </div>
   <div class="col-12 text-center">
-  <a class="float-end btn btn-success" href="viewPastBills.php" type="submit">Bill History</a>
+  <a class="float-end btn btn-success" href="viewBills.php" type="submit">Current Bills</a>
   </div>
 </div>
 </div>
@@ -45,7 +45,7 @@
 		</div>
     <div class="container justify-content-center text-center">
     <?php
-      $bills->listBillsHomeowner();
+      $bills->listPaidHomeowner();
       ?>
 
 

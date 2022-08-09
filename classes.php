@@ -967,6 +967,7 @@ function tableHeaderBookingHome()
           <tbody class='search-table'>";
 }
 
+
 function listBookingsHomeowner(){
   $ID = $_SESSION['ID'];
 
@@ -1065,7 +1066,7 @@ function listBillsHomeowner(){
            FROM Bills AS bill
            JOIN Company AS comp
            ON bill.company_ID = comp.company_ID
-           WHERE homeowner_ID = '$ID'";
+           WHERE homeowner_ID = '$ID' AND bill_status = \"pending\"";
 
   $result = mysqli_query($this->conn, $query);
 
@@ -1320,6 +1321,65 @@ function addWaterUsage($company_name,$water_usage,$date)
     echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn) . "</p>";
   }
 
+
+}
+
+function tableHeaderPaid()
+{
+  echo "<table class='table table-hover datatable_style' >
+          <thead>
+          <tr class='table-padding text-white'>
+            <th>Bill #</th>
+            <th>Company Name</th>
+            <th>Bill Date</th>
+            <th>Date Paid</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody class='search-table'>";
+}
+
+function listPaidHomeowner(){
+  $ID = $_SESSION['ID'];
+
+ $query = "SELECT bill.*,comp.company_ID,comp.name,comp.address,comp.postal_code
+           FROM Bills AS bill
+           JOIN Company AS comp
+           ON bill.company_ID = comp.company_ID
+           WHERE homeowner_ID = '$ID' AND bill_status = \"Paid\"";
+
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderPaid();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+     echo "
+               <tr class='table-padding' >
+                 <form method='post' action='viewBillDetails.php'>
+                 <td>".$row["bill_ID"]."</td>
+                 <td>".$row["name"]."</td>
+                 <td>".$row["bill_date"]."</td>
+                 <td>".$row["bill_payment_date"]."</td>
+                 <td>".$row["bill_status"]."</td>
+                 ".'<input type ="hidden" value ="'.$row["bill_ID"].'" name ="bill_ID"/>'.
+                   '<input type ="hidden" value ="'.$row["name"].'" name ="company_name"/>'.
+                   '<input type ="hidden" value ="'.$row["bill_date"].'" name ="bill_date"/>'.
+                   '<input type ="hidden" value ="'.$row["bill_due_date"].'" name ="bill_due_date"/>'.
+                   '<input type ="hidden" value ="'.$row["bill_status"].'" name ="bill_status"/>'.
+                   '<input type ="hidden" value ="'.$row["company_ID"].'" name ="company_ID"/>'.
+                   '<input type ="hidden" value ="'.$row["address"].'" name ="company_address"/>'.
+                   '<input type ="hidden" value ="'.$row["postal_code"].'" name ="company_postal"/>'.
+                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+               </tr>
+             </form>";
+     }
+     echo "
+     </tbody></table>";
+   } else {
+     echo "No Bills Found";
+   }
 
 }
 

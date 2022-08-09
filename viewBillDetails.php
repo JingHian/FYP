@@ -65,10 +65,21 @@
         <?php $no_fees = $bills->listBillDetailsHomeowner(); ?>
         </div>
         <form  action="Payment.php" method="post">
-        <a class='btn btn-lg btn-primary text-white float-end mt-5' href="viewBills.php" value='Back'>Back</a>
+            <?php
+            if($_SESSION['bill_status'] != "Paid")
+            {
+               echo "<a class='btn btn-lg btn-primary text-white float-end mt-5' href=\"viewBills.php\" value='Back'>Back</a>";
+            }
+            else
+            {
+                echo "<a class='btn btn-lg btn-primary text-white float-end mt-5' href=\"viewPastBills.php\" value='Back'>Back</a>";
+            }
+            ?>
+
           <?php if($no_fees == 0 )
           {
-            echo '<input type="submit" class="btn btn-lg btn-primary me-4 mt-5 float-end" value="Make Payment">';
+            if($_SESSION['bill_status'] != "Paid")
+              echo '<input type="submit" class="btn btn-lg btn-primary me-4 mt-5 float-end" value="Make Payment">';
           }
         ?>
       </form>

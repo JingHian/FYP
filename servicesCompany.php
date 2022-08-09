@@ -19,7 +19,7 @@ include_once "logInCheck.php";
   <div class="container">
     <div class="row ">
     <div class="col-md-15"></div>
-      <a class=" menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-dark border-start-0 border-top-0 border-3 pt-3  height-200" href="">
+      <a class=" menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-dark border-start-0 border-top-0 border-3 pt-3  height-200" href="viewServiceHomeownerAndCompany">
         <div class =" text-center">
           <span class="material-symbols-outlined  icon-size">design_services</span>
           <p class="usage-font">Service Categories</p>

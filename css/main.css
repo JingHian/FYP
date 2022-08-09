@@ -29,6 +29,12 @@ pre{
   border-color:IndianRed !important ;
 }
 
+.btn-info{
+  background-color:SlateBlue !important ;
+  border-color:SlateBlue !important ;
+  color:white !important;
+}
+
 .form-control {
   font-size: 18px;
 }
