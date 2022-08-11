@@ -21,7 +21,7 @@ session_start();
     if(isset($_POST['payment']))
     {
         $date = date("Y/m/d");
-        $payment = "UPDATE bills SET bill_status =\"Paid\", bill_payment_date = '$date' WHERE bill_ID = $billsID";
+        $payment = "UPDATE Bills SET bill_status =\"Paid\", bill_payment_date = '$date' WHERE bill_ID = $billsID";
         try
         {
             if(mysqli_query($conn, $payment) == TRUE)

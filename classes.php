@@ -33,13 +33,13 @@ class Company{
       $getcompanyname = mysqli_query($this->conn, "SELECT * FROM Maintenance_Staff WHERE company_ID = '$ID' AND status = \"Not Assigned\"");
 
     echo '<div class="condi-dropdown mb-3">
-      <select id="staff_name" class="form-select" name="staff_name" required>
+      <select id="staff_name_ID" class="form-select" name="staff_name_ID" required>
           <option value="" default disabled>Assign a Staff</option>';
           while (($Row = mysqli_fetch_assoc($getcompanyname)) != FALSE) {
                        $name = $Row['staff_name'];
-                       $staffid = $Row['staff_ID'];
+                       $staff_id = $Row['staff_ID'];
                        $role = $Row['staff_role'];
-                      echo "<option value=$staffid>$name-$role</option>";
+                      echo "<option value=$staff_id>$name - $role</option>";
                      };
           echo'  </select>
           </div>';

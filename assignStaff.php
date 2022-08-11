@@ -11,15 +11,29 @@ if(isset($_POST['booking_ID']))
 {
     $_SESSION['booking_ID'] = $_POST['booking_ID'];
 }
+
 $bookingID = $_SESSION['booking_ID'];
 
-$getbooking = mysqli_query($conn, "SELECT * FROM bookings INNER JOIN homeowners ON bookings.homeowner_ID = homeowners.homeowner_ID WHERE bookings.booking_ID = '$bookingID'");
+$getbooking = mysqli_query($conn, "SELECT book.*, home.name
+                                   FROM Bookings as book
+                                   INNER JOIN
+                                   Homeowners as home
+                                   ON book.homeowner_ID = home.homeowner_ID
+                                   WHERE book.booking_ID = '$bookingID'");
 try
 {
     if(($row = mysqli_fetch_assoc($getbooking)) == TRUE)
     {
+        $homeowner_ID = $row['homeowner_ID'];
         $homeownerName = $row['name'];
         $staff = $row['staff_ID'];
+        if ($staff != NULL)
+        {
+          $assign_true = 1;
+        }
+        else {
+          $assign_true = 0;
+        }
         $bookingDate = $row['booking_date'];
         $bookingStatus = $row['booking_status'];
         $bookingDescription = $row['booking_description'];
@@ -38,12 +52,17 @@ try
 
 if(isset($_POST['assign']))
 {
-    $staffid = $_POST['staff_name'];
-    $bookid = $_POST['bookingID'];
-    $status = "Assigned-$bookid";
+    // $sql = "SELECT client_ID FROM Clients WHERE homeowner_ID = '$homeowner_ID' AND company_ID = '" . $_SESSION['ID'] . "'";
+    // $result = mysqli_query($conn, $sql);
+    // $row = $result->fetch_assoc();
+    // $client_ID = $row["client_ID"];
+    // echo $client_ID;
+
+    $staffid = $_POST['staff_name_ID'];
+    $bookid = $_POST['booking_ID'];
     $booked = "Assigned";
-    $assignstaff = "UPDATE maintenance_staff SET status='$booked', booking_ID ='$bookid' WHERE staff_ID = '$staffid'";
-    $chgstatus = "UPDATE bookings SET booking_status='$booked', staff_ID = '$staffid' WHERE booking_ID = '$bookid'";
+    $assignstaff = "UPDATE Maintenance_Staff SET status='$booked', booking_ID ='$bookid' WHERE staff_ID = '$staffid'";
+    $chgstatus = "UPDATE Bookings SET booking_status='$booked', staff_ID = '$staffid' WHERE booking_ID = '$bookid'";
     try
     {
         if(mysqli_query($conn, $assignstaff)== TRUE)
@@ -51,19 +70,42 @@ if(isset($_POST['assign']))
             if(mysqli_query($conn, $chgstatus)== TRUE)
             {
                 $enquiry_success = "Booking updated!";
+                $assign_true = 1;
+                // header("Location: assignStaff.php");
             }
         }
     } catch (Exception $ex) {
         echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
     }
 }
+
+elseif (isset($_POST['unassign'])) {
+
+    $bookid = $_POST['booking_ID'];
+    $donedate = date("Y/m/d");
+    $complete = "UPDATE Bookings SET booking_status= 'In Progress' , staff_ID = NULL WHERE booking_ID = '$bookid'";
+    $unassign = "UPDATE Maintenance_Staff SET status= 'Not Assigned', booking_ID = NULL WHERE staff_ID = '$staff'";
+    try
+    {
+        if(mysqli_query($conn, $complete)== TRUE)
+        {
+            if(mysqli_query($conn, $unassign)== TRUE)
+            {
+                $enquiry_success = "Staff Unassigned!";
+                $assign_true = 0;
+            }
+        }
+    } catch (Exception $ex) {
+        echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
+    }
+}
+
 elseif (isset($_POST['chg_status'])) {
 
-    $bookid = $_POST['bookingID'];
-    $staffid = $_POST['booking_subject'];
+    $bookid = $_POST['booking_ID'];
     $donedate = date("Y/m/d");
-    $complete = "UPDATE bookings SET booking_status=\"Completed\" , completion_date='$donedate' WHERE booking_ID = '$bookid'";
-    $unassign = "UPDATE maintenance_staff SET status=\"Not Assigned\" WHERE staff_ID = '$staffid'";
+    $complete = "UPDATE Bookings SET booking_status='Completed ' , completion_date='$donedate', staff_ID = NULL WHERE booking_ID = '$bookid'";
+    $unassign = "UPDATE Maintenance_Staff SET status= 'Not Assigned', booking_ID = NULL WHERE staff_ID = '$staff'";
     try
     {
         if(mysqli_query($conn, $complete)== TRUE)
@@ -71,6 +113,7 @@ elseif (isset($_POST['chg_status'])) {
             if(mysqli_query($conn, $unassign)== TRUE)
             {
                 $enquiry_success = "Booking Marked as complete!";
+                $assign_true = 0;
             }
         }
     } catch (Exception $ex) {
@@ -108,8 +151,8 @@ elseif (isset($_POST['chg_status'])) {
         </div>
         <div class="col">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="booking_subject" name="booking_subject" placeholder="Staff Assigned" value ="<?php echo $staff; ?>" READONLY>
-            <label for="booking_subject">Staff Assigned</label>
+            <input type="text" class="form-control" id="staff_ID" name="staff_ID" placeholder="Staff Assigned" value ="<?php echo $staff; ?>" disabled>
+            <label for="staff_ID">Staff Assigned</label>
           </div>
         </div>
         <div class="row">
@@ -141,14 +184,27 @@ elseif (isset($_POST['chg_status'])) {
               </div>
         </div>
         <div class="col">
-          <?php  $company->StaffDropDown();?>
+          <?php
+          if ($assign_true == 0)
+          {
+           $company->StaffDropDown();
+          }
+         ?>
           </div>
-      <input type="hidden" name="bookingID" value=<?php echo $_SESSION['booking_ID'] ?>>
     <div class="form-group mb-2 mt-3 text-center">
-        <button type="submit" class="btn  btn-primary" name ="assign">Assign a Staff</button>
-        <button type ="submit" class="btn btn-primary" name="chg_status" value ="update status">Mark as completed</button>
+        <?php
+          if ($assign_true == 0)
+          {
+            echo '<button type="submit" class="btn btn-lg btn-primary" name ="assign">Assign Staff</button>';
+          }
+          else if ($assign_true == 1)
+          {
+            echo '<button type="submit" class="btn btn-lg me-5 btn-primary" name ="unassign">Unassign Staff</button>';
+            echo '<button type ="submit" class="btn btn-lg btn-success" name="chg_status" value ="update status">Mark as completed</button>';
+          }
+        ?>
     </div>
-    <p class="text-center" style  ="color:green"><?php echo $enquiry_success;?></p>
+    <div class="alert alert-primary text-center booking-alert mt-3" role="alert"><?php echo $enquiry_success;?></div>
   </form>
 </div>
     </body>

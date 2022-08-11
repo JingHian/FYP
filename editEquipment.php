@@ -60,7 +60,7 @@ else {
                 <div class="col">
                     <div class="form-floating mb-3 ">
                         <input type="text" class='form-control' name="quantity" placeholder="Quantity" value = "<?php echo $quantity?>" required>
-                        <label for="quantity">Equipment Email</label>
+                        <label for="quantity">Equipment Quantity</label>
                     </div>
                 </div>
             </div>

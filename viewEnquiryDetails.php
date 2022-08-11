@@ -10,6 +10,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" &&  isset($_POST['Details']))
+{
+  $_SESSION['case_ID']  =  $_POST['case_ID'];
+  $_SESSION['company_name']  =  $_POST['company_name'];
+  $_SESSION['case_subject']  =  $_POST['case_subject'];
+  $_SESSION['case_date']  =  $_POST['case_date'];
+  $_SESSION['case_status']  =  $_POST['case_status'];
+  $_SESSION['case_description']  =  $_POST['case_description'];
+  $_SESSION['case_reply']  =  $_POST['case_reply'];
+
+}
+
 ?>
 <html>
     <head>
@@ -23,7 +35,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
       <?php include_once('navbar.php');?>
       <div class="container" >
-      <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Enquiry #<?php echo $_POST['case_ID'];?></h1>
+      <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Enquiry #<?php echo $_SESSION['case_ID'];?></h1>
       <div class="row justify-content-center">
         <div class="col-md-6 text-center">
       <p class ="display-6 fs-5" name = "product" value ="avail">check the details of your enquiry here.</p>
@@ -35,28 +47,29 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         <div class="col">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="to_company" name="to_company" placeholder="to_company" value ="<?php echo $_POST['company_name'];?>" disabled>
+            <input type="text" class="form-control" id="to_company" name="to_company" placeholder="to_company" value ="<?php echo $_SESSION['company_name'];?>" disabled>
             <label for="to_company">To: </label>
+            <!-- <input type="hidden" value ="<?php //echo $_POST['to_company'];?>" > -->
           </div>
         </div>
 
         <div class="col">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="Subject" name="Subject" placeholder="Subject" value ="<?php echo $_POST['case_subject'];?>" disabled>
+            <input type="text" class="form-control" id="Subject" name="Subject" placeholder="Subject" value ="<?php echo $_SESSION['case_subject'];?>" disabled>
             <label for="Subject">Subject</label>
           </div>
         </div>
         <div class="row">
           <div class ="col-md-6">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="case_date" name="case_date" placeholder="case_date" value ="<?php echo $_POST['case_date'];?>" disabled>
+            <input type="text" class="form-control" id="case_date" name="case_date" placeholder="case_date" value ="<?php echo $_SESSION['case_date'];?>" disabled>
             <label for="case_date">Date</label>
           </div>
         </div>
 
         <div class ="col-md-6">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="case_status" name="case_status" placeholder="case_status" value ="<?php echo $_POST['case_status'];?>" disabled>
+          <input type="text" class="form-control" id="case_status" name="case_status" placeholder="case_status" value ="<?php echo $_SESSION['case_status'];?>" disabled>
           <label for="case_status">Status</label>
         </div>
       </div>
@@ -64,13 +77,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         </div>
         <div class="col">
           <div class="form-floating  mb-3 ">
-            <textarea class="form-control" id="enquirydetails" name="enquirydetails" placeholder="enquirydetails" style="height: 200px" disabled><?php echo $_POST['case_description'];?></textarea>
+            <textarea class="form-control" id="enquirydetails" name="enquirydetails" placeholder="enquirydetails" style="height: 200px"><?php echo $_SESSION['case_description'];?></textarea>
             <label for="enquirydetails">Enquiry Details</label>
           </div>
         </div>
         <div class="col">
           <div class="form-floating  mb-3 ">
-            <textarea class="form-control hide-reply" id="enquiry_reply" name="enquiry_reply" style="height: 200px" disabled><?php echo $_POST['case_reply'];?></textarea>
+            <textarea class="form-control hide-reply" id="enquiry_reply" name="enquiry_reply" style="height: 200px" disabled><?php echo $_SESSION['case_reply'];?></textarea>
             <label for="enquiry_reply" id="reply-label">Enquiry Reply</label>
           </div>
         </div>
@@ -78,11 +91,44 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
   </form>
   <div class="form-group mt-3 text-center form-horizontal">
+  <input type="submit" name="update" class="btn btn-lg btn-primary" value="Update">
       <input type="button" onClick="history.go(-1);" class="btn btn-lg btn-primary" value="Back">
   </div>
 </div>
 
-<?php include_once('jsLinks.php');?>
+<?php
+  include_once('jsLinks.php');
+
+  $newCaseDesc = $_POST['enquirydetails'] ?? "";
+  $userID = $_SESSION['ID'] ?? "";
+  // $userType = $_SESSION['user_type'] ?? "";
+  // var_dump($_SESSION);
+
+  // echo $newCaseDesc;
+
+  $getCompanyID = mysqli_query($conn, "SELECT company_ID from Company where name = '{$_SESSION['company_name']}'");
+  $companyID = $getCompanyID->fetch_array()[0] ?? '';
+
+  if (isset($_POST['update'])) {
+    //
+    // echo $userID;
+    // echo $companyID;
+    $updateCase = "UPDATE Cases SET case_description = '$newCaseDesc' WHERE company_ID = '$companyID' AND homeowner_ID = '$userID'";
+    mysqli_query($conn, $updateCase);
+    if(mysqli_affected_rows($conn) > 0 )
+    {
+      $_SESSION['case_description'] = $newCaseDesc;
+    }
+    else {
+      // echo "no";
+    }
+  }
+  //
+  // ECHO $userID;
+  // echo $newCaseDesc;
+  // echo $companyID;
+  // echo $_SESSION['companyName'];
+?>
 
 </body>
 
