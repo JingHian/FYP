@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2022 at 11:51 PM
+-- Generation Time: Aug 12, 2022 at 03:06 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -71,9 +71,8 @@ CREATE TABLE `Bills` (
 
 INSERT INTO `Bills` (`bill_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `bill_date`, `bill_due_date`, `bill_status`, `bill_payment_date`) VALUES
 (13, 4, 1, 1, '2022-08-31', '2022-09-30', 'pending', NULL),
-(16, 1, 1, 7, '2022-06-30', '2022-07-31', 'Paid', '2022-08-08'),
-(18, 1, 1, 7, '2022-04-30', '2022-05-31', 'pending', NULL),
-(19, 1, 1, 7, '2022-02-28', '2022-03-31', 'pending', NULL);
+(22, 1, 1, 8, '2022-07-31', '2022-08-31', 'pending', NULL),
+(23, 1, 1, 8, '2022-08-31', '2022-09-30', 'pending', NULL);
 
 -- --------------------------------------------------------
 
@@ -99,9 +98,9 @@ CREATE TABLE `Bookings` (
 --
 
 INSERT INTO `Bookings` (`booking_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `staff_ID`, `booking_date`, `booking_description`, `booking_type`, `booking_status`, `completion_date`) VALUES
-(14, 1, 1, 7, NULL, '2022-08-12', '123', 'installation', 'In Progress', NULL),
-(15, 1, 1, 7, NULL, '2022-08-26', 'dsa', 'problem', 'In Progress', NULL),
-(16, 1, 1, 7, NULL, '2022-08-26', 'asd', 'problem', 'In Progress', NULL);
+(17, 1, 1, 8, NULL, '2022-08-01', 'asd', 'installation', 'Completed ', '2022-08-12'),
+(18, 1, 1, 8, NULL, '2022-08-25', 'asdas', 'problem', 'Completed ', '2022-08-12'),
+(19, 1, 1, 8, NULL, '2022-08-31', '123', 'problem', 'In Progress', NULL);
 
 -- --------------------------------------------------------
 
@@ -125,7 +124,7 @@ CREATE TABLE `Cases` (
 --
 
 INSERT INTO `Cases` (`case_ID`, `case_subject`, `company_ID`, `homeowner_ID`, `case_date`, `case_status`, `case_description`, `case_reply`) VALUES
-(24, '123', 1, 2, '2022-06-24', 'Replied', '123', 'hu'),
+(24, '123', 1, 2, '2022-06-24', 'Replied', 'hello', 'hu'),
 (25, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
 (26, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
 (27, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
@@ -133,7 +132,7 @@ INSERT INTO `Cases` (`case_ID`, `case_subject`, `company_ID`, `homeowner_ID`, `c
 (32, 'test', 1, 3, '2022-07-05', 'Replied', 'testing', 'Testing Reply\r\n'),
 (34, 'asdasd', 2, 3, '2022-07-05', 'Awaiting', 'test', NULL),
 (35, 'test', 2, 3, '2022-07-05', 'Awaiting', 'test', NULL),
-(36, 'test', 2, 1, '2022-07-12', 'Awaiting', 'Hello', NULL);
+(36, 'test', 2, 1, '2022-07-12', 'Awaiting', 'Hello test123', NULL);
 
 -- --------------------------------------------------------
 
@@ -156,7 +155,7 @@ CREATE TABLE `Clients` (
 INSERT INTO `Clients` (`client_ID`, `company_ID`, `homeowner_ID`, `discount_ID`, `start_date`) VALUES
 (1, 4, 1, NULL, '2022-06-29'),
 (2, 5, 1, NULL, '2022-07-08'),
-(7, 1, 1, 14, '2022-08-12');
+(8, 1, 1, 14, '2022-08-01');
 
 -- --------------------------------------------------------
 
@@ -246,6 +245,24 @@ CREATE TABLE `Discounts` (
 INSERT INTO `Discounts` (`discount_ID`, `company_ID`, `discount_name`, `discount_start_date`, `discount_end_date`, `discount_description`, `discount_modifier`) VALUES
 (5, 2, 'Sign up bonus', '2022-07-15', '2022-08-01', 'Sign up now and get 15% off', 15),
 (14, 1, '30% off your Total bill', '2022-08-05', '2022-09-06', 'Test', 15);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Enquiries`
+--
+
+CREATE TABLE `Enquiries` (
+  `enquiry_ID` int(11) NOT NULL,
+  `admin_ID` int(10) DEFAULT NULL,
+  `user_ID` int(11) NOT NULL,
+  `user_type` varchar(15) NOT NULL,
+  `enquiry_date` varchar(15) NOT NULL,
+  `enquiry_subject` varchar(30) NOT NULL,
+  `enquiry_description` varchar(500) NOT NULL,
+  `enquiry_status` varchar(10) NOT NULL,
+  `enquiry_reply` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -361,7 +378,8 @@ INSERT INTO `Homeowner_Services` (`hs_ID`, `service_ID`, `homeowner_ID`) VALUES
 (7, 1, 6),
 (8, 2, 6),
 (9, 1, 9),
-(10, 1, 10);
+(10, 1, 10),
+(17, 15, 1);
 
 -- --------------------------------------------------------
 
@@ -386,7 +404,7 @@ CREATE TABLE `Maintenance_Equipment` (
 INSERT INTO `Maintenance_Equipment` (`equipment_ID`, `company_ID`, `equipment_name`, `quantity`, `installation_date`, `warranty_date`, `expiry_date`) VALUES
 (1, 1, 'iansutarjieq', 4, '2022-06-22', '2022-06-23', '2022-06-10'),
 (2, 1, 'eq1', 33, '2022-07-06', '2022-07-14', '2022-07-12'),
-(3, 1, 'ianeeqqqq', 1234321, '2022-06-29', '2022-06-30', '2022-07-07'),
+(3, 1, 'ianeeqqqq', 1234, '2022-06-29', '2022-06-30', '2022-07-07'),
 (4, 1, 'dcqwdf', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
 (5, 1, 'dcqwdf', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
 (6, 2, 'Water Tank', 2, '2022-04-19', '2022-07-14', '2023-04-12'),
@@ -419,12 +437,12 @@ CREATE TABLE `Maintenance_Staff` (
 --
 
 INSERT INTO `Maintenance_Staff` (`staff_ID`, `company_ID`, `booking_ID`, `staff_role`, `staff_name`, `email`, `phone`, `status`) VALUES
-(1, 1, 4, 'Customer Service', 'John Doe', 'jd@mail.sg', 98762521, 'Assigned'),
-(2, 1, 5, 'Plumber', 'Jane Smith', 'js@mail.sg', 46109281, 'Assigned'),
-(3, 1, 1, 'Customer Service', 'Tan Ah Kow', 'TaK@mail.com', 95719243, 'Not Assigned'),
+(1, 1, NULL, 'Customer Service', 'John Doe', 'jd@mail.sg', 98762521, 'Not Assigned'),
+(2, 1, NULL, 'Plumber', 'Jane Smith', 'js@mail.sg', 46109281, 'Not Assigned'),
+(3, 1, NULL, 'Customer Service', 'Tan Ah Kow', 'TaK@mail.com', 95719243, 'Not Assigned'),
 (4, 2, NULL, 'Customer Service', 'Jing Hian', 'jh@mail.com', 92837621, 'Not Assigned'),
 (5, 2, NULL, 'Plumber', 'John Doe', 'test@mail.com', 12345678, 'Not Assigned'),
-(6, 1, 2, 'Customer Service', 'John Doe', 'test@mail.com', 12345678, 'Assigned'),
+(6, 1, NULL, 'Customer Service', 'John Doe', 'test@mail.com', 12345678, 'Not Assigned'),
 (7, 1, NULL, 'Plumber', 'Jane Smith', 'dsad@mail.com', 98765432, 'Not Assigned'),
 (8, 1, NULL, 'Customer Service', 'John Doe', 'test@mail.com', 89735145, 'Not Assigned'),
 (9, 1, NULL, 'Plumber', 'Tan Ah Kow', 'Angjinghian@gmail.com', 98785474, 'Not Assigned'),
@@ -472,7 +490,10 @@ INSERT INTO `Services` (`service_ID`, `service_name`) VALUES
 (4, 'Fireworks'),
 (6, 'Inspections'),
 (2, 'Maintenance'),
+(15, 'Pipe Installation'),
 (5, 'Pipes'),
+(17, 'Pipes installation'),
+(16, 'pipess'),
 (1, 'Water Supply');
 
 -- --------------------------------------------------------
@@ -539,8 +560,8 @@ ALTER TABLE `Bookings`
   ADD PRIMARY KEY (`booking_ID`),
   ADD KEY `FK_bookings_company_ID` (`company_ID`),
   ADD KEY `FK_bookings_homeowner_ID` (`homeowner_ID`),
-  ADD KEY `FK_bookings_staff_ID` (`staff_ID`),
-  ADD KEY `FK_bookings_client_ID` (`client_ID`);
+  ADD KEY `FK_bookings_client_ID` (`client_ID`),
+  ADD KEY `FK_bookings_staff_ID` (`staff_ID`);
 
 --
 -- Indexes for table `Cases`
@@ -579,6 +600,12 @@ ALTER TABLE `Company_Services`
 ALTER TABLE `Discounts`
   ADD PRIMARY KEY (`discount_ID`),
   ADD KEY `FK_discounts_company_ID` (`company_ID`);
+
+--
+-- Indexes for table `Enquiries`
+--
+ALTER TABLE `Enquiries`
+  ADD PRIMARY KEY (`enquiry_ID`);
 
 --
 -- Indexes for table `Enquiries_Company`
@@ -657,13 +684,13 @@ ALTER TABLE `Admin`
 -- AUTO_INCREMENT for table `Bills`
 --
 ALTER TABLE `Bills`
-  MODIFY `bill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `bill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `Bookings`
 --
 ALTER TABLE `Bookings`
-  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `Cases`
@@ -675,7 +702,7 @@ ALTER TABLE `Cases`
 -- AUTO_INCREMENT for table `Clients`
 --
 ALTER TABLE `Clients`
-  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `Company`
@@ -687,13 +714,19 @@ ALTER TABLE `Company`
 -- AUTO_INCREMENT for table `Company_Services`
 --
 ALTER TABLE `Company_Services`
-  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `Discounts`
 --
 ALTER TABLE `Discounts`
   MODIFY `discount_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `Enquiries`
+--
+ALTER TABLE `Enquiries`
+  MODIFY `enquiry_ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Enquiries_Company`
@@ -717,7 +750,7 @@ ALTER TABLE `Homeowners`
 -- AUTO_INCREMENT for table `Homeowner_Services`
 --
 ALTER TABLE `Homeowner_Services`
-  MODIFY `hs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `hs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `Maintenance_Equipment`
@@ -741,7 +774,7 @@ ALTER TABLE `Ratings`
 -- AUTO_INCREMENT for table `Services`
 --
 ALTER TABLE `Services`
-  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `Water_Tracking`
@@ -766,9 +799,8 @@ ALTER TABLE `Bills`
 --
 ALTER TABLE `Bookings`
   ADD CONSTRAINT `FK_bookings_client_ID` FOREIGN KEY (`client_ID`) REFERENCES `Clients` (`client_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_bookings_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_bookings_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_bookings_staff_ID` FOREIGN KEY (`staff_ID`) REFERENCES `maintenance_staff` (`staff_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_bookings_company_ID` FOREIGN KEY (`company_ID`) REFERENCES `Company` (`company_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_bookings_homeowner_ID` FOREIGN KEY (`homeowner_ID`) REFERENCES `Homeowners` (`homeowner_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Cases`
