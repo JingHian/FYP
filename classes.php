@@ -1796,7 +1796,7 @@ class Universal{
           </div>';
   }
 
-  function SendMail($subject, $msg)
+  function SendMail($subject, $msg, $recipient_email)
   {
     $header =   "From: fypscom@fyp-22-s2-27.com" . "\r\n" . "Content-Type: text/plain; charset=utf-8";
 
@@ -1806,7 +1806,7 @@ class Universal{
     if (!empty($msg)) {
     // send email
 
-        if (mail("youremailhere@mail.com",$subject,$msg, $header,"-ffypscom@fyp-22-s2-27.com"))
+        if (mail($recipient_email,$subject,$msg, $header,"-ffypscom@fyp-22-s2-27.com"))
         {
           echo "email sent successfully";
         } else {
