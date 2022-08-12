@@ -31,21 +31,21 @@ session_start();
         </div>
       </div>
       <div class="container justify-content-center text-center">
-        <?php 
+        <?php
             $count =  0;
             $ID = $_SESSION['ID'];
             $userType = $_SESSION['user_type'];
 
             if ($userType == "homeowner") {
-                $query = "select homeowner_services.service_ID, services.service_name from homeowner_services 
-                        join services on homeowner_services.service_ID = services.service_ID 
-                        where homeowner_services.homeowner_ID = $ID";
+                $query = "SELECT Homeowner_Services.service_ID, Services.service_name from Homeowner_Services
+                        join Services on Homeowner_Services.service_ID = Services.service_ID
+                        where Homeowner_Services.homeowner_ID = $ID";
             } else if ($userType == "company") {
-                $query = "select company_services.service_ID, services.service_name from company_services 
-                join services on company_services.service_ID = services.service_ID 
-                where company_services.company_ID = $ID";
+                $query = "SELECT Company_Services.service_ID, Services.service_name from Company_Services
+                join Services on Company_Services.service_ID = Services.service_ID
+                where Company_Services.company_ID = $ID";
             }
-            
+
             $result = mysqli_query($conn, $query);
             echo "<table class='table table-hover datatable_style' >
             <thead>
@@ -68,7 +68,7 @@ session_start();
                             ".'<input type ="hidden" value ="'.$row["service_ID"].'" name ="service_ID"/>'.
                             '<input type ="hidden" value ="'.$row["service_name"].'" name ="service_name"/>';
                         // if($count < 3)
-                        if($row ["service_name"] == "Water Supply" || $row ["service_name"] == "Maintenance") 
+                        if($row ["service_name"] == "Water Supply" || $row ["service_name"] == "Maintenance")
                         {
                         echo "<td></td>";
                         }

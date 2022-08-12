@@ -8,6 +8,7 @@ include_once "navbar.php";
 $id = $_SESSION["ID"] ?? "";
 $name = $_POST["servicename"] ?? "";
 $userType = $_SESSION["user_type"] ?? "";
+$insert_success= 0;
 
 if (!empty($_POST["servicename"])) {
 
@@ -28,6 +29,7 @@ if (!empty($_POST["servicename"])) {
 
                 $insertToHomeownerServices = "INSERT INTO Homeowner_Services " . "(service_ID, homeowner_ID) VALUES " . "('$serviceID', '$id')";
                 @mysqli_query($conn, $insertToHomeownerServices);
+                $insert_success= 1;
 
             } else if ($numRowsServices > 0) {
 
@@ -47,6 +49,7 @@ if (!empty($_POST["servicename"])) {
                     @mysqli_query($conn, $sql);
 
                     $successMessage = "Service $name has been added";
+                    $insert_success= 1;
                 }
             }
 
@@ -65,6 +68,7 @@ if (!empty($_POST["servicename"])) {
                 @mysqli_query($conn, $insertToServices);
 
                 $successMessage = "A new service $name has been inserted to the system.";
+                $insert_success= 1;
 
                 $getServiceID = mysqli_query($conn, "SELECT service_ID from Services where service_name = '$name'");
                 $serviceID = $getServiceID->fetch_array()[0] ?? '';
@@ -89,6 +93,7 @@ if (!empty($_POST["servicename"])) {
                     @mysqli_query($conn, $sql);
 
                     $successMessage = "Service $name has been inserted";
+                    $insert_success= 1;
                 }
             }
 
@@ -131,7 +136,12 @@ if (!empty($_POST["servicename"])) {
                     </div>
                 </div>
                 <div class="form-group mt-3 text-center">
-                    <input type="submit" class="btn btn-primary" name="submit" value="Add">
+
+                  <?php if($insert_success == 0)
+                  {
+                    echo '<input type="submit" class="btn btn-lg btn-primary" name="submit" value="Add">';
+                  }?>
+                    <a class="btn btn-lg btn-danger" href="viewServiceHomeownerAndCompany.php">Back to Services</a>
                 </div>
                 <div class="alert alert-success text-center booking-alert mt-3" role="alert"><?php echo $successMessage ?? "";?></div>
                 <div class="alert alert-danger text-center booking-alert mt-3" role="alert"><?php echo $fail_message ?? "";?></div>
