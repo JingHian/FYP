@@ -72,6 +72,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
         <div class="form-floating mb-3">
           <input type="date" class="form-control" id="date" name="date"placeholder="date" required>
           <label for="date">Date</label>
+           <script>date.min = new Date().toLocaleDateString('en-ca')</script>
         </div>
       </div>
 

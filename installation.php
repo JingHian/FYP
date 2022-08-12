@@ -97,8 +97,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
           ?>
         <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
         <div class="form-floating mb-3">
-          <input type="date" class="form-control" name="date" placeholder="date" required>
+          <input type="date" class="form-control" id="installationDate" name="date" placeholder="date" required>
           <label for="date">Date</label>
+           <script>installationDate.min = new Date().toLocaleDateString('en-ca')</script>
         </div>
       </div>
     </div>
