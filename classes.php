@@ -1795,4 +1795,25 @@ class Universal{
           <option value="December" >December</option></select>
           </div>';
   }
+
+  function SendMail($subject, $msg)
+  {
+    $header =   "From: fypscom@fyp-22-s2-27.com" . "\r\n" . "Content-Type: text/plain; charset=utf-8";
+
+    // use wordwrap() if lines are longer than 70 characters
+    $msg = wordwrap($msg,70);
+
+    if (!empty($msg)) {
+    // send email
+
+        if (mail("youremailhere@mail.com",$subject,$msg, $header,"-ffypscom@fyp-22-s2-27.com"))
+        {
+          echo "email sent successfully";
+        } else {
+            echo "email send failed";
+        }
+
+    }
+
+  }
 }
