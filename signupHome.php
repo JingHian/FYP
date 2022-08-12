@@ -25,7 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
 
   // Put secret key here, which we get
   // from google console
-  $secret_key = "6LdRHUghAAAAAGbESGY4Azx8QdRuJ_ZI7acdj7J4";
+  $secret_key = "6LcAl20hAAAAALP5eQ7sMH0WJdBTZxiBBw7Ci1o0";
 
   // Hitting request to the URL, Google will
   // respond with success or error scenario
@@ -175,7 +175,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
             <div class=" form-floating mt-3 mb-3  last_service"></div>
               <a id="add_service" class="ninety-five" href="#">+Add a service</a>
               <div class="g-recaptcha form-group mb-2 mt-3 ninety-five"
-                  data-sitekey="6LdRHUghAAAAAB95kQnedvuFh0aXtlvoHWrIVal9">
+                  data-sitekey="6LcAl20hAAAAAEv5uGqx3KutJfBmAlvKuiEXyhCG">
               </div>
               <div class="form-group mb-2 mt-3 ninety-five">
                 <input type="submit" id="sign-up" class="btn  btn-primary" value="Sign up">

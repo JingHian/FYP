@@ -78,14 +78,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['generate'])) {
           <?php  $uni->MonthDropDown();?>
           </div>
     <div class="form-group mb-2 mt-3 text-center">
-        <button type="submit" class="btn  btn-primary" name ="generate">Generate</button>
-        <a class='btn  btn-primary text-white me-4' href="viewBillsComp.php" value='Back'>Back</a>
+        <button type="submit" class="btn btn-lg btn-primary" name ="generate">Generate</button>
+        <a class='btn btn-lg btn-primary text-white me-4' href="viewBillsComp.php" value='Back'>Back</a>
     </div>
     <div class="alert alert-primary booking-alert mt-3" role="alert"><?php echo $generated;?></div>
     <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $already_exists;?></div>
   </form>
 </div>
     </body>
+    <?php include_once ("jsLinks.php"); ?>
 
 </html>
 <?php

@@ -30,7 +30,7 @@ session_start();
           <input class="form-control rounded-0 search-for" type="text" placeholder="Search..">
         </div>
       </div>
-      <div class="container justify-content-center text-center">
+      <div class="container justify-content-center text-center table-responsive">
         <?php
             $count =  0;
             $ID = $_SESSION['ID'];
@@ -73,7 +73,7 @@ session_start();
                         echo "<td></td>";
                         }
                         else{
-                        echo "<td class ='align-middle'><input type='submit' class='btn btn-small btn-danger' name='Remove' value='Remove'></td>";
+                        echo "<td class ='align-middle'><input type='submit' class='btn btn-mobile btn-danger' name='Remove' value='Remove'></td>";
                         }
                         echo"</tr>
                         </form>";

@@ -188,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
       }
       else if ($have_discount == 1)
       {
-        echo '<input type="submit" class="btn btn-lg btn-primary me-5" name="Edit" value="Edit Discount">';
+        echo '<input type="submit" class="btn btn-lg btn-primary me-5 me-m" name="Edit" value="Edit Discount">';
         echo '<input type="submit" class="btn btn-lg  btn-danger" name="Delete" value="Delete Discount">';
       }
         ?>
@@ -201,6 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
 
 
     </body>
+    <?php include_once('jsLinks.php');?>
 
 
 

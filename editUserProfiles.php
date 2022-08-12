@@ -37,6 +37,7 @@ if(isset($_POST['save']))
         if ($conn->query($change) === TRUE)
         {
             $editInfo_success = "Your details have been updated!";
+            $suspended = 0;
         }
         else
         {
@@ -54,6 +55,7 @@ if(isset($_POST['save']))
         if ($conn->query($change) === TRUE)
         {
             $editInfo_success = "Your details have been updated!";
+            $suspended = 0;
         }
         else
         {
@@ -209,13 +211,13 @@ else if(isset($_POST['unsuspend']))
                         <div class=\"alert alert-success booking-alert mt-3\" role=\"alert\">$editInfo_success</div>
                         <div class=\"alert alert-danger booking-alert mt-3\" role=\"alert\">$editInfo_suspended</div>
                         <div class=\"form-group mb-2 mt-3  text-center\">
-                            <button type=\"submit\" class=\"btn btn-lg btn-primary me-5\" id=\"save\" name =\"save\" value=\"Save Changes\">Save Changes</button>";
+                            <button type=\"submit\" class=\"btn btn-lg btn-primary me-5 me-m mb-1\" id=\"save\" name =\"save\" value=\"Save Changes\">Save Changes</button>";
                             if ($suspended == 0)
                             {
-                            echo "  <button type=\"submit\" class=\"btn btn-lg btn-danger\" id=\"suspend\" name =\"suspend\" value=\"Suspend\">Suspend user</button>";
+                            echo "  <button type=\"submit\" class=\"btn btn-lg btn-danger mb-1\" id=\"suspend\" name =\"suspend\" value=\"Suspend\">Suspend user</button>";
                           } else if ($suspended == 1)
                             {
-                            echo "  <button type=\"submit\" class=\"btn btn-lg btn-success\" id=\"unsuspend\" name =\"unsuspend\" value=\"unSuspend\">Unsuspend user</button>";
+                            echo "  <button type=\"submit\" class=\"btn btn-lg btn-success mb-1\" id=\"unsuspend\" name =\"unsuspend\" value=\"unSuspend\">Unsuspend user</button>";
                             }
                         echo"  </div>
                         </form>

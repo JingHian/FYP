@@ -59,7 +59,7 @@ include_once "logInCheck.php";
             </a>
             <div class="col-md-15"></div>
             <div class="col-md-15"></div>
-          <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-dark border-start-0 border-bottom-0 border-3 pt-3  height-200 " href="managePrice.php">
+          <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-dark border-start-0 border-bottom-0 border-3 pt-3  height-200 " href="">
                 <div class =" text-center">
                   <span class="material-symbols-outlined  icon-size">assignment</span>
                   <p class="usage-font ">View Hired Companies</p>

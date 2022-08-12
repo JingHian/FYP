@@ -52,7 +52,7 @@
 			</div>
 		</div>
 
-    <div class="container justify-content-center text-center">
+    <div class="container justify-content-center text-center table-responsive">
     <?php
       $tables->listEquipment();
       ?>

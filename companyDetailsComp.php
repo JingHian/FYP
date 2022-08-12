@@ -165,7 +165,7 @@
 
           <h2 class ="fw-bold mb-3">Contact Us</h2>
           <pre>Email: <?php echo $_SESSION['email'];?>     Phone Number: <?php echo $_SESSION['phone'] ;?></pre>
-            <a class='btn  btn-primary text-white me-4' href="userInfo.php" value='Back'>Back</a>
+            <a class='btn btn-lg btn-primary text-white me-4' href="userInfo.php" value='Back'>Back</a>
 
         </div>
     </div>
@@ -265,4 +265,5 @@
 
 
 </body>
+<?php include_once ("jsLinks.php"); ?>
 </html>

@@ -54,7 +54,7 @@
 				<input class="form-control rounded-0 search-for" type="text" placeholder="Search..">
 			</div>
 		</div>
-    <div class="container justify-content-center text-center">
+    <div class="container justify-content-center text-center table-responsive">
     <?php
       $bills->listClientBillDetails();
       ?>

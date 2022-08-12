@@ -90,10 +90,11 @@ if ($enquirySubject == "") {
                     </div>
 
                     <div class="form-group mb-2 mt-3 text-center">
-                        <input type="submit" class="btn  btn-primary" value="Submit Enquiry">
+                        <input type="submit" class="btn btn-lg btn-primary" value="Submit Enquiry">
                     </div>
                     <div class="alert alert-success booking-alert text-center  mt-3" role="alert"><?php echo $enquiry_success;?></div>
             </form>
         </div>
     </body>
+    <?php include_once ("jsLinks.php"); ?>
 </html>

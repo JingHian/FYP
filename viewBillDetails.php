@@ -39,7 +39,7 @@
     </head>
 
     <body>
-      <div class="container clearfix boxshadow p-5" style ="margin-top:100px;">
+      <div class="container clearfix boxshadow p-5 m-p mt-100">
       <div class="row" style="height: 200px;">
         <div class="col-md-4 ">
           <h2 class ="fw-bold mb-0"><?php echo $_SESSION['company_name'];?></h2>

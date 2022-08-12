@@ -291,6 +291,11 @@ border-bottom: 1px solid white !important;
 opacity: .75 !important;
 }
 
+.mt-100
+{
+  margin-top:100px;
+}
+
 @media (max-width: 1366px) {
   .form-horizontal {
     width: 40% !important;
@@ -348,6 +353,36 @@ opacity: .75 !important;
   .hide-box{
     display:none;
   }
+
+  table.dataTable th {
+    font-size: 12px;
+  }
+  table.dataTable td {
+    font-size: 12px;
+  }
+
+
+  .table-padding{
+    line-height:14px;
+  }
+
+  .mt-100
+  {
+    margin-top:0px;
+  }
+
+  .m-p
+  {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .me-m
+  {
+    margin-right:2px !important;
+  }
+
+
 }
 
 
@@ -355,4 +390,19 @@ opacity: .75 !important;
 .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
     max-width: 1400px;
 }
+}
+
+@media (max-width: 768px) {
+  .btn-mobile {
+    font-size:12px !important;
+    padding:4px 6px !important;
+  }
+}
+
+
+@media (max-width: 992px) {
+  .btn {
+    font-size:14px;
+    padding:8px 12px;
+  }
 }

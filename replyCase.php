@@ -76,7 +76,7 @@ $_SESSION['homeowner_name'] = $_POST['homeowner_name'];
         </div>
 
     <div class="form-group mb-2 mt-3 text-center">
-        <input type="submit" class="btn  btn-primary" value="Reply Homeowner">
+        <input type="submit" class="btn btn-lg btn-primary" value="Reply Homeowner">
     </div>
     <p class="text-center" style  ="color:green"><?php echo $enquiry_success;?></p>
   </form>
@@ -84,6 +84,7 @@ $_SESSION['homeowner_name'] = $_POST['homeowner_name'];
 
 
     </body>
+    <?php include_once ("jsLinks.php"); ?>
 
 
 

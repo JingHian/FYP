@@ -51,9 +51,9 @@ class Company{
             <thead>
             <tr class='table-padding text-white'>
               <th>Name</th>
-              <th>Services Offered</th>
+              <th class='hide-box'>Services Offered</th>
               <th>Address</th>
-              <th>Ratings</th>
+              <th class='hide-box'>Ratings</th>
               <th>Action</th>
             </tr>
             </thead>
@@ -90,8 +90,8 @@ class Company{
                 <tr class='table-padding' >
                   <form method='post' action=''>
                   <td>".$row["name"]."</td>
-                  <td>".$row["service_grouped"]."</td>
-                  <td>".$row["address"]."</td> <td>".number_format(floatval($averageRating), 1)." </td>
+                  <td class='hide-box'>".$row["service_grouped"]."</td>
+                  <td>".$row["address"]."</td> <td class='hide-box'>".number_format(floatval($averageRating), 1)." </td>
                   ".'<input type ="hidden" value ="'.$row["name"].'" name ="company_name"/>'.
                     '<input type ="hidden" value ="'.$row["email"].'" name ="company_email"/>'.
                     '<input type ="hidden" value ="'.$row["phone"].'" name ="company_phone"/>'.
@@ -100,7 +100,7 @@ class Company{
                     '<input type ="hidden" value ="'.$row["postal_code"].'" name ="company_postal"/>'.
                     '<input type ="hidden" value ="'.$row["description"].'" name ="company_description"/>'.
                     '<input type ="hidden" value ="'.$row["service_grouped"].'" name ="service_grouped"/>'.
-                  "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+                  "<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' value='Details'></td>
                 </tr>
               </form>";
       }
@@ -117,7 +117,7 @@ function tableHeaderCases()
   echo "<table class='table table-hover datatable_style' >
           <thead>
           <tr class='table-padding text-white'>
-            <th>Enquiry #</th>
+            <th class='hide-box'>Enquiry #</th>
             <th>Subject</th>
             <th>From</th>
             <th>Date</th>
@@ -146,7 +146,7 @@ function tableHeaderCases()
       echo "
                 <tr class='table-padding' >
                   <form method='post' action='replyCase.php'>
-                  <td>".$row["case_ID"]."</td>
+                  <td class='hide-box'>".$row["case_ID"]."</td>
                   <td>".$row["case_subject"]."</td>
                   <td>".$row["name"]."</td>
                   <td>".$row["case_date"]."</td>
@@ -158,7 +158,7 @@ function tableHeaderCases()
                     '<input type ="hidden" value ="'.$row["case_status"].'" name ="case_status"/>'.
                     '<input type ="hidden" value ="'.$row["case_description"].'" name ="case_description"/>'.
                     '<input type ="hidden" value ="" name ="reply"/>'.
-                  "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+                  "<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' value='Details'></td>
                 </tr>
               </form>";
       }
@@ -176,8 +176,8 @@ function tableHeaderBookingComp()
   echo "<table class='table table-hover datatable_style' >
           <thead>
           <tr class='table-padding text-white'>
-            <th>Booking #</th>
-            <th>Homeowner Name</th>
+            <th class='hide-box'>Booking #</th>
+            <th>Client Name</th>
             <th>Date</th>
             <th>Assigned Staff</th>
             <th>Status</th>
@@ -205,7 +205,7 @@ function listBookingsComp(){
      echo "
                <tr class='table-padding' >
                  <form method='post' action='assignStaff.php'>
-                 <td>".$row["booking_ID"]."</td>
+                 <td class='hide-box'>".$row["booking_ID"]."</td>
                  <td>".$row["name"]."</td>
                  <td>".$row["booking_date"]."</td>
                  <td>".$row["staff_ID"]."</td>
@@ -216,7 +216,7 @@ function listBookingsComp(){
                    '<input type ="hidden" value ="'.$row["staff_ID"].'" name ="booking_subject"/>'.
                    '<input type ="hidden" value ="'.$row["booking_status"].'" name ="booking_status"/>'.
                    '<input type ="hidden" value ="'.$row["booking_description"].'" name ="booking_description"/>'.
-                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' value='Details'></td>
                </tr>
              </form>";
      }
@@ -245,9 +245,9 @@ function tableHeaderStaff()
   echo "<table class='table table-hover datatable_style' >
           <thead>
           <tr class='table-padding text-white'>
-            <th>Staff ID</th>
+            <th class='hide-box'>Staff ID</th>
             <th>Name</th>
-            <th>Email</th>
+            <th class='hide-box'>Email</th>
             <th>Phone</th>
             <th>Role</th>
             <th>Status</th>
@@ -272,9 +272,9 @@ function listStaff(){
      while($row = $result->fetch_assoc()) {
       echo "<tr class='table-padding' >";
       echo "<form method='post' action='viewStaffDetails.php'>";
-      echo "<td>".$row["staff_ID"]."</td>";
+      echo "<td class='hide-box'>".$row["staff_ID"]."</td>";
       echo "<td>".$row["staff_name"]."</td>";
-      echo "<td>".$row["email"]."</td>";
+      echo "<td class='hide-box'>".$row["email"]."</td>";
       echo "<td>".$row["phone"]."</td>";
       echo "<td>".$row["staff_role"]."</td>";
       echo '<td>'.$row["status"].'</td>'
@@ -284,7 +284,7 @@ function listStaff(){
       .'<input type ="hidden" value ="'.$row["phone"].'" name ="staff_phone"/>'
       .'<input type ="hidden" value ="'.$row["staff_role"].'" name ="staff_role"/>'
       .'<input type ="hidden" value ="'.$row["status"].'" name ="staff_status"/>'
-      ."<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+      ."<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' value='Details'></td>
   </tr>
 </form>";
      }
@@ -326,12 +326,12 @@ function tableHeaderEquipment()
   echo "<table class='table table-hover datatable_style' >
   <thead>
   <tr class='table-padding text-white'>
-    <th>ID</th>
+    <th class='hide-box'>ID</th>
     <th>Name</th>
     <th>Quantity</th>
     <th>Installation Date</th>
-    <th>Warranty Date</th>
-    <th>Expiry Date</th>
+    <th class='hide-box'>Warranty Date</th>
+    <th class='hide-box'>Expiry Date</th>
     <th>Action</th>
   </tr>
   </thead>
@@ -354,19 +354,19 @@ function listEquipment(){
        while($row = $result->fetch_assoc()) {
           echo "<tr class='table-padding' >";
           echo "<form method='post' action='viewEquipmentDetails.php'>";
-          echo "<td>".$row["equipment_ID"]."</td>";
+          echo "<td class='hide-box'>".$row["equipment_ID"]."</td>";
           echo "<td>".$row["equipment_name"]."</td>";
           echo "<td>".$row["quantity"]."</td>";
           echo "<td>".$row["installation_date"]."</td>";
-          echo "<td>".$row["warranty_date"]."</td>";
-          echo "<td>".$row["expiry_date"]."</td>"
+          echo "<td class='hide-box'>".$row["warranty_date"]."</td>";
+          echo "<td class='hide-box'>".$row["expiry_date"]."</td>"
           .'<input type ="hidden" value ="'.$row["equipment_ID"].'" name ="equipment_ID"/>'
           .'<input type ="hidden" value ="'.$row["equipment_name"].'" name ="equipment_name"/>'
           .'<input type ="hidden" value ="'.$row["quantity"].'" name ="quantity"/>'
           .'<input type ="hidden" value ="'.$row["installation_date"].'" name ="installation_date"/>'
           .'<input type ="hidden" value ="'.$row["warranty_date"].'" name ="warranty_date"/>'
           .'<input type ="hidden" value ="'.$row["expiry_date"].'" name ="expiry_date"/>'
-          ."<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+          ."<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' value='Details'></td>
           </tr>
         </form>";
 
@@ -520,7 +520,7 @@ function listClientsBills(){
       .'<input type ="hidden" value ="'.$row["start_date"].'" name ="start_date"/>'
       .'<input type ="hidden" value ="'.$row["address"].'" name ="client_address"/>'
       .'<input type ="hidden" value ="'.$row["postal_code"].'" name ="client_postal_code"/>'
-      ."<td class ='align-middle'><input type='submit' class='btn btn-primary me-2' name='viewbills' value='View Bills'></td>
+      ."<td class ='align-middle'><input type='submit' class='btn btn-primary btn-mobile me-2' name='viewbills' value='View Bills'></td>
   </tr>
 </form>";
      }
@@ -580,7 +580,7 @@ function listClientBillDetails()
                    '<input type ="hidden" value ="'.$row["homeowner_ID"].'" name ="homeowner_ID"/>'.
                    '<input type ="hidden" value ="'.$_SESSION["address"].'" name ="company_address"/>'.
                    '<input type ="hidden" value ="'.$_SESSION["postal_code"].'" name ="company_postal"/>'.
-                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'>
+                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' value='Details'>
                  </td>
                </tr>
              </form>";
@@ -803,7 +803,7 @@ class Homeowner{
     echo "<table class='table table-hover datatable_style' >
             <thead>
             <tr class='table-padding text-white'>
-              <th>Enquiry #</th>
+              <th class='hide-box'>Enquiry #</th>
               <th>Subject</th>
               <th>To</th>
               <th>Date</th>
@@ -847,12 +847,12 @@ class Homeowner{
                echo "
                        <tr class='table-padding'>
                        <form method='post' action='viewEnquiryDetails.php'>
-                          <td>" . $Row['case_ID'] . "</td>".
+                          <td class='hide-box'>" . $Row['case_ID'] . "</td>".
                          "<td>" . $Row['case_subject'] . "</td>".
                          "<td>" . $Row['name'] . "</td>".
                          "<td>" . $Row['case_date'] ."</td>".
                          "<td>" . $Row['case_status'] ."</td>".
-                         "<td class ='align-middle'><input type='submit' class='btn  btn-primary' name='Details' value='Details'></td>".
+                         "<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' name='Details' value='Details'></td>".
                          "<input type ='hidden' value ='".$Row['case_subject']."' name ='case_subject'/>".
                          "<input type ='hidden' value ='".$Row['name']."' name ='company_name'/>".
                          "<input type ='hidden' value ='".$Row['case_description']."' name ='case_description'/>".
@@ -956,7 +956,7 @@ function tableHeaderBookingHome()
   echo "<table class='table table-hover datatable_style' >
           <thead>
           <tr class='table-padding text-white'>
-            <th>Booking #</th>
+            <th class='hide-box'>Booking #</th>
             <th>Company Name</th>
             <th>Date</th>
             <th>Type</th>
@@ -986,7 +986,7 @@ function listBookingsHomeowner(){
      echo "
                <tr class='table-padding' >
                  <form method='post' action='viewBookingDetailsHomeowner.php'>
-                 <td>".$row["booking_ID"]."</td>
+                 <td class='hide-box'>".$row["booking_ID"]."</td>
                  <td>".$row["name"]."</td>
                  <td>".$row["booking_date"]."</td>
                  <td>".$row["booking_type"]."</td>
@@ -997,7 +997,7 @@ function listBookingsHomeowner(){
                    '<input type ="hidden" value ="'.$row["booking_description"].'" name ="booking_description"/>'.
                    '<input type ="hidden" value ="'.$row["booking_type"].'" name ="booking_type"/>'.
                    '<input type ="hidden" value ="'.$row["booking_status"].'" name ="booking_status"/>'.
-                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+                 "<td class ='align-middle'><input type='submit' class='btn btn-primary btn-mobile' value='Details'></td>
                </tr>
              </form>";
      }
@@ -1047,7 +1047,7 @@ function tableHeaderBills()
   echo "<table class='table table-hover datatable_style' >
           <thead>
           <tr class='table-padding text-white'>
-            <th>Bill #</th>
+            <th class='hide-box'>Bill #</th>
             <th>Company Name</th>
             <th>Bill Date</th>
             <th>Due Date</th>
@@ -1077,7 +1077,7 @@ function listBillsHomeowner(){
      echo "
                <tr class='table-padding' >
                  <form method='post' action='viewBillDetails.php'>
-                 <td>".$row["bill_ID"]."</td>
+                 <td class='hide-box'>".$row["bill_ID"]."</td>
                  <td>".$row["name"]."</td>
                  <td>".$row["bill_date"]."</td>
                  <td>".$row["bill_due_date"]."</td>
@@ -1090,7 +1090,7 @@ function listBillsHomeowner(){
                    '<input type ="hidden" value ="'.$row["company_ID"].'" name ="company_ID"/>'.
                    '<input type ="hidden" value ="'.$row["address"].'" name ="company_address"/>'.
                    '<input type ="hidden" value ="'.$row["postal_code"].'" name ="company_postal"/>'.
-                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+                 "<td class ='align-middle'><input type='submit' class='btn btn-primary btn-mobile' value='Details'></td>
                </tr>
              </form>";
      }
@@ -1371,7 +1371,7 @@ function listPaidHomeowner(){
                    '<input type ="hidden" value ="'.$row["company_ID"].'" name ="company_ID"/>'.
                    '<input type ="hidden" value ="'.$row["address"].'" name ="company_address"/>'.
                    '<input type ="hidden" value ="'.$row["postal_code"].'" name ="company_postal"/>'.
-                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+                 "<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' value='Details'></td>
                </tr>
              </form>";
      }
@@ -1401,13 +1401,13 @@ function tableHeaderVerifyCompanies()
   echo "<table class='table table-hover datatable_style' >
           <thead>
             <tr class='table-padding text-white'>
-              <th>Company ID</th>
-              <th>Company Name</th>
+              <th class='hide-box'>Company ID</th>
+              <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
               <th>Address</th>
-              <th>Postal Code</th>
-              <th>Status</th>
+              <th class='hide-box'>Postal Code</th>
+              <th class='hide-box'>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -1427,20 +1427,20 @@ function verifyCompanies(){
           while (($row = mysqli_fetch_assoc($result)) != FALSE) {
               echo "<tr class='table-padding' >";
               echo "<form method='post' action='companyWaitingToBeVerified.php'>";
-              echo "<td>" . $row['company_ID']?? "" . "</td>";
+              echo "<td class='hide-box'>" . $row['company_ID']?? "" . "</td>";
               echo "<td>" . $row['name'] . "</td>";
               echo "<td>" . $row['email'] . "</td>";
               echo "<td>" . $row['phone'] . "</td>";
               echo "<td>" . $row['address'] ."</td>";
-              echo "<td>" . $row['postal_code'] ."</td>";
-              echo '<td>Awaiting</td>
+              echo "<td class='hide-box'>" . $row['postal_code'] ."</td>";
+              echo '<td class="hide-box">Awaiting</td>
               '.'<input type ="hidden" value ="'.$row["company_ID"].'" name ="company_ID"/>'.
                 '<input type ="hidden" value ="'.$row["name"].'" name ="name"/>'.
                 '<input type ="hidden" value ="'.$row["email"].'" name ="email"/>'.
                 '<input type ="hidden" value ="'.$row["phone"].'" name ="phone"/>'.
                 '<input type ="hidden" value ="'.$row["address"].'" name ="address"/>'.
                 '<input type ="hidden" value ="'.$row["postal_code"].'" name ="postal_code"/>'.
-              "<td class ='align-middle'><input type='submit' class='btn  btn-primary' value='Details'></td>
+              "<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' value='Details'></td>
             </tr>
           </form>";
 
@@ -1458,11 +1458,11 @@ function tableHeaderUserProfiles()
     echo "<table class='table table-hover datatable_style' >
     <thead>
     <tr class='table-padding text-white'>
-      <th>User ID</th>
+      <th class='hide-box'>User ID</th>
       <th>Username</th>
       <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
+      <th class='hide-box'>Email</th>
+      <th class='hide-box'>Phone</th>
       <th>User Type</th>
       <th>Status</th>
       <th>Action</th>
@@ -1490,11 +1490,11 @@ function viewUserProfiles()
             echo "
             <tr class='table-padding' >
               <form method='post' action='editUserProfiles.php'>
-              <td>".$row["ID"]."</td>
+              <td class='hide-box'>".$row["ID"]."</td>
               <td>".$row["username"]."</td>
               <td>".$row["name"]."</td>
-              <td>".$row["email"]."</td>
-              <td>".$row["phone"]."</td>
+              <td class='hide-box'>".$row["email"]."</td>
+              <td class='hide-box'>".$row["phone"]."</td>
               <td>".$row["user_type"]."</td>";
               if($row["suspended"] == 0)
               {
@@ -1507,7 +1507,7 @@ function viewUserProfiles()
               echo '<input type ="hidden" value ="'.$row["ID"].'" name ="ID"/>'.
                '<input type="hidden" value ="'.$row["user_type"].'" name ="user_type"/>'.
                '<input type="hidden" value ="'.$row["suspended"].'" name ="suspended"/>'.
-              "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' name='Edit' value='Edit'></td>
+              "<td class ='align-middle'><input type='submit' class='btn btn-mobile btn-primary' name='Edit' value='Edit'></td>
             </tr>
           </form>";
         }
@@ -1528,8 +1528,8 @@ function tableHeaderEnquiriesAdmin()
     echo "<table class='table table-hover  datatable_style' >
             <thead>
             <tr class='table-padding text-white'>
-              <th>Enquiry #</th>
-              <th>User #</th>
+              <th class='hide-box'>Enquiry #</th>
+              <th class='hide-box'>User #</th>
               <th>Name</th>
               <th>User Type</th>
 			        <th>Subject</th>
@@ -1567,8 +1567,8 @@ function tableHeaderEnquiriesAdmin()
                echo "
                        <tr class='table-padding'>
                        <form method='post' action='replyEnquiry.php'>
-                          <td>" . $Row['eh_ID'] . "</td>".
-                         "<td>" . $Row['homeowner_ID'] . "</td>".
+                          <td class='hide-box'>" . $Row['eh_ID'] . "</td>".
+                         "<td class='hide-box'>" . $Row['homeowner_ID'] . "</td>".
                          "<td>" . $Row['name'] . "</td>".
                          "<td>" . $Row['user_type'] . "</td>".
                          "<td>" . $Row['enquiry_subject'] . "</td>".
@@ -1582,7 +1582,7 @@ function tableHeaderEnquiriesAdmin()
                          "<input type ='hidden' value ='".$Row['enquiry_description']."' name ='enquiry_description'/>".
                          "<input type ='hidden' value ='".$Row['user_type']."' name ='user_type'/>".
                          "<input type ='hidden' value ='".$Row['enquiry_status']."' name ='enquiry_status'/>".
-                         "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' name='Details' value='Details'></td>".
+                         "<td class ='align-middle'><input type='submit' class='btn btn-mobile btn-primary' name='Details' value='Details'></td>".
                       " </tr>
                      </form>";
               }
@@ -1606,14 +1606,14 @@ function tableHeaderEnquiriesAdmin()
                  echo "
                          <tr class='table-padding'>
                          <form method='post' action='replyEnquiry.php'>
-                            <td>" . $Row['ec_ID'] . "</td>".
-                           "<td>" . $Row['company_ID'] . "</td>".
+                            <td class='hide-box'>" . $Row['ec_ID'] . "</td>".
+                           "<td class='hide-box'>" . $Row['company_ID'] . "</td>".
                            "<td>" . $Row['name'] . "</td>".
                            "<td>" . $Row['user_type'] . "</td>".
                            "<td>" . $Row['enquiry_subject'] . "</td>".
                            "<td>" . $Row['enquiry_date'] ."</td>".
                            "<td>" . $Row['enquiry_status'] ."</td>".
-                           "<td class ='align-middle'><input type='submit' class='btn btn-small btn-primary' name='Details' value='Details'></td>".
+                           "<td class ='align-middle'><input type='submit' class='btn btn-mobile btn-primary' name='Details' value='Details'></td>".
                            "<input type ='hidden' value ='".$Row['ec_ID']."' name ='enquiry_ID'/>".
                            "<input type ='hidden' value ='".$Row['company_ID']."' name ='user_id'/>".
                            "<input type ='hidden' value ='".$Row['name']."' name ='name'/>".
@@ -1684,7 +1684,7 @@ function tableHeaderEnquiriesAdmin()
                 echo "<td></td>";
               }
               else{
-                echo "<td class ='align-middle'><input type='submit' class='btn btn-small btn-danger' name='Remove' value='Remove'></td>";
+                echo "<td class ='align-middle'><input type='submit' class='btn btn-mobile btn-danger' name='Remove' value='Remove'></td>";
               }
               echo"</tr>
               </form>";

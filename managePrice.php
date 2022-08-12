@@ -113,10 +113,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
                 ?>
                 <div class="form-group mb-2 mt-3 text-center">
-                    <input type="submit" class="btn  btn-primary" value="change">
+                    <input type="submit" class="btn btn-lg btn-primary" value="change">
                 </div>
             </form>
         </div>
     </body>
+    <?php include_once ("jsLinks.php"); ?>
 
 </html>
