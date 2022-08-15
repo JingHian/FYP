@@ -1816,4 +1816,58 @@ class Universal{
     }
 
   }
+
+  function imageUpload($files,$file_name)
+  {
+    $target_dir = "img/";
+    $target_file = $target_dir . basename($files["fileToUpload"]["name"]);
+    $temp = explode(".", $_FILES["fileToUpload"]["name"]);
+    $extension = end($temp);
+    if ($extension == 'jpeg' || $extension == 'JPEG')
+    {
+      $extension = 'jpg';
+    }
+    $filename = $_SESSION['ID'] . $file_name . "." . $extension;
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+    $check = getimagesize($files["fileToUpload"]["tmp_name"]);
+    if($check !== false) {
+      // echo "File is an image - " . $check["mime"] . ".";
+      $uploadOk = 1;
+    } else {
+      $uploadOk = 0;
+      return "not_image";
+    }
+
+  // Check if file already exists
+  // if (file_exists($target_file)) {
+  //   echo "Sorry, file already exists.";
+  //   $uploadOk = 0;
+  // }
+
+  // Check file size
+  if ($files["fileToUpload"]["size"] > 2000000) {
+    echo "Sorry, your file is too large.";
+    $uploadOk = 0;
+    return "file_too_big";
+  }
+
+  // Allow certain file formats
+  if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" ) {
+    $uploadOk = 0;
+    return "wrong_file";
+  }
+
+  // Check if $uploadOk is set to 0 by an error
+  if ($uploadOk == 0) {
+  // if everything is ok, try to upload file
+  } else {
+    if (move_uploaded_file($files["fileToUpload"]["tmp_name"], $target_dir.$filename)) {
+      return "upload_success";
+    } else {
+      return "upload_failed";
+    }
+  }
+  }
 }

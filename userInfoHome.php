@@ -16,10 +16,77 @@ $postal_code = $_SESSION["postal_code"];
 $home_type = $_SESSION["home_type"];
 $editInfo_success = "";
 $wrong_password = "";
+$upload_failed = "";
+$upload_success = "";
 $homeowners = new Homeowner();
+
+// find profile picture of particular user
+$img_name = $_SESSION["ID"] . "_user_profile_home";
+$target_dir = "img/" . $img_name;
+$matching = glob($target_dir . ".*");
+
+
+// check which file is newer and display that one.
+$filenamepng = "img/" . $img_name . ".png";
+// echo $filenamepng;
+if (file_exists($filenamepng)) {
+    $file_time_png = filemtime($filenamepng);
+}
+else {
+  $file_time_png = 0;
+}
+$filenamejpg = "img/" . $img_name . ".jpg";
+// echo $filenamejpg;
+if (file_exists($filenamejpg)) {
+    $file_time_jpg = filemtime($filenamejpg);
+}
+else {
+  $file_time_jpg = 0;
+}
+
+if ($file_time_jpg > $file_time_png)
+{
+  $img_name = $_SESSION["ID"] . "_user_profile_home.jpg";
+}
+
+else if ($file_time_jpg < $file_time_png)
+{
+  $img_name = $_SESSION["ID"] . "_user_profile_home.png";
+}
+
+else if ($file_time_jpg == $file_time_png)
+{
+  $img_name = $_SESSION["ID"] . "_user_profile_home";
+}
+
+// print_r($matching);
+// echo $target_dir;
+// $img_name = $_SESSION["ID"] . "_user_profile_home.".  $file_ext;
+$uni = new Universal();
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand']){
   $validate = new Validation();
   $n_password = $_POST['n_password'];
+  $check_image = $uni->imageUpload($_FILES,"_user_profile_home");
+  if ($check_image == "not_image")
+  {
+    $upload_failed ="File is not an image, please upload a JPG, JPEG or PNG file!";
+  }
+  else if ($check_image == "file_too_big")
+  {
+    $upload_failed ="File size is too large! please upload a file smaller than 2mb!";
+  }
+  else if ($check_image == "wrong_file")
+  {
+    $upload_failed ="File is not an image, please upload a JPG, JPEG or PNG file!";
+  }
+  else if ($check_image == "upload_failed")
+  {
+    $upload_failed ="There was an error uploading your image, please try again!";
+  }
+  else if ($check_image == "upload_success")
+  {
+    $upload_success ="Image has been uploaded!";
+  }
 
   if (password_verify($_POST['o_password'],$_SESSION['password']) == false)
   {
@@ -61,13 +128,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
 </div>
 <div class="container justify-content-center"  style="text-align: center;">
 <div class="container">
-    <form class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+    <form class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post"  enctype="multipart/form-data">
     <?php
      $rand=rand();
      $_SESSION['rand']=$rand;
     ?>
     <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
+
+    <img class="image-upload" src="img/<?php echo $img_name?>"/>
+    <div class="col">
+      <div class=" mb-3 ">
+        <input class="form-control" type="file" name="fileToUpload" id="fileToUpload">
+    </div>
+  </div>
     <div class="row">
+
+
         <div class="col">
           <div class="form-floating  mb-3 ">
             <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $_SESSION['name']; ?>">
@@ -135,6 +211,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
         <input type="submit" class="btn btn-lg btn-primary" value="Save Changes">
     </div>
       <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $editInfo_success;?></div>
+      <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $upload_failed;?></div>
+      <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $upload_success;?></div>
       <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $wrong_password;?></div>
   </form>
 </div>

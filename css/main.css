@@ -296,6 +296,33 @@ opacity: .75 !important;
   margin-top:100px;
 }
 
+ .image-upload {
+    height: 170px;
+    width: 170px;
+    border-radius: 50%;
+    box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
+    margin: 5px auto 20px auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{    width: 80px;
+    cursor: pointer;
+    color: var(--white);
+}
+
+
+
+
+
+
 @media (max-width: 1366px) {
   .form-horizontal {
     width: 40% !important;
