@@ -150,67 +150,67 @@
   //get the stars
   $stars = $averageRating;
     if ($stars > 0 && $stars < 1)  {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star_half</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
     }
     else if ($stars == 1) {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
   } else if ($stars > 1 && $stars < 2) {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star_half</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
   } else if ($stars == 2) {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
   } else if ($stars > 2 && $stars < 3) {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star_half</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
   } else if ($stars == 3) {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
   } else if ($stars > 3 && $stars < 4) {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star_half</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
   } else if ($stars == 4) {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
   } else if ($stars > 4 && $stars < 5) {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star_half</div>';
 
   }else if ($stars == 5) {
-      $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>';
+      $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>';
   }
 
 ?>
@@ -286,59 +286,59 @@
             $stars = $Row['score'];
 
             if ($stars == 1) {
-              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+              $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
             } else if ($stars == 1.5) {
-              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+              $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star_half</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
             } else if ($stars == 2) {
-              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+              $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
             } else if ($stars == 2.5) {
-              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+              $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star_half</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
             } else if ($stars == 3) {
-              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+              $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
             } else if ($stars == 3.5) {
-              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+              $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star_half</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
             } else if ($stars == 4) {
-              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">grade</div>';
+              $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">grade</div>';
             } else if ($stars == 4.5) {
-              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star_half</div>';
+              $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star_half</div>';
             } else if ($stars == 5) {
-              $stars = '<div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>
-                        <div class="float-start font-20 material-symbols-outlined mt-01 gold">star</div>';
+              $stars = '<div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>
+                        <div class="float-start font-20 material-symbols-rounded mt-01 gold">star</div>';
             }
 
             ?>

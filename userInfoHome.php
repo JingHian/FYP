@@ -19,74 +19,18 @@ $wrong_password = "";
 $upload_failed = "";
 $upload_success = "";
 $homeowners = new Homeowner();
+$uni = new Universal();
 
 // find profile picture of particular user
 $img_name = $_SESSION["ID"] . "_user_profile_home";
-$target_dir = "img/" . $img_name;
-$matching = glob($target_dir . ".*");
+$ext = $uni->getLastestImage($img_name);
+$img_name .= $ext;
 
 
-// check which file is newer and display that one.
-$filenamepng = "img/" . $img_name . ".png";
-// echo $filenamepng;
-if (file_exists($filenamepng)) {
-    $file_time_png = filemtime($filenamepng);
-}
-else {
-  $file_time_png = 0;
-}
-$filenamejpg = "img/" . $img_name . ".jpg";
-// echo $filenamejpg;
-if (file_exists($filenamejpg)) {
-    $file_time_jpg = filemtime($filenamejpg);
-}
-else {
-  $file_time_jpg = 0;
-}
-
-if ($file_time_jpg > $file_time_png)
-{
-  $img_name = $_SESSION["ID"] . "_user_profile_home.jpg";
-}
-
-else if ($file_time_jpg < $file_time_png)
-{
-  $img_name = $_SESSION["ID"] . "_user_profile_home.png";
-}
-
-else if ($file_time_jpg == $file_time_png)
-{
-  $img_name = $_SESSION["ID"] . "_user_profile_home";
-}
-
-// print_r($matching);
-// echo $target_dir;
-// $img_name = $_SESSION["ID"] . "_user_profile_home.".  $file_ext;
-$uni = new Universal();
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand']){
   $validate = new Validation();
   $n_password = $_POST['n_password'];
-  $check_image = $uni->imageUpload($_FILES,"_user_profile_home");
-  if ($check_image == "not_image")
-  {
-    $upload_failed ="File is not an image, please upload a JPG, JPEG or PNG file!";
-  }
-  else if ($check_image == "file_too_big")
-  {
-    $upload_failed ="File size is too large! please upload a file smaller than 2mb!";
-  }
-  else if ($check_image == "wrong_file")
-  {
-    $upload_failed ="File is not an image, please upload a JPG, JPEG or PNG file!";
-  }
-  else if ($check_image == "upload_failed")
-  {
-    $upload_failed ="There was an error uploading your image, please try again!";
-  }
-  else if ($check_image == "upload_success")
-  {
-    $upload_success ="Image has been uploaded!";
-  }
+
 
   if (password_verify($_POST['o_password'],$_SESSION['password']) == false)
   {
@@ -103,6 +47,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
   {
     $homeowners->updateInfoHome($_POST["name"],$_POST["phone"],$_POST["email"],$_POST["address"],$_POST["postal_code"],$_POST["home_type"],"");
     $editInfo_success = "Your details have been updated!";
+
+    //check if user has uploaded a profile picture
+    if(file_exists($_FILES['fileToUpload']['tmp_name']) || is_uploaded_file($_FILES['fileToUpload']['tmp_name'])) {
+        $check_image = $uni->imageUpload($_FILES,"_user_profile_home");
+        if ($check_image == "not_image")
+        {
+          $upload_failed ="File is not an image, please upload a JPG, JPEG or PNG file!";
+        }
+        else if ($check_image == "file_too_big")
+        {
+          $upload_failed ="File size is too large! please upload a file smaller than 2mb!";
+        }
+        else if ($check_image == "wrong_file")
+        {
+          $upload_failed ="File is not an image, please upload a JPG, JPEG or PNG file!";
+        }
+        else if ($check_image == "upload_failed")
+        {
+          $upload_failed ="There was an error uploading your image, please try again!";
+        }
+        else if ($check_image == "upload_success")
+        {
+          $upload_success ="Image has been uploaded!";
+        }
+    }
+
   }
 
 }
@@ -142,8 +112,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
     </div>
   </div>
     <div class="row">
-
-
         <div class="col">
           <div class="form-floating  mb-3 ">
             <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $_SESSION['name']; ?>">

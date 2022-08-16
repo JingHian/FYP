@@ -1817,6 +1817,48 @@ class Universal{
 
   }
 
+  function getLastestImage($img_name)
+  {
+
+    // check which file is newer and display that one.
+    $filenamepng = "img/" . $img_name . ".png";
+    // echo $filenamepng;
+    if (file_exists($filenamepng)) {
+        $file_time_png = filemtime($filenamepng);
+    }
+    else {
+      $file_time_png = 0;
+    }
+    $filenamejpg = "img/" . $img_name . ".jpg";
+    // echo $filenamejpg;
+    if (file_exists($filenamejpg)) {
+        $file_time_jpg = filemtime($filenamejpg);
+    }
+    else {
+      $file_time_jpg = 0;
+    }
+
+    if ($file_time_jpg > $file_time_png)
+    {
+      $ext = ".jpg";
+      return $ext;
+    }
+
+    else if ($file_time_jpg < $file_time_png)
+    {
+      $ext =".png";
+      return $ext;
+    }
+
+    else if ($file_time_jpg == $file_time_png)
+    {
+      $ext = "no_image";
+      return $ext;
+    }
+
+
+  }
+
   function imageUpload($files,$file_name)
   {
     $target_dir = "img/";
@@ -1848,7 +1890,6 @@ class Universal{
 
   // Check file size
   if ($files["fileToUpload"]["size"] > 2000000) {
-    echo "Sorry, your file is too large.";
     $uploadOk = 0;
     return "file_too_big";
   }

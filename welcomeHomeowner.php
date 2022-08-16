@@ -97,22 +97,22 @@ if ($result->num_rows > 0) {
       <h2 class="font-SlateBlue" style="margin-top:30px;margin-bottom:30px;"><b>Quick Links</b></h2>
 				<div class="row ">
 					<a class=" menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-6 border border-dark border-start-0 border-top-0 border-2 pt-3  height-200" href="viewWaterUsage.php">
-						<div class=" text-center"> <span class="material-symbols-outlined  icon-size">water_drop</span>
+						<div class=" text-center"> <span class="material-symbols-rounded  icon-size">water_drop</span>
 							<p class="usage-font">My Water Usage </p>
 						</div>
 					</a>
 					<a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-6 border border-dark border-top-0 border-end-0 border-2 pt-3  height-200" href="viewBills.php">
-						<div class=" text-center"> <span class="material-symbols-outlined icon-size">request_quote</span>
+						<div class=" text-center"> <span class="material-symbols-rounded icon-size">request_quote</span>
 							<p class="usage-font"> Bills/History </p>
 						</div>
 					</a>
 					<a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-6 border  border-start-0 border-bottom-0 border-dark border-2 pt-3  height-200" href="rateAndReviewCompany.php">
-						<div class=" text-center"> <span class="material-symbols-outlined icon-size">grade</span>
+						<div class=" text-center"> <span class="material-symbols-rounded icon-size">grade</span>
 							<p class="usage-font ">Review Company </p>
 						</div>
 					</a>
 					<a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-6 border   border-bottom-0 border-end-0 border-dark border-2 pt-3  height-200" href="enquiryToPlatform.php">
-						<div class=" text-center"> <span class="material-symbols-outlined icon-size">contact_support</span>
+						<div class=" text-center"> <span class="material-symbols-rounded icon-size">contact_support</span>
 							<p class="usage-font">Send Enquiry to Platform </p>
 						</div>
 					</a>
