@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 12, 2022 at 03:06 PM
+-- Generation Time: Aug 16, 2022 at 02:41 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -38,7 +38,7 @@ CREATE TABLE `Admin` (
   `phone` int(11) NOT NULL,
   `user_type` varchar(20) NOT NULL,
   `suspended` tinyint(1) NOT NULL DEFAULT 0,
-  `verified` tinyint(1) NOT NULL DEFAULT 1
+  `verified` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -46,7 +46,9 @@ CREATE TABLE `Admin` (
 --
 
 INSERT INTO `Admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone`, `user_type`, `suspended`, `verified`) VALUES
-(2, 'admin1', '$2y$10$PzVZrvMbbN8/ANiT2.9OBu2j1/exOdblgYA.l8UF/NHAC2Q7Y/5Aq', 'Test', 'test@mail.com', 98765432, 'admin', 0, 1);
+(2, 'admin1', '$2y$10$PzVZrvMbbN8/ANiT2.9OBu2j1/exOdblgYA.l8UF/NHAC2Q7Y/5Aq', 'Test', 'test@mail.com', 98765432, 'admin', 0, 1),
+(3, 'admin3', '$2y$10$qu/bvrQXEaKP04ewb05f6umnR7PMlsu.GPBWXPW7A/Ogi.bcQjebO', 'Admin Three', 'admin@mail.com', 98765432, 'admin', 0, 1),
+(4, 'admin4', '$2y$10$QvmBbSo7gh1B5mEJX0SawuXLv4OMbi9bBr8M/e6i9ukYmXDsUEOyW', 'Admin Four', 'adsa@asd.com', 98745621, 'admin', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -64,15 +66,6 @@ CREATE TABLE `Bills` (
   `bill_status` varchar(20) NOT NULL DEFAULT 'pending',
   `bill_payment_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `Bills`
---
-
-INSERT INTO `Bills` (`bill_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `bill_date`, `bill_due_date`, `bill_status`, `bill_payment_date`) VALUES
-(13, 4, 1, 1, '2022-08-31', '2022-09-30', 'pending', NULL),
-(22, 1, 1, 8, '2022-07-31', '2022-08-31', 'pending', NULL),
-(23, 1, 1, 8, '2022-08-31', '2022-09-30', 'pending', NULL);
 
 -- --------------------------------------------------------
 
@@ -92,15 +85,6 @@ CREATE TABLE `Bookings` (
   `booking_status` varchar(20) NOT NULL,
   `completion_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `Bookings`
---
-
-INSERT INTO `Bookings` (`booking_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `staff_ID`, `booking_date`, `booking_description`, `booking_type`, `booking_status`, `completion_date`) VALUES
-(17, 1, 1, 8, NULL, '2022-08-01', 'asd', 'installation', 'Completed ', '2022-08-12'),
-(18, 1, 1, 8, NULL, '2022-08-25', 'asdas', 'problem', 'Completed ', '2022-08-12'),
-(19, 1, 1, 8, NULL, '2022-08-31', '123', 'problem', 'In Progress', NULL);
 
 -- --------------------------------------------------------
 
@@ -187,7 +171,7 @@ INSERT INTO `Company` (`company_ID`, `username`, `password`, `name`, `email`, `p
 (2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'Hello we are company 2', 'company', 0, 1),
 (3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'Hello we are company three', 'company', 0, 1),
 (4, 'company4', '$2y$10$ASJ5hTD3X9gbM4MSBnAGLuh8IallE5CFYJLqV8G6PM6tyZT0lizOC', 'Company Four', 'test@mail.com', 98765432, '93 Lorum Avenue 1 #52', 52821, 'No description has been set by the company yet', 'company', 0, 1),
-(5, 'company5', '$2y$10$.YFGFGMcLbK1Sq66S5G.6e/YpicGLLJDyQ7BqsAxkCwbcecKlS5TO', 'Company Five', 'company5@mail.com', 89876544, '358 Random Lane 7 #2-223', 798628, 'No description has been set by the company yet', 'company', 0, 0);
+(5, 'company5', '$2y$10$.YFGFGMcLbK1Sq66S5G.6e/YpicGLLJDyQ7BqsAxkCwbcecKlS5TO', 'Company Five', 'company5@mail.com', 89876544, '358 Random Lane 7 #2-223', 798628, 'No description has been set by the company yet', 'company', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -218,8 +202,8 @@ INSERT INTO `Company_Services` (`cs_ID`, `service_ID`, `company_ID`, `price`) VA
 (10, 6, 3, NULL),
 (11, 3, 3, NULL),
 (12, 1, 4, NULL),
-(45, 1, 5, NULL),
-(46, 2, 5, NULL),
+(45, 1, 5, 12.00),
+(46, 2, 5, 41.00),
 (47, 3, 5, NULL);
 
 -- --------------------------------------------------------
@@ -494,6 +478,7 @@ INSERT INTO `Services` (`service_ID`, `service_name`) VALUES
 (5, 'Pipes'),
 (17, 'Pipes installation'),
 (16, 'pipess'),
+(18, 'test'),
 (1, 'Water Supply');
 
 -- --------------------------------------------------------
@@ -678,7 +663,7 @@ ALTER TABLE `Water_Tracking`
 -- AUTO_INCREMENT for table `Admin`
 --
 ALTER TABLE `Admin`
-  MODIFY `admin_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `admin_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `Bills`
@@ -690,7 +675,7 @@ ALTER TABLE `Bills`
 -- AUTO_INCREMENT for table `Bookings`
 --
 ALTER TABLE `Bookings`
-  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `Cases`
@@ -702,7 +687,7 @@ ALTER TABLE `Cases`
 -- AUTO_INCREMENT for table `Clients`
 --
 ALTER TABLE `Clients`
-  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `Company`
@@ -750,7 +735,7 @@ ALTER TABLE `Homeowners`
 -- AUTO_INCREMENT for table `Homeowner_Services`
 --
 ALTER TABLE `Homeowner_Services`
-  MODIFY `hs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `hs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `Maintenance_Equipment`
@@ -774,7 +759,7 @@ ALTER TABLE `Ratings`
 -- AUTO_INCREMENT for table `Services`
 --
 ALTER TABLE `Services`
-  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `Water_Tracking`
