@@ -88,12 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" &&  isset($_POST['Details']))
           </div>
         </div>
 
+        <div class="form-group mt-3 text-center ">
+        <input type="submit" name="update" class="btn btn-lg btn-primary" value="Update">
+            <input type="button" onClick="history.go(-1);" class="btn btn-lg btn-primary" value="Back">
+        </div>
 
   </form>
-  <div class="form-group mt-3 text-center form-horizontal">
-  <input type="submit" name="update" class="btn btn-lg btn-primary" value="Update">
-      <input type="button" onClick="history.go(-1);" class="btn btn-lg btn-primary" value="Back">
-  </div>
 </div>
 
 <?php
