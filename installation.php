@@ -4,6 +4,7 @@ include "conn.php";
 include_once "classes.php";
 include_once "logInCheck.php";
   // echo '<pre>' . print_r($_SESSION) . '</pre>';
+$ID = $_SESSION["ID"];
 $name = $_SESSION["name"];
 $phone = $_SESSION["phone"];
 $email = $_SESSION["email"];
@@ -14,11 +15,17 @@ $booking_failed = "";
 $homeowner = new Homeowner();
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand']) {
+  $checkother = "SELECT * FROM Clients WHERE homeowner_ID = '$ID'";
+  $result = mysqli_query($conn, $checkother);
   if($homeowner->checkClientExists($_SESSION["ID"],$_SESSION["company_ID"]) == True)
   {
-    $homeowner->addClient($_SESSION["company_ID"],$_POST["date"]);
+  $homeowner->addClient($_SESSION["company_ID"],$_POST["date"]);
     $homeowner->insertBooking($_SESSION["company_name"],$_POST["date"],$_POST["comments"],"installation");
     $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_SESSION['company_name']."!";
+  }
+  elseif((mysqli_num_rows($result))!= 0)
+  {
+      $booking_failed = "You already are a client of another company. You may only be a client of 1 company at a time. ";
   }
   else{
     $booking_failed = "You already are a client of ". $_SESSION['company_name']."! Please check your bookings for your previous installation booking.";
@@ -97,9 +104,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
           ?>
         <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
         <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="installationDate" name="date" placeholder="date" required>
+        <input type="date" class="form-control" id="installationDate" name="date" placeholder="date" required>
           <label for="date">Date</label>
-           <script>installationDate.min = new Date().toLocaleDateString('en-ca')</script>
+          <script>installationDate.min = new Date().toLocaleDateString('en-ca')</script>
         </div>
       </div>
     </div>

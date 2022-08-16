@@ -14,11 +14,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
-  if($homeowner->insertBooking($_POST['company_name'],$_POST['date'],$_POST['problem_details'],$_POST['booking_type']))
+
+  $check_success =  $homeowner->insertBooking($_POST['company_name'],$_POST['date'],$_POST['problem_details'],$_POST['booking_type']);
+  if($check_success == True)
   {
     $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_POST['company_name']."!";
   }
-  else {
+  else if ($check_success == False) {
     $booking_failed = "You are not a client of ". $_POST['company_name']."!";
   }
 
@@ -72,7 +74,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
         <div class="form-floating mb-3">
           <input type="date" class="form-control" id="date" name="date"placeholder="date" required>
           <label for="date">Date</label>
-           <script>date.min = new Date().toLocaleDateString('en-ca')</script>
+          <script>date.min = new Date().toLocaleDateString('en-ca')</script>
         </div>
       </div>
 

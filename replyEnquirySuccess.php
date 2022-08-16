@@ -6,12 +6,16 @@ include_once "logInCheck.php";
 
 $admin = new Admin();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['Reply'])) {
   $reply = $_POST['reply'];
   if ($reply !="")
   {
     $admin->updateEnquiry($reply,$_SESSION['enquiry_ID'],$_SESSION['ID'],$_SESSION['enquiry_user_type']);
   }
+}
+elseif(isset($_POST['complete']))
+{
+    $admin->closeEnquiry($_SESSION['enquiry_ID'],$_SESSION['ID'],$_SESSION['enquiry_user_type']);
 }
 // echo $_SESSION['case_ID'];
 

@@ -71,13 +71,19 @@ $_SESSION['user_name'] = $_POST['name'];
         </div>
         <div class="col">
           <div class="form-floating  mb-3 ">
-            <textarea  class="form-control" name="reply" placeholder="reply" style="height: 150px" ></textarea>
+            <textarea  class="form-control" name="reply" placeholder="reply" style="height: 150px" <?php if($_POST['enquiry_status'] == "Closed") {echo "disabled";}?>></textarea>
             <label for="reply">Reply</label>
           </div>
         </div>
 
     <div class="form-group mb-2 mt-3 text-center">
-        <input type="submit" class="btn btn-lg btn-primary" value="Reply">
+        <?php
+        if ($_POST['enquiry_status']!= "Closed")
+        {
+            echo "<button type=\"submit\" class=\"btn btn-lg btn-primary\" name=\"Reply\">Reply</button>
+                <button type=\"submit\" class=\"btn btn-lg btn-primary\" name=\"complete\">Mark as Complete</button>";
+        }
+        ?>
     </div>
     <p class="text-center" style  ="color:green"><?php echo $enquiry_success;?></p>
   </form>

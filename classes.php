@@ -239,6 +239,16 @@ function updateCase($reply,$case_ID){
 
   }
 
+function closeCase($case_ID){
+  $query = "UPDATE Cases
+            SET
+            case_status = 'Closed'
+            WHERE case_ID ='$case_ID'";
+
+  $result = mysqli_query($this->conn, $query);
+
+  }
+
 
 function tableHeaderStaff()
 {
@@ -887,7 +897,7 @@ function checkClientExists($homeowner_ID,$company_ID)
 function insertBooking($company_name,$date,$details,$booking_type)
 {
   // get company_ID from company name
-  $sql = "SELECT company_ID from Company where name= '$company_name'";
+  $sql = "SELECT company_ID from Company where name = '$company_name'";
   $result = mysqli_query($this->conn, $sql);
   $row = mysqli_fetch_assoc($result);
   $company_ID = $row['company_ID'];
@@ -1636,6 +1646,30 @@ function tableHeaderEnquiriesAdmin()
        echo "<p>Error " . mysqli_errno($this->conn). ": " . mysqli_error($this->conn);
     }
   }
+
+  function closeEnquiry($enquiry_ID,$admin_ID,$enquiry_user_type){
+      if ($enquiry_user_type == "homeowner")
+      {
+        $query = "UPDATE Enquiries_Homeowner
+                  SET
+                  admin_ID ='$admin_ID' ,
+                  enquiry_status = \"Closed\"
+                  WHERE eh_ID ='$enquiry_ID'";
+
+        $result = mysqli_query($this->conn, $query);
+      }
+      else if ($enquiry_user_type == "company")
+      {
+        $query = "UPDATE Enquiries_Company
+                  SET
+                  admin_ID ='$admin_ID' ,
+                  enquiry_status = \"Closed\"
+                  WHERE ec_ID ='$enquiry_ID'";
+
+        $result = mysqli_query($this->conn, $query);
+      }
+
+      }
 
    function tableHeaderServiceAdmin()
   {

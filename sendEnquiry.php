@@ -8,7 +8,8 @@ $company = new Company();
 $enquiry_success = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
-  $companyName = $_POST['company_name'] ?? "";
+  //$companyName = $_POST['Company'] ?? "";
+  //echo $companyName;
   $subject = $_POST['enquirysubject'] ?? "";
   $details = $_POST['enquirydetails'] ?? "";
   $homeownerName = $_SESSION['name'] ?? "";
@@ -16,23 +17,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
   $getHID = mysqli_query($conn, "select homeowner_ID from Homeowners where name = ". "'$homeownerName'");
   $HID = $_SESSION["ID"];
 
-  $getCID = mysqli_query($conn, "select company_ID from Company where name = ". "'$companyName'");
+  $getCID = mysqli_query($conn, "select company_ID from Company where name = '{$_SESSION['company_name']}'");
   $CID = $getCID->fetch_array()[0] ?? '';
 
+  try {
+      $sql = "INSERT INTO $tableName (case_subject, company_ID, homeowner_ID, case_date, case_status, case_description) VALUES " . "('$subject', '$CID', '$HID', curdate(), 'Awaiting', '$details')";
+      // printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
+      @mysqli_query($conn, $sql);
+      $enquiry_success = "Your enquiry has been sent to ". $_SESSION['company_name']."!";
 
-if ($companyName == "") {
-    echo "";
-} else {
-    try {
-        $sql = "INSERT INTO $tableName (case_subject, company_ID, homeowner_ID, case_date, case_status, case_description) VALUES " . "('$subject', '$CID', '$HID', curdate(), 'Awaiting', '$details')";
-        // printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
-        @mysqli_query($conn, $sql);
-        $enquiry_success = "Your enquiry has been sent to ". $companyName."!";
-
-    }  catch (mysqli_sql_exception $e) {
-        echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
-    }
-}
+  }  catch (mysqli_sql_exception $e) {
+      echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
+  }
 }
 
 ?>
@@ -62,9 +58,13 @@ if ($companyName == "") {
        $_SESSION['rand']=$rand;
       ?>
       <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
-    <div class="col">
-      <?php  $company->CompanyDropDown();?>
+    <div class="col"> 
+      <div class="form-floating  mb-3">
+        <?php  //$company->CompanyDropDown();?>
+        <input type="text" class="form-control" name="Company" placeholder="Company" value="<?php echo $_SESSION["company_name"]; ?>"disabled>
+        <label for="Company">Company </label>
       </div>
+    </div>
 
         <div class="col">
           <div class="form-floating mb-3">
@@ -80,7 +80,7 @@ if ($companyName == "") {
         </div>
 
     <div class="form-group mb-2 mt-3 text-center">
-        <input type="submit" class="btn btn-lg btn-primary" value="Submit Enquiry">
+        <input type="submit" class="btn  btn-primary" value="Submit Enquiry" name="submit">
     </div>
       <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $enquiry_success;?></div>
   </form>

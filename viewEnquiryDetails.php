@@ -4,11 +4,13 @@ include("conn.php");
 include_once "logInCheck.php";
 include_once "classes.php";
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: index.php");
-    exit;
+$enquiry_success ="";
+$newCaseDesc = $_POST['enquirydetails'] ?? "";
+$userID = $_SESSION['ID'] ?? "";
+// $userType = $_SESSION['user_type'] ?? "";
+// var_dump($_SESSION);
 
-}
+// echo $newCaseDesc;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" &&  isset($_POST['Details']))
 {
@@ -20,6 +22,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" &&  isset($_POST['Details']))
   $_SESSION['case_description']  =  $_POST['case_description'];
   $_SESSION['case_reply']  =  $_POST['case_reply'];
 
+}
+
+$getCompanyID = mysqli_query($conn, "SELECT company_ID from Company where name = '{$_SESSION['company_name']}'");
+$companyID = $getCompanyID->fetch_array()[0] ?? '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
+
+  $updateCase = "UPDATE Cases SET case_description = '$newCaseDesc' WHERE company_ID = '$companyID' AND homeowner_ID = '$userID'";
+  mysqli_query($conn, $updateCase);
+  if(mysqli_affected_rows($conn) > 0 )
+  {
+    $_SESSION['case_description'] = $newCaseDesc;
+    $enquiry_success = "Your Enquiry has been updated!";
+  }
+  else {
+    // echo "no";
+  }
 }
 
 ?>
@@ -49,7 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" &&  isset($_POST['Details']))
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="to_company" name="to_company" placeholder="to_company" value ="<?php echo $_SESSION['company_name'];?>" disabled>
             <label for="to_company">To: </label>
-            <!-- <input type="hidden" value ="<?php //echo $_POST['to_company'];?>" > -->
           </div>
         </div>
 
@@ -90,44 +108,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" &&  isset($_POST['Details']))
 
         <div class="form-group mt-3 text-center ">
         <input type="submit" name="update" class="btn btn-lg btn-primary" value="Update">
-            <input type="button" onClick="history.go(-1);" class="btn btn-lg btn-primary" value="Back">
+          <a class="btn btn-lg btn-danger" href="viewEnquiries.php">Back</a>
         </div>
 
   </form>
+  <div class="alert alert-primary text-center booking-alert mt-3" role="alert"><?php echo $enquiry_success;?></div>
 </div>
 
 <?php
   include_once('jsLinks.php');
-
-  $newCaseDesc = $_POST['enquirydetails'] ?? "";
-  $userID = $_SESSION['ID'] ?? "";
-  // $userType = $_SESSION['user_type'] ?? "";
-  // var_dump($_SESSION);
-
-  // echo $newCaseDesc;
-
-  $getCompanyID = mysqli_query($conn, "SELECT company_ID from Company where name = '{$_SESSION['company_name']}'");
-  $companyID = $getCompanyID->fetch_array()[0] ?? '';
-
-  if (isset($_POST['update'])) {
-    //
-    // echo $userID;
-    // echo $companyID;
-    $updateCase = "UPDATE Cases SET case_description = '$newCaseDesc' WHERE company_ID = '$companyID' AND homeowner_ID = '$userID'";
-    mysqli_query($conn, $updateCase);
-    if(mysqli_affected_rows($conn) > 0 )
-    {
-      $_SESSION['case_description'] = $newCaseDesc;
-    }
-    else {
-      // echo "no";
-    }
-  }
-  //
-  // ECHO $userID;
-  // echo $newCaseDesc;
-  // echo $companyID;
-  // echo $_SESSION['companyName'];
 ?>
 
 </body>
