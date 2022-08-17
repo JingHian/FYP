@@ -14,13 +14,13 @@ $booking_success = "";
 $booking_failed = "";
 $homeowner = new Homeowner();
 
-if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand']) {
+if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'] && isset($_POST['accept'])) {
   $checkother = "SELECT * FROM Clients WHERE homeowner_ID = '$ID'";
   $result = mysqli_query($conn, $checkother);
   if($homeowner->checkClientExists($_SESSION["ID"],$_SESSION["company_ID"]) == True)
   {
-  $homeowner->addClient($_SESSION["company_ID"],$_POST["date"]);
     $homeowner->insertBooking($_SESSION["company_name"],$_POST["date"],$_POST["comments"],"installation");
+    $homeowner->addClient($_SESSION["company_ID"],$_POST["date"]);
     $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_SESSION['company_name']."!";
   }
   elseif((mysqli_num_rows($result))!= 0)
@@ -31,7 +31,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
     $booking_failed = "You already are a client of ". $_SESSION['company_name']."! Please check your bookings for your previous installation booking.";
   }
 }
-
+elseif($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'] && !isset ($_POST['accept']))
+{
+    $booking_failed = "Please check that you have accepted to be registered as a client";
+}
 ?>
 <html>
 <head>
@@ -104,7 +107,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
           ?>
         <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
         <div class="form-floating mb-3">
-        <input type="date" class="form-control" id="installationDate" name="date" placeholder="date" required>
+          <input type="date" class="form-control" name="date" placeholder="date"  id="installationDate" required>
           <label for="date">Date</label>
           <script>installationDate.min = new Date().toLocaleDateString('en-ca')</script>
         </div>
@@ -116,8 +119,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
         <label for="comments">Additional comments</label>
       </div>
     </div>
+    <div class="col">
+        <div class="row">
+            <label style="display: inline-block">
+                <input type="checkbox" id="accept" name="accept" value="accept">
+                I agree to be registered as a client of <?php echo $_SESSION["company_name"]; ?></label>
+        </div>
+    </div>
     <div class="form-group mt-3 text-center">
         <input type="submit" class="btn btn-lg btn-primary" value="Submit">
+        <button onclick="location.href='viewCompanies.php'"class="btn btn-lg btn-primary">Back</button>
     </div>
     <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $booking_success;?></div>
     <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $booking_failed;?></div>

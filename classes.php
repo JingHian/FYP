@@ -456,6 +456,7 @@ function tableHeaderClient()
     <th>Client ID</th>
     <th>Name</th>
     <th>Start Date</th>
+    <th>Action</th>
   </tr>
   </thead>
   <tbody class='search-table'>";
@@ -475,15 +476,16 @@ function listClients(){
      // output data of each row
      while($row = $result->fetch_assoc()) {
       echo "<tr class='table-padding' >";
-      echo "<form method='post' action=''>";
+      echo "<form method='post' action='ViewClientDetails.php'>";
       echo "<td>".$row["client_ID"]."</td>";
       echo "<td>".$row["name"]."</td>";
       echo '<td>'.$row["start_date"].'</td>'
       .'<input type ="hidden" value ="'.$row["client_ID"].'" name ="client_ID"/>'
       .'<input type ="hidden" value ="'.$row["name"].'" name ="name"/>'
       .'<input type ="hidden" value ="'.$row["start_date"].'" name ="start_date"/>'."</td>
-  </tr>
-</form>";
+      <td class ='align-middle'><input type='submit' class='btn btn-mobile btn-primary' value='Details'></td>
+          </tr>
+        </form>";
      }
      echo "</tbody></table>";
    } else {

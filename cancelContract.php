@@ -32,7 +32,7 @@ session_start();
     
     if(isset($_POST['cancel']))
     {
-        $cancel = "INSERT INTO Past_clients(client_ID, company_ID, homeowner_ID) SELECT client_ID, company_ID, homeowner_ID FROM Clients WHERE homeowner_ID = $ID";
+        $cancel = "INSERT INTO Past_Clients(client_ID, company_ID, homeowner_ID) SELECT client_ID, company_ID, homeowner_ID FROM Clients WHERE homeowner_ID = $ID";
         $delete = "DELETE FROM Clients WHERE homeowner_ID = $ID";
         $date = "UPDATE Past_clients set cancellation_date= CURRENT_DATE() WHERE homeowner_ID = $ID";
         try
