@@ -1,6 +1,7 @@
 <html>
     <form action="testemail.php" method="post">
         Send email: <input type="text" name="test" required>
+        recipient_email : <input type="text" name="message" required>
         <input type="submit" value="submit" name="submit">
     </form>
 </html>
@@ -18,9 +19,9 @@ if (!empty($msg)) {
 
     if (mail("youremailhere@mail.com",$subject,$msg, $header,"-ffypscom@fyp-22-s2-27.com"))
     {
-      echo "email sent successfully";
+      return "success";
     } else {
-        echo "email send failed";
+        echo "email sending failed";
     }
 
     // if (mail("angjinghian@gmail.com","Test Subject",$msg,$headers)) {

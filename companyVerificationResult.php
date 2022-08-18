@@ -7,10 +7,12 @@
     include_once('navbar.php');
     include_once('jsLinks.php');
     include_once('cssLinks.php');
+    include_once "classes.php";
 
 
      $company_ID = $_SESSION["company_ID"];
      $name = $_SESSION["name"];
+     $email = new Universal();
 
 ?>
 <html>
@@ -29,16 +31,32 @@
         <div class="col-md-6 text-center">
       <?php
         if (isset($_POST['approve'])) {
-            $query = "update Company set verified = 1 where company_id = $company_ID";
+            $query = "UPDATE Company set verified = 1 where company_id = $company_ID";
             $approve = mysqli_query($conn, $query);
-            //mail($companyEmail,"Verification result",$approvalMsg);
-            echo '<p class="alert alert-success booking-alert mt-3" role="alert">Company '.$name.'\'s verification request has been approved.</p>';
+            $subject = "Water Supply Marketplace - Account Approved";
+            $msg = "Congratulations! Your Account Has been verified and approved by our staff. You may now proceed to login to our website";
+            $getmail = mysqli_query($conn, "SELECT email FROM Company WHERE company_ID = $company_ID");
+            $Row = mysqli_fetch_assoc($getmail);
+            $receipt = $Row['email'];
+            if(($email->SendMail($subject,$msg,$receipt)) == "success")
+            {
+                echo '<p class="alert alert-success booking-alert mt-3" role="alert">Company '.$name.'\'s verification request has been approved and an email has been sent to them.</p>';
+            }
+
 
         } else if (isset($_POST['reject'])) {
-            $query = "update Company set verified = 2 where company_id = $company_ID";
+            $query = "UPDATE Company set verified = 2 where company_id = $company_ID";
             $approve = mysqli_query($conn, $query);
-            //mail($companyEmail,"Verification Result",$rejectionMsg);
-            echo '<p class="alert alert-danger booking-alert mt-3" role="alert">Company '.$name.'\'s verification request has been rejected.</p>';
+            $subject = "Water Supply Marketplace - Account Rejected";
+            $msg = "unfortunately, Your Account Approval request has been rejected by our staff. Kindly contact us for further clarification";
+            $getmail = mysqli_query($conn, "SELECT email FROM Company WHERE company_ID = $company_ID");
+            $Row = mysqli_fetch_assoc($getmail);
+            $receipt = $Row['email'];
+            if(($email->SendMail($subject,$msg,$receipt)) == "success")
+            {
+                echo '<p class="alert alert-danger booking-alert mt-3" role="alert">Company '.$name.'\'s verification request has been rejected and an email has been sent to them..</p>';
+            }
+
         }
 
 

@@ -14,6 +14,7 @@ if(isset($_POST['booking_ID']))
     $_SESSION['booking_ID'] = $_POST['booking_ID'];
 }
 $ID = $_SESSION['booking_ID'];
+
 $getbooking = mysqli_query($conn,"SELECT * FROM Bookings INNER JOIN Company ON Company.company_ID = Bookings.company_ID WHERE booking_ID = $ID");
 try
 {
@@ -23,6 +24,7 @@ try
         $date = $row['booking_date'];
         $status = $row['booking_status'];
         $desc = $row['booking_description'];
+        $imgname = $row['booking_image'];
     }
 } catch (Exception $ex) {
     echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
@@ -95,6 +97,7 @@ if(isset($_POST['update']))
             <label for="enquirydetails">Enquiry Details</label>
           </div>
         </div>
+        <img class="image-upload" src="img/<?php echo $imgname?>"/>
          <div class="form-group mb-2 mt-3 text-center">
       <button type="submit" name="update" class="btn btn-lg btn-primary">Update</button>
         <a class="btn btn-lg btn-danger" href="viewBookingsHomeowner.php">Back</a>

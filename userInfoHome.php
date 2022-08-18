@@ -50,7 +50,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
 
     //check if user has uploaded a profile picture
     if(file_exists($_FILES['fileToUpload']['tmp_name']) || is_uploaded_file($_FILES['fileToUpload']['tmp_name'])) {
-        $check_image = $uni->imageUpload($_FILES,"_user_profile_home");
+        $file_name = $uni->getImageName($_FILES,"_user_profile_home");
+        $check_image = $uni->imageUpload($_FILES,$file_name);
         if ($check_image == "not_image")
         {
           $upload_failed ="File is not an image, please upload a JPG, JPEG or PNG file!";

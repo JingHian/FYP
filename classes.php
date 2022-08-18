@@ -14,17 +14,21 @@ class Company{
   }
 
   function CompanyDropDown(){
-
-    $getcompanyname = mysqli_query($this->conn, "SELECT name FROM Company");
-
-    echo '<div class="condi-dropdown mb-3">
-      <select id="company_name" class="form-select" name="company_name" form="enquirydetails" required>
-          <option value="" default disabled >Select a Company</option>';
-          while (($Row = mysqli_fetch_assoc($getcompanyname)) != FALSE) {
-              echo '<option value="'.$Row["name"].'">'. $Row["name"].'</option>';
-            };
-          echo'  </select>
-          </div>';
+  $HID = $_SESSION['ID'];
+  $CompID = "";
+  $getCompanyID = mysqli_query($this->conn, "SELECT * from Clients WHERE homeowner_ID = '$HID'");
+  if(($Row = mysqli_fetch_assoc($getCompanyID)) == TRUE)
+  {
+      $CompID = $Row['company_ID'];
+      $getcompanyname = mysqli_query($this->conn, "SELECT * FROM Company WHERE company_ID = '$CompID'");
+      if(($Row = mysqli_fetch_assoc($getcompanyname)) == TRUE)
+      {
+          $name = $Row['name'];
+          echo "<div class=\"form-floating mb-3\">
+                      <input type = \"text\" id=\"company_name\" class=\"form-control\" name=\"company_name\" required value = '$name' READONLY>
+                      <label for=\"company_name\">Company Name</label></div>";
+      }
+  }
   }
 
   function StaffDropDown(){
@@ -896,7 +900,7 @@ function checkClientExists($homeowner_ID,$company_ID)
   }
 }
 
-function insertBooking($company_name,$date,$details,$booking_type)
+function insertBooking($company_name,$date,$details,$booking_type,$booking_image)
 {
   // get company_ID from company name
   $sql = "SELECT company_ID from Company where name = '$company_name'";
@@ -914,7 +918,7 @@ function insertBooking($company_name,$date,$details,$booking_type)
 
     try
     {
-      $sql = "INSERT INTO Bookings (company_ID, homeowner_ID,client_ID, booking_date,booking_description,booking_type,booking_status) VALUES ( '$company_ID', '$ID','$client_ID', '$date', '$details', '$booking_type', 'In Progress')";
+      $sql = "INSERT INTO Bookings (company_ID, homeowner_ID,client_ID, booking_date,booking_description,booking_type,booking_status,booking_image) VALUES ( '$company_ID', '$ID','$client_ID', '$date', '$details', '$booking_type', 'In Progress','$booking_image')";
       $result = mysqli_query($this->conn, $sql);
       // printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
       return True;
@@ -1395,6 +1399,53 @@ function listPaidHomeowner(){
 
 }
 
+function tableHeaderContracted()
+{
+  echo "<table class='table table-hover datatable_style' >
+  <thead>
+  <tr class='table-padding text-white'>
+    <th>Company ID</th>
+    <th>Company Name</th>
+    <th>Start Date</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody class='search-table'>";
+}
+
+function listContracted(){
+  $homeowner_ID = $_SESSION['ID'];
+  $query = "SELECT cl.company_ID, cl.homeowner_ID, cl.start_date, co.name
+            FROM Clients as cl
+            JOIN Company AS co
+            ON cl.company_ID = co.company_ID
+            WHERE cl.homeowner_ID = $homeowner_ID";
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderContracted();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+      echo "<tr class='table-padding' >";
+      echo "<form method='post' action='CancelContract.php'>";
+      echo "<td>".$row["company_ID"]."</td>";
+      echo "<td>".$row["name"]."</td>";
+      echo '<td>'.$row["start_date"].'</td>'
+      .'<input type ="hidden" value ="'.$row["company_ID"].'" name ="client_ID"/>'
+      .'<input type ="hidden" value ="'.$row["name"].'" name ="name"/>'
+      .'<input type ="hidden" value ="'.$row["start_date"].'" name ="start_date"/>'."</td>
+      <td class ='align-middle'><input type='submit' class='btn btn-mobile btn-primary' value='Cancel Contract'></td>
+          </tr>
+        </form>";
+     }
+     echo "</tbody></table>";
+   } else {
+     echo "Not currently contracted to a company";
+   }
+
+}
+
+
 }
 
 
@@ -1834,7 +1885,7 @@ class Universal{
 
   function SendMail($subject, $msg, $recipient_email)
   {
-    $header =   "From: fypscom@fyp-22-s2-27.com" . "\r\n" . "Content-Type: text/plain; charset=utf-8";
+    $header ="From: fypscom@fyp-22-s2-27.com" . "\r\n" . "Content-Type: text/plain; charset=utf-8";
 
     // use wordwrap() if lines are longer than 70 characters
     $msg = wordwrap($msg,70);
@@ -1844,9 +1895,9 @@ class Universal{
 
         if (mail($recipient_email,$subject,$msg, $header,"-ffypscom@fyp-22-s2-27.com"))
         {
-          echo "email sent successfully";
+          return "success";
         } else {
-            echo "email send failed";
+          return "failed";
         }
 
     }
@@ -1895,7 +1946,7 @@ class Universal{
 
   }
 
-  function imageUpload($files,$file_name)
+  function getImageName($files,$file_name)
   {
     $target_dir = "img/";
     $target_file = $target_dir . basename($files["fileToUpload"]["name"]);
@@ -1906,6 +1957,13 @@ class Universal{
       $extension = 'jpg';
     }
     $filename = $_SESSION['ID'] . $file_name . "." . $extension;
+    return $filename;
+  }
+
+  function imageUpload($files,$file_name)
+  {
+    $target_dir = "img/";
+    $target_file = $target_dir . $file_name;
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -1940,7 +1998,9 @@ class Universal{
   if ($uploadOk == 0) {
   // if everything is ok, try to upload file
   } else {
-    if (move_uploaded_file($files["fileToUpload"]["tmp_name"], $target_dir.$filename)) {
+    if (move_uploaded_file($files["fileToUpload"]["tmp_name"], $target_dir.$file_name)) {
+      // echo $files["fileToUpload"]["tmp_name"];
+      // echo $filename;
       return "upload_success";
     } else {
       return "upload_failed";

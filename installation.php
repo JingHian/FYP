@@ -20,7 +20,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
   if($homeowner->checkClientExists($_SESSION["ID"],$_SESSION["company_ID"]) == True)
   {
     $homeowner->addClient($_SESSION["company_ID"],$_POST["date"]);
-    $homeowner->insertBooking($_SESSION["company_name"],$_POST["date"],$_POST["comments"],"installation");
+    $homeowner->insertBooking($_SESSION["company_name"],$_POST["date"],$_POST["comments"],"installation",NULL);
     $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_SESSION['company_name']."!";
   }
   elseif((mysqli_num_rows($result))!= 0)

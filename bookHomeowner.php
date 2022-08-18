@@ -2,20 +2,48 @@
 
 include("conn.php");
 include_once("classes.php");
+include_once("validation.php");
+include_once "logInCheck.php";
 $company = new Company();
 $homeowner = new Homeowner();
+$uni = new Universal();
 $booking_success = "";
 $booking_failed = "";
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: index.php");
-    exit;
 
-}
 
 if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
 
-  $check_success =  $homeowner->insertBooking($_POST['company_name'],$_POST['date'],$_POST['problem_details'],$_POST['booking_type']);
+    if(file_exists($_FILES['fileToUpload']['tmp_name']) || is_uploaded_file($_FILES['fileToUpload']['tmp_name'])) {
+
+        $file_name = $uni->getImageName($_FILES,"_user_problem_image_". microtime(true));
+        $check_image = $uni->imageUpload($_FILES,$file_name);
+        if ($check_image == "not_image")
+        {
+          $upload_failed ="File is not an image, please upload a JPG, JPEG or PNG file!";
+        }
+        else if ($check_image == "file_too_big")
+        {
+          $upload_failed ="File size is too large! please upload a file smaller than 2mb!";
+        }
+        else if ($check_image == "wrong_file")
+        {
+          $upload_failed ="File is not an image, please upload a JPG, JPEG or PNG file!";
+        }
+        else if ($check_image == "upload_failed")
+        {
+          $upload_failed ="There was an error uploading your image, please try again!";
+        }
+        else if ($check_image == "upload_success")
+        {
+          $upload_success ="Image has been uploaded!";
+        }
+    }
+    else{
+      $file_name = NULL;
+    }
+
+  $check_success =  $homeowner->insertBooking($_POST['company_name'],$_POST['date'],$_POST['problem_details'],$_POST['booking_type'],$file_name);
   if($check_success == True)
   {
     $booking_success = "Your booking for ".$_POST['date']. " has been sent to ". $_POST['company_name']."!";
@@ -47,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
       </div>
     </div>
 <div class="container">
-  <form id="enquirydetails" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+  <form id="enquirydetails" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" enctype="multipart/form-data">
     <?php
      $rand=rand();
      $_SESSION['rand']=$rand;
@@ -85,6 +113,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
           <label for="problem_details">Problem Details</label>
         </div>
       </div>
+      <div class="col">
+        <div class=" mb-3 ">
+          <input class="form-control" type="file" name="fileToUpload" id="fileToUpload">
+      </div>
+    </div>
       <input type="hidden" id="booking_type" name="booking_type" value="problem">
 
       <div class="form-group mb-2 mt-3 text-center">
