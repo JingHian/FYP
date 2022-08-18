@@ -9,6 +9,8 @@ $homeowner = new Homeowner();
 $uni = new Universal();
 $booking_success = "";
 $booking_failed = "";
+$upload_failed = "";
+$upload_success = "";
 
 
 
@@ -124,6 +126,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
           <input type="submit" class="btn btn-lg btn-primary" value="Submit Booking">
       </div>
       <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $booking_success;?></div>
+      <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $upload_failed;?></div>
+      <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $upload_success;?></div>
       <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $booking_failed;?></div>
         </form>
       </div>

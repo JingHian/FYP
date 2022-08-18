@@ -17,7 +17,7 @@ $msg = wordwrap($msg,70);
 if (!empty($msg)) {
 // send email
 
-    if (mail("youremailhere@mail.com",$subject,$msg, $header,"-ffypscom@fyp-22-s2-27.com"))
+    if (mail("jhang013@mymail.sim.edu.sg",$subject,$msg, $header,"-ffypscom@fyp-22-s2-27.com"))
     {
       return "success";
     } else {

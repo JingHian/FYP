@@ -1013,7 +1013,7 @@ function listBookingsHomeowner(){
                    '<input type ="hidden" value ="'.$row["booking_description"].'" name ="booking_description"/>'.
                    '<input type ="hidden" value ="'.$row["booking_type"].'" name ="booking_type"/>'.
                    '<input type ="hidden" value ="'.$row["booking_status"].'" name ="booking_status"/>'.
-                 "<td class ='align-middle'><input type='submit' class='btn btn-primary btn-mobile' value='Details'></td>
+                 "<td class ='align-middle'><input type='submit' class='btn btn-primary btn-mobile'name='details' value='Details'></td>
                </tr>
              </form>";
      }
@@ -1427,7 +1427,7 @@ function listContracted(){
      // output data of each row
      while($row = $result->fetch_assoc()) {
       echo "<tr class='table-padding' >";
-      echo "<form method='post' action='CancelContract.php'>";
+      echo "<form method='post' action='cancelContract.php'>";
       echo "<td>".$row["company_ID"]."</td>";
       echo "<td>".$row["name"]."</td>";
       echo '<td>'.$row["start_date"].'</td>'

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 18, 2022 at 02:55 AM
+-- Generation Time: Aug 19, 2022 at 06:15 AM
 -- Server version: 10.5.15-MariaDB-cll-lve
 -- PHP Version: 7.4.30
 
@@ -84,8 +84,17 @@ CREATE TABLE `Bookings` (
   `booking_description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `booking_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `booking_status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `booking_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `completion_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `Bookings`
+--
+
+INSERT INTO `Bookings` (`booking_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `staff_ID`, `booking_date`, `booking_description`, `booking_type`, `booking_status`, `booking_image`, `completion_date`) VALUES
+(19, 5, 1, 2, NULL, '2022-08-19', '123', 'installation', 'In Progress', '', NULL),
+(20, 5, 1, 2, NULL, '2022-08-25', 'test', 'problem', 'In Progress', '1_user_problem_image_1660860544.573.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -134,6 +143,13 @@ CREATE TABLE `Clients` (
   `start_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `Clients`
+--
+
+INSERT INTO `Clients` (`client_ID`, `company_ID`, `homeowner_ID`, `discount_ID`, `start_date`) VALUES
+(2, 5, 1, 15, '2022-08-19');
+
 -- --------------------------------------------------------
 
 --
@@ -160,7 +176,7 @@ CREATE TABLE `Company` (
 --
 
 INSERT INTO `Company` (`company_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `description`, `user_type`, `suspended`, `verified`) VALUES
-(1, 'company1', '$2y$10$Walm.A37GJ6HYfD5JGl2LOmvaYQIxaUKFH6474V6.q6nh/FO66Nn.', 'Company One', 'test@mail.com', 98765432, '123 Test A42111', 123520, 'Testing', 'company', 0, 1),
+(1, 'company1', '$2y$10$Walm.A37GJ6HYfD5JGl2LOmvaYQIxaUKFH6474V6.q6nh/FO66Nn.', 'Company One', 'angjinghian@gmail.com', 98765432, '123 Test A42111', 123520, 'Testing', 'company', 0, 1),
 (2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'Hello we are company 2', 'company', 0, 1),
 (3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'Hello we are company three', 'company', 0, 1),
 (4, 'company4', '$2y$10$KL2pPxj97pnCOazUynfgNOStA2jPc/DdBX.zFnSCDDFnu0Y16U116', 'Company Four', 'compfour@mail.com', 67876543, '93 Lorum Avenue 1 #05-98', 52821, 'Bringing fresh water right to your homes', 'company', 0, 1),
@@ -388,7 +404,6 @@ CREATE TABLE `Maintenance_Equipment` (
 --
 
 INSERT INTO `Maintenance_Equipment` (`equipment_ID`, `company_ID`, `equipment_name`, `quantity`, `installation_date`, `warranty_date`, `expiry_date`) VALUES
-(2, 1, 'eq1', 33, '2022-07-06', '2022-07-14', '2022-07-12'),
 (3, 1, 'ianeeqqqq', 1234321, '2022-06-29', '2022-06-30', '2022-07-07'),
 (4, 1, 'dcqwdf', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
 (5, 1, 'dcqwdf', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
@@ -398,7 +413,8 @@ INSERT INTO `Maintenance_Equipment` (`equipment_ID`, `company_ID`, `equipment_na
 (9, 2, 'test', 123, '2022-07-05', '2022-07-15', '2022-07-27'),
 (10, 2, 'Alkaline Solution', 521, '2022-06-27', '2022-08-05', '2022-10-19'),
 (11, 2, 'test11', 123, '2022-07-20', '2022-07-28', '2022-08-03'),
-(12, 1, 'Reverse Osmosis Filters', 20, '2022-07-08', '2022-07-29', '2022-07-20');
+(12, 1, 'Reverse Osmosis Filters', 20, '2022-07-08', '2022-07-29', '2022-07-20'),
+(14, 1, 'meter', 2, '2022-08-18', '2022-08-31', '2022-08-25');
 
 -- --------------------------------------------------------
 
@@ -445,7 +461,7 @@ CREATE TABLE `Past_Clients` (
   `client_ID` int(11) NOT NULL,
   `company_ID` int(11) NOT NULL,
   `homeowner_ID` int(11) NOT NULL,
-  `cancellation_date` date NOT NULL
+  `cancellation_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -453,7 +469,7 @@ CREATE TABLE `Past_Clients` (
 --
 
 INSERT INTO `Past_Clients` (`client_ID`, `company_ID`, `homeowner_ID`, `cancellation_date`) VALUES
-(10, 5, 1, '2022-08-18');
+(1, 5, 1, '2022-08-18');
 
 -- --------------------------------------------------------
 
@@ -502,6 +518,7 @@ INSERT INTO `Services` (`service_ID`, `service_name`) VALUES
 (2, 'Maintenance'),
 (5, 'Pipes'),
 (20, 'Pipes installation'),
+(29, 'Repair'),
 (27, 'test'),
 (28, 'Testing'),
 (1, 'Water Supply');
@@ -663,14 +680,6 @@ ALTER TABLE `Maintenance_Staff`
   ADD KEY `FK_staff_company_ID` (`company_ID`);
 
 --
--- Indexes for table `Past_Clients`
---
-ALTER TABLE `Past_Clients`
-  ADD UNIQUE KEY `client_ID` (`client_ID`),
-  ADD UNIQUE KEY `company_ID` (`company_ID`),
-  ADD UNIQUE KEY `homeowner_ID` (`homeowner_ID`);
-
---
 -- Indexes for table `Ratings`
 --
 ALTER TABLE `Ratings`
@@ -713,7 +722,7 @@ ALTER TABLE `Bills`
 -- AUTO_INCREMENT for table `Bookings`
 --
 ALTER TABLE `Bookings`
-  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `Cases`
@@ -725,7 +734,7 @@ ALTER TABLE `Cases`
 -- AUTO_INCREMENT for table `Clients`
 --
 ALTER TABLE `Clients`
-  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Company`
@@ -737,7 +746,7 @@ ALTER TABLE `Company`
 -- AUTO_INCREMENT for table `Company_Services`
 --
 ALTER TABLE `Company_Services`
-  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `Discounts`
@@ -779,7 +788,7 @@ ALTER TABLE `Homeowner_Services`
 -- AUTO_INCREMENT for table `Maintenance_Equipment`
 --
 ALTER TABLE `Maintenance_Equipment`
-  MODIFY `equipment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `equipment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `Maintenance_Staff`
@@ -797,7 +806,7 @@ ALTER TABLE `Ratings`
 -- AUTO_INCREMENT for table `Services`
 --
 ALTER TABLE `Services`
-  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `Water_Tracking`

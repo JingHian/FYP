@@ -8,6 +8,7 @@ session_start();
     $usertype = $_SESSION["user_type"];
     $ID = $_SESSION["ID"];
     $payment_success = "";
+    $cancelled = 0;
 
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         header("location: index.php");
@@ -44,6 +45,7 @@ session_start();
                     if(mysqli_query($conn, $date) == TRUE)
                     {
                         $payment_success = "Contract cancelled";
+                        $cancelled = 1;
                     }
                 }
             }
@@ -79,7 +81,10 @@ session_start();
         ?>
         <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
         <div class="form-group mb-2 mt-3 text-center">
-        <button type="submit" name="cancel" class="btn btn-lg btn-primary" value="Cancel">Cancel Contract</button>
+        <?php if ($cancelled == 0)
+        {
+          echo '<button type="submit" name="cancel" class="btn btn-lg btn-primary" value="cancel">Cancel Contract</button> ';
+        }?>
 
           <div class="alert alert-primary text-center booking-alert mt-3" role="alert"><?php echo $payment_success;?></div>
           <a class='btn btn-lg btn-primary text-white ' href="servicesHomeowner.php" value='Back'>Back</a>
