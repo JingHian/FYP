@@ -100,46 +100,7 @@
     <title>Company Details</title>
 </head>
 <body>
-<style>
 
-.innerReviewTable{
-  border: 1px solid SlateBlue;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-}
-
-.nameandreview{
-  background-color: SlateBlue;
-  color:white;
-
-}
-
-.name {
-  text-align: left;
-}
-
-.rating {
-  text-align: right;
-}
-
-
-.review {
-  height:700px;
-    overflow: auto;
-    border-radius:10px;
-    shape-outside: content-box;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0px 0px 8px -4px rgba(0,0,0,0.75);
-}
-
-.outerreviewtable{
-  width:100%;
-}
-
-</style>
 <?php
 
 //count the number of reviews of a particular company
@@ -353,25 +314,21 @@
                 }
 
                 ?>
-                <table class="outerReviewTable">
-                    <tr>
-                        <td>
-                            <table class="innerReviewTable">
-                                <tr class="nameandreview">
-                                    <td class="name">
-                                        <h4><?php echo $Row['name']?></h4>
-                                    </td>
-                                    <td class="rating">
-                                        <h4><?php echo $stars;?></h4>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><p class="reviewdetail"><?php echo $Row['review'];?>
-                                    </p></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+                <table class='table table-borderless boxshadow innerReviewTable'>
+                        <tr class='table-padding text-white'>
+                                <td >
+                                    <h4><?php echo $Row['name']?></h4>
+                                </td>
+                                <td >
+                                    <h4><?php echo $stars;?></h4>
+                                </td>
+                            </tr>
+                            <tbody class='innerReviewTable'>
+                                <td colspan="2"><p class="reviewdetail"><?php echo $Row['review'];?>
+                                </p></td>
+                            </tbody>
+                    </td>
+                </tr>
                   <?php }} ?>
             </table>
 

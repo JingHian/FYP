@@ -3,11 +3,9 @@ session_start();
 include("conn.php");
 include_once("classes.php");
 include_once "logInCheck.php";
-print_r($_SESSION);
+// print_r($_SESSION);
 
 $enquiry_success = "";
-
-
 
 if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
 

@@ -3,21 +3,34 @@ session_start();
 include("conn.php");
 include_once("classes.php");
 include_once "logInCheck.php";
+$review_success ="";
 
-//automatically create the table if not exists yet when the user clicks the review company menu
-$ratingTable = "CREATE TABLE IF NOT EXISTS Ratings (
-    rating_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    company_ID INT(10) NULL,
-    homeowner_ID int(10) NOT NULL,
-    score decimal(5,1) NOT NULL,
-    review VARCHAR(500) NOT NULL)";
-
-mysqli_query($conn, $ratingTable);
 
 $homeownerID = $_SESSION['ID'];
 
-$companiesList = "select Company.name from Clients join Company on Clients.company_ID = Company.company_ID where Clients.homeowner_ID = $homeownerID";
+$companiesList = "SELECT Company.name from Clients join Company on Clients.company_ID = Company.company_ID where Clients.homeowner_ID = $homeownerID";
 $result = mysqli_query($conn, $companiesList);
+
+$chosenCompany = $_POST['companyname'] ?? "";
+$ratingGiven = $_POST['companyrating'] ?? "";
+$reviewDetails = $_POST['reviewdetails'] ?? "";
+
+if (isset($_POST['submit']) && $_POST['randcheck']==$_SESSION['rand']) {
+
+    $getCompanyID = mysqli_query($conn, "SELECT company_ID from Company where name = '$chosenCompany'");
+    $companyID = $getCompanyID->fetch_array()[0] ?? '';
+
+    try {
+        $storeReview = "INSERT into Ratings (company_ID, homeowner_ID, score, review) values ($companyID, $homeownerID, $ratingGiven, '$reviewDetails')";
+        mysqli_query($conn, $storeReview);
+
+        $review_success = "Review has been sent to $chosenCompany!";
+
+    }  catch (mysqli_sql_exception $e) {
+        echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
+    }
+
+}
 ?>
 
 <html>
@@ -39,20 +52,25 @@ $result = mysqli_query($conn, $companiesList);
                     </div>
                 </div>
         </div>
-        <br>
         <div class="container">
             <form class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+              <?php
+               $rand=rand();
+               $_SESSION['rand']=$rand;
+              ?>
+              <input type="hidden" value="<?php echo $rand; ?>" name="randcheck" />
                 <div class="container text-center">
-                    <div class="form-floating mb-3">
-                        <select name="companyname" id="companyname" required>
+                      <div class="condi-dropdown mb-3">
+                        <select name="companyname" id="companyname" class="form-select" required>
                             <option value="">Select a company</option>
                             <?php
                                 while (($Row = mysqli_fetch_assoc($result)) != FALSE) { ?>
                                 <option value="<?php echo $Row['name'];?>"><?php echo $Row['name'];?></option>
                             <?php } ?>
                         </select>
-                        <br> <br>
-                          <select id="companyrating" name="companyrating" required>
+                      </div>
+                      <div class="condi-dropdown mb-3">
+                          <select id="companyrating" name="companyrating" class="form-select" required>
                             <option value="" default disabled>Rate</option>
                             <option value="1">★☆☆☆☆</option>
                             <option value="2">★★☆☆☆</option>
@@ -60,48 +78,25 @@ $result = mysqli_query($conn, $companiesList);
                             <option value="4">★★★★☆</option>
                             <option value="5">★★★★★</option>
                         </select>
-                    </div>
-                </div>
+                        </div>
 
-                <br>
 
                 <div class="col">
                     <div class="form-floating  mb-3 ">
                         <textarea class="form-control" id="reviewdetails" name="reviewdetails" placeholder="reviewdetails" style="height: 200px"></textarea>
                         <label for="enquirydetails">Review Details</label>
                     </div>
+                    </div>
                 </div>
 
                 <div class="form-group mb-2 mt-3 text-center">
                     <input type="submit" name="submit" class="btn btn-lg btn-primary" value="Submit Review">
                 </div>
+                <div class="alert alert-success  text-center booking-alert mt-3" role="alert"><?php echo $review_success;?></div>
 
             </form>
+            </div>
         </div>
     </body>
     <?php include_once ("jsLinks.php"); ?>
 </html>
-
-<?php
-$chosenCompany = $_POST['companyname'] ?? "";
-$ratingGiven = $_POST['companyrating'] ?? "";
-$reviewDetails = $_POST['reviewdetails'] ?? "";
-
-if (isset($_POST['submit'])) {
-
-    $getCompanyID = mysqli_query($conn, "select company_ID from Company where name = '$chosenCompany'");
-    $companyID = $getCompanyID->fetch_array()[0] ?? '';
-
-    try {
-        $storeReview = "insert into Ratings (company_ID, homeowner_ID, score, review) values ($companyID, $homeownerID, $ratingGiven, '$reviewDetails')";
-        mysqli_query($conn, $storeReview);
-
-        echo "review has been sent to $chosenCompany";
-
-    }  catch (mysqli_sql_exception $e) {
-        echo "<p>Error " . mysqli_errno($conn). ": " . mysqli_error($conn);
-    }
-
-}
-
-?>
