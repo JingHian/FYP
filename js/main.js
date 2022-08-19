@@ -1,6 +1,6 @@
 $(document).ready( function () {
     $('.datatable_style').DataTable({
-    paging: false,
+    // paging: false,
     // info: false,
     searching: false,
   });
@@ -15,6 +15,18 @@ $(document).ready( function () {
     info: false,
     ordering:  false,
     searching: false,
+});
+
+$('.datatable_style3').DataTable({
+  // "columns": [
+  //   { "width": "30%" },
+  //   { "width": "50%" },
+  //   null
+  // ],
+  "pageLength": 4,
+  info: false,
+  ordering:  false,
+  searching: false,
 });
 
   // search script

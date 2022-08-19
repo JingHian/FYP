@@ -498,6 +498,47 @@ function listClients(){
 
 }
 
+function tableHeaderClientQuick()
+{
+  echo "<table class='table table-hover datatable_style3' >
+  <thead>
+  <tr class='table-padding text-white'>
+    <th>Client ID</th>
+    <th>Name</th>
+    <th>Start Date</th>
+  </tr>
+  </thead>
+  <tbody class='search-table'>";
+}
+
+function listClientsQuick(){
+  $company_ID = $_SESSION['ID'];
+  $query = "SELECT cl.client_ID, cl.homeowner_ID,cl.start_date,ho.name
+            FROM Clients as cl
+            JOIN Homeowners AS ho
+            ON cl.homeowner_ID = ho.homeowner_ID
+            WHERE cl.company_ID = $company_ID";
+  $result = mysqli_query($this->conn, $query);
+
+   if ($result->num_rows > 0) {
+     $this->tableHeaderClientQuick();
+     // output data of each row
+     while($row = $result->fetch_assoc()) {
+      echo "<tr class='table-padding' >";
+      echo "<form method='post' action='ViewClientDetails.php'>";
+      echo "<td>".$row["client_ID"]."</td>";
+      echo "<td>".$row["name"]."</td>";
+      echo '<td>'.$row["start_date"].'</td>'
+      ."  </tr>
+        </form>";
+     }
+     echo "</tbody></table>";
+   } else {
+     echo "No Customers Found";
+   }
+
+}
+
 
 function tableHeaderListClientBills()
 {

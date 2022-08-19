@@ -82,7 +82,7 @@ if ($result->num_rows > 0) {
 		<div class="container ">
 			<h1 class="my-5 welcome-font text-center">Hi, <?php echo htmlspecialchars($_SESSION["name"])." "; ?>. Welcome to Water Supply Marketplace.</h1>
     </div>
-		<div class="container   ">
+		<div class="container">
 			<div class="row">
         <div class="col-md-55 bg-white pt-2 p-5 rounded boxshadow">
 				<h2 class="font-SlateBlue" style="margin-top:30px;margin-bottom:30px;"><b>Water Usage Statistics at a Glance</b></h2>

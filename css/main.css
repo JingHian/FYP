@@ -51,6 +51,10 @@ table.dataTable td {
   font-size: 18px;
 }
 
+.dataTables_length label{
+  display: none !important;
+}
+
 .nav-link{
   padding:19px;
 }

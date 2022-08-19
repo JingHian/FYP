@@ -50,7 +50,7 @@ include_once "logInCheck.php";
 
             <div class =" text-center">
               <span class="material-symbols-rounded icon-size">contact_support</span>
-              <p class="usage-font">Homeowner Cases</p>
+              <p class="usage-font">Homeowner Enquiries</p>
             </div>
           </a>
 
