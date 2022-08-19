@@ -70,7 +70,7 @@ $_SESSION['homeowner_name'] = $_POST['homeowner_name'];
         </div>
         <div class="col">
           <div class="form-floating  mb-3 ">
-              <textarea  class="form-control" name="reply" placeholder="reply" style="height: 200px" <?php if($_POST['case_status'] == "Closed") {echo "disabled";}?>></textarea>
+              <textarea  class="form-control" name="reply" placeholder="reply" style="height: 200px" <?php if($_POST['case_status'] == "Closed") {echo "disabled";}?>><?php echo $_POST['case_reply']; ?></textarea>
             <label for="reply">Reply</label>
           </div>
         </div>

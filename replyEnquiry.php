@@ -71,7 +71,7 @@ $_SESSION['user_name'] = $_POST['name'];
         </div>
         <div class="col">
           <div class="form-floating  mb-3 ">
-            <textarea  class="form-control" name="reply" placeholder="reply" style="height: 150px" <?php if($_POST['enquiry_status'] == "Closed") {echo "disabled";}?>></textarea>
+            <textarea  class="form-control" name="reply" placeholder="reply" style="height: 150px" <?php if($_POST['enquiry_status'] == "Closed") {echo "disabled";}?>><?php echo $_POST['enquiry_reply']; ?></textarea>
             <label for="reply">Reply</label>
           </div>
         </div>

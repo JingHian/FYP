@@ -161,6 +161,7 @@ function tableHeaderCases()
                     '<input type ="hidden" value ="'.$row["case_date"].'" name ="case_date"/>'.
                     '<input type ="hidden" value ="'.$row["case_status"].'" name ="case_status"/>'.
                     '<input type ="hidden" value ="'.$row["case_description"].'" name ="case_description"/>'.
+                    '<input type ="hidden" value ="'.$row["case_reply"].'" name ="case_reply"/>'.
                     '<input type ="hidden" value ="" name ="reply"/>'.
                   "<td class ='align-middle'><input type='submit' class='btn  btn-primary btn-mobile' value='Details'></td>
                 </tr>
@@ -931,7 +932,7 @@ class Homeowner{
 
 function checkClientExists($homeowner_ID,$company_ID)
 {
-  $sql = "SELECT client_ID FROM Clients where homeowner_ID = '$homeowner_ID' and company_ID = '$company_ID'";
+  $sql = "SELECT client_ID FROM Clients where homeowner_ID = '$homeowner_ID'";
   $result = mysqli_query($this->conn, $sql);
   if (mysqli_num_rows($result) < 1) {
     return True;
@@ -1686,6 +1687,7 @@ function tableHeaderEnquiriesAdmin()
                          "<input type ='hidden' value ='".$Row['enquiry_description']."' name ='enquiry_description'/>".
                          "<input type ='hidden' value ='".$Row['user_type']."' name ='user_type'/>".
                          "<input type ='hidden' value ='".$Row['enquiry_status']."' name ='enquiry_status'/>".
+                         "<input type ='hidden' value ='".$Row['enquiry_reply']."' name ='enquiry_reply'/>".
                          "<td class ='align-middle'><input type='submit' class='btn btn-mobile btn-primary' name='Details' value='Details'></td>".
                       " </tr>
                      </form>";
