@@ -113,12 +113,13 @@ class SignUp{
     }
   }
 
-  function insertIntoTableAdmin() //insert company details into databse
+  function insertIntoTableAdmin() //insert admin details into databse
   {
     try
     {
-      $sql = "INSERT INTO Admin (username, password, name, email, phone,user_type) VALUES ( '$this->username', '$this->password', '$this->name', '$this->email', '$this->phone','$this->user_type')";
-      $result = mysqli_query($this->conn, $sql);
+      $stmt = $this->conn->prepare("INSERT INTO Admin (username, password, name, email, phone,user_type) VALUES (?,?,?,?,?,?)");
+      $stmt->bind_param("ssssis", $this->username, $this->password, $this->name, $this->email, $this->phone,$this->user_type);
+      $stmt->execute();
     }
     catch (mysqli_sql_exception $e)
     {
@@ -134,8 +135,9 @@ class SignUp{
     try
     {
     foreach ($services as $i => $value) {
-      $sql = "INSERT IGNORE INTO Services (service_name) VALUES('$value')";
-      $result = mysqli_query($this->conn, $sql);
+      $stmt = $this->conn->prepare("INSERT IGNORE INTO Services (service_name) VALUES(?)");
+      $stmt->bind_param("s", $value);
+      $stmt->execute();
       }
     }
     catch (mysqli_sql_exception $e)
@@ -149,8 +151,10 @@ class SignUp{
   {
     // print_r($this->services);
     foreach ($services as $i => $value) {
-    $sql = "SELECT service_ID FROM Services where service_name ='$value'";
-    $result = mysqli_query($this->conn, $sql);
+    $stmt = $this->conn->prepare("SELECT service_ID FROM Services where service_name =?");
+    $stmt->bind_param("s", $value);
+    $stmt->execute();
+    $result = $stmt->get_result(); // get the mysqli result
     if ($result->num_rows > 0) {
       // output data of each row
       while($row = $result->fetch_assoc()) {
@@ -159,8 +163,10 @@ class SignUp{
     }
     }
 
-    $sql = "SELECT homeowner_ID FROM Homeowners where username ='$this->username'";
-    $result = mysqli_query($this->conn, $sql);
+    $stmt = $this->conn->prepare("SELECT homeowner_ID FROM Homeowners where username = ?");
+    $stmt->bind_param("s", $this->username);
+    $stmt->execute();
+    $result = $stmt->get_result(); // get the mysqli result
     if ($result->num_rows > 0) {
       // output data of each row
       while($row = $result->fetch_assoc()) {
@@ -172,8 +178,9 @@ class SignUp{
   if (is_array($service_ID_List) || is_object($service_ID_List))
   {
     foreach ($service_ID_List as $i => $value) {
-      $sql = "INSERT INTO Homeowner_Services (service_ID,homeowner_ID) values ( '$value', '$homeowner_ID')";
-      $result = mysqli_query($this->conn, $sql);
+      $stmt = $this->conn->prepare("INSERT INTO Homeowner_Services (service_ID,homeowner_ID) values ( ?, ?)");
+      $stmt->bind_param("ii", $value,$homeowner_ID);
+      $stmt->execute();
       }
 
     }
@@ -183,8 +190,10 @@ class SignUp{
   {
     // print_r($this->services);
     foreach ($services as $i => $value) {
-    $sql = "SELECT service_ID FROM Services where service_name ='$value'";
-    $result = mysqli_query($this->conn, $sql);
+    $stmt = $this->conn->prepare("SELECT service_ID FROM Services where service_name =?");
+    $stmt->bind_param("s", $value);
+    $stmt->execute();
+    $result = $stmt->get_result(); // get the mysqli result
     if ($result->num_rows > 0) {
       // output data of each row
       while($row = $result->fetch_assoc()) {
@@ -193,8 +202,10 @@ class SignUp{
     }
     }
 
-    $sql = "SELECT company_ID FROM Company where username ='$this->username'";
-    $result = mysqli_query($this->conn, $sql);
+    $stmt = $this->conn->prepare("SELECT company_ID FROM Company where username = ?");
+    $stmt->bind_param("s", $this->username);
+    $stmt->execute();
+    $result = $stmt->get_result(); // get the mysqli result
     if ($result->num_rows > 0) {
       // output data of each row
       while($row = $result->fetch_assoc()) {
@@ -205,8 +216,9 @@ class SignUp{
   // echo $company_ID;
 
   foreach ($service_ID_List as $i => $value) {
-    $sql = "INSERT INTO Company_Services (service_ID,company_ID) values ( '$value', '$company_ID')";
-    $result = mysqli_query($this->conn, $sql);
+    $stmt = $this->conn->prepare("INSERT INTO Company_Services (service_ID,company_ID) values ( ?, ?)");
+    $stmt->bind_param("ii", $value,$company_ID);
+    $stmt->execute();
   }
 
   }
@@ -224,10 +236,13 @@ class LogIn extends SignUp{
 
   function checkVerified()
   {
-    $sql = "SELECT suspended,verified,password FROM Homeowners WHERE username = '$this->username'
-      UNION SELECT suspended,verified,password FROM Company WHERE username = '$this->username'
-      UNION SELECT suspended,verified,password FROM Admin WHERE username = '$this->username'";
-    $result = $this->conn->query($sql);
+    $stmt = $this->conn->prepare("SELECT suspended,verified,password FROM Homeowners WHERE username = ?
+                            UNION SELECT suspended,verified,password FROM Company WHERE username = ?
+                            UNION SELECT suspended,verified,password FROM Admin WHERE username = ?");
+
+    $stmt->bind_param("sss", $this->username,$this->username,$this->username);
+    $stmt->execute();
+    $result = $stmt->get_result(); // get the mysqli result
 
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
@@ -260,10 +275,13 @@ class LogIn extends SignUp{
 
   function selectFromTable()
   {
-    $sql = "SELECT homeowner_ID as ID,password,name,email,phone,address,postal_code,home_type,user_type FROM Homeowners WHERE username = '$this->username'
-      UNION SELECT company_ID as ID,password,name,email,phone,address,postal_code,description,user_type FROM Company WHERE username = '$this->username'
-      UNION SELECT admin_ID as ID,password,name,email,phone,null,null,null,user_type FROM Admin WHERE username = '$this->username'";
-    $result = $this->conn->query($sql);
+    $stmt = $this->conn->prepare("SELECT homeowner_ID as ID,password,name,email,phone,address,postal_code,home_type,user_type FROM Homeowners WHERE username = ?
+                            UNION SELECT company_ID as ID,password,name,email,phone,address,postal_code,description,user_type FROM Company WHERE username = ?
+                            UNION SELECT admin_ID as ID,password,name,email,phone,null,null,null,user_type FROM Admin WHERE username = ?");
+
+    $stmt->bind_param("sss", $this->username,$this->username,$this->username);
+    $stmt->execute();
+    $result = $stmt->get_result(); // get the mysqli result
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     // printf("Affected rows (INSERT): %d\n", $this->conn->affected_rows);
     if(mysqli_num_rows($result)==1)
