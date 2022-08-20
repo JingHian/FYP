@@ -10,7 +10,7 @@ $CID = $_SESSION['ID'];
 try
 {
   //get prices of water supply
- $query = "SELECT price FROM Company_services as cs
+ $query = "SELECT price FROM Company_Services as cs
            JOIN Services as serv
            ON cs.service_ID = serv.service_ID
            WHERE company_ID =$CID AND service_name ='Water Supply'";
@@ -24,7 +24,7 @@ try
      $water_price = "none";
    }
   //get prices Maintenance
-   $query = "SELECT price FROM Company_services as cs
+   $query = "SELECT price FROM Company_Services as cs
              JOIN Services as serv
              ON cs.service_ID = serv.service_ID
              WHERE company_ID =$CID AND service_name ='Maintenance'";
@@ -51,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     try
     {
-        $wprice = "UPDATE company_services SET price = '$water_price' WHERE company_ID = '$CID' AND service_ID = '1'";
-        $mprice = "UPDATE company_services SET price = '$maintenance_price' WHERE company_ID = '$CID' AND service_ID = '2'";
+        $wprice = "UPDATE Company_Services SET price = '$water_price' WHERE company_ID = '$CID' AND service_ID = '1'";
+        $mprice = "UPDATE Company_Services SET price = '$maintenance_price' WHERE company_ID = '$CID' AND service_ID = '2'";
         @mysqli_query($conn, $wprice);
         @mysqli_query($conn, $mprice);
 
@@ -75,9 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     <body>
         <?php include_once('navbar.php');?>
         <div class="container" >
-            <h1 class ="display-5 text-center" style="margin-top:50px;">Manage Pricing</h1>
+            <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Manage Pricing</h1>
             <div class="row justify-content-center">
-                <div class="col-6 text-center">
+                <div class="col-md-6 text-center">
                     <p class ="display-6 fs-5" name = "product" value ="avail">Change Pricing</p>
                 </div>
             </div>
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="container">
             <form id="ManagePrice" class ="form-horizontal-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
               <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
               <div class="form-floating mb-3">
                <input type="text" class="form-control" id="water_price" name="water_price" placeholder="water_price"  value = "<?php if($water_price != "none"){echo $water_price;}?>" <?php if($water_price == "none"){echo "disabled";}else{echo "required";}?>>
                <label for="water_price">Water Price</label>
@@ -113,10 +113,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
                 ?>
                 <div class="form-group mb-2 mt-3 text-center">
-                    <input type="submit" class="btn  btn-primary" value="change">
+                    <input type="submit" class="btn btn-lg btn-primary" value="change">
                 </div>
             </form>
         </div>
     </body>
+    <?php include_once ("jsLinks.php"); ?>
 
 </html>

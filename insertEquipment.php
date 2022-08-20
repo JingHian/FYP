@@ -26,7 +26,7 @@ $equipmentQuantity = $_POST['equipmentquantity'] ?? "";
 $installationDate = $_POST['installationdate'] ?? "";
 $warrantyDate = $_POST['warrantydate'] ?? "";
 $expiry_date = $_POST['expiry_date'] ?? "";
-$tableName = "maintenance_equipment";
+$tableName = "Maintenance_Equipment";
 $companyName = $_SESSION['name'] ?? "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand']){
@@ -58,9 +58,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['randcheck']==$_SESSION['rand'
     </head>
     <body>
         <div class="container" >
-            <h1 class ="display-5 text-center" style="margin-top:50px;">Add New Equipment</h1>
+            <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Add New Equipment</h1>
             <div class="row justify-content-center">
-                <div class="col-6 text-center">
+                <div class="col-md-6 text-center">
                     <p class ="display-6 fs-5">Enter Equipment Details</p>
                 </div>
             </div>

@@ -61,14 +61,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
   <div class="container" >
-  <h1 class ="display-5" style="text-align: center;margin-top:100px;">Water Supply Marketplace</h1>
+  <h1 class ="display-5 fw-bold" style="text-align: center;margin-top:100px;">Water Supply Marketplace</h1>
   <h2 class ="display-6 fs-2 text-muted" style="text-align: center;">Admin Sign Up</h2>
   </div>
 <div class="container">
   <form class ="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-        <span style ="color:green"><?php echo $signUpSuccess;?></span>
-        <span style ="color:red"><?php echo $signUpFail;  ?></span>
-        <span style ="color:red"><?php echo $whiteSpaceError;  ?></span>
+      <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $signUpSuccess;?></div>
+      <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $signUpFail;?></div>
+      <div class="alert alert-danger booking-alert mt-3" role="alert"><?php echo $whiteSpaceError;?></div>
       <div class="form-floating mt-3 mb-3  ">
           <input type="text" class="form-control" id="username" name="username" placeholder="username" value="<?php echo $username; ?>"required>
           <label for="username">Username</label>
@@ -79,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $name; ?>"required>
-          <label for="name">Company Name</label>
+          <label for="name">Name</label>
         </div>
         <div class="form-floating mb-3">
           <input type="email" class="form-control" id="email"name="email" placeholder="email"value="<?php echo $email; ?>" required>

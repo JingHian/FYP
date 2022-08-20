@@ -5,7 +5,7 @@
     include_once ('navbar.php');
     include_once "logInCheck.php";
     $name = $_SESSION["name"];
-    $usertype = $_SESSION["user_type"];
+    $user_type = $_SESSION["user_type"];
 
     $tables = new Homeowner();
 
@@ -30,12 +30,12 @@
 
 
 <div class="container" >
-<h1 class ="display-5 text-center" style="margin-top:50px;">Homeowner Bookings</h1>
+<h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Homeowner Bookings</h1>
 <div class="row justify-content-center">
-  <div class="col-12 text-center">
-<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View Homeowner bookings and assign staff.</p>
+  <div class="col-md-12 text-center">
+<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View your bookings.</p>
 </div>
-<div class="col-12 text-center">
+<div class="col-md-12 text-center">
     <a class="float-end btn btn-primary" href="bookHomeowner.php" type="submit">New +</a>
   </div>
 </div>
@@ -45,7 +45,7 @@
 				<input class="form-control rounded-0 search-for" type="text" placeholder="Search..">
 			</div>
 		</div>
-    <div class="container justify-content-center text-center">
+    <div class="container justify-content-center text-center table-responsive">
     <?php
       $tables->listBookingsHomeowner();
       ?>

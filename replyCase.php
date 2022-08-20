@@ -24,9 +24,9 @@ $_SESSION['homeowner_name'] = $_POST['homeowner_name'];
 
       <?php include_once('navbar.php');?>
       <div class="container" >
-      <h1 class ="display-5 text-center" style="margin-top:50px;">Case #<?php echo $_SESSION['case_ID'] ?></h1>
+      <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Case #<?php echo $_SESSION['case_ID'] ?></h1>
       <div class="row justify-content-center">
-        <div class="col-6 text-center">
+        <div class="col-md-6 text-center">
       <p class ="display-6 fs-5" name = "product" value ="avail">View and reply to case.</p>
     </div>
       </div>
@@ -70,13 +70,19 @@ $_SESSION['homeowner_name'] = $_POST['homeowner_name'];
         </div>
         <div class="col">
           <div class="form-floating  mb-3 ">
-            <textarea  class="form-control" name="reply" placeholder="reply" style="height: 200px" ></textarea>
+              <textarea  class="form-control" name="reply" placeholder="reply" style="height: 200px" <?php if($_POST['case_status'] == "Closed") {echo "disabled";}?>><?php echo $_POST['case_reply']; ?></textarea>
             <label for="reply">Reply</label>
           </div>
         </div>
 
     <div class="form-group mb-2 mt-3 text-center">
-        <input type="submit" class="btn  btn-primary" value="Reply Homeowner">
+        <?php
+        if ($_POST['case_status']!= "Closed")
+        {
+            echo "<button type=\"submit\" class=\"btn btn-lg btn-primary\" name=\"Reply\">Reply to Homeowner</button>
+                <button type=\"submit\" class=\"btn btn-lg btn-primary\" name=\"complete\">Mark as Complete</button>";
+        }
+        ?>
     </div>
     <p class="text-center" style  ="color:green"><?php echo $enquiry_success;?></p>
   </form>

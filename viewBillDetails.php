@@ -5,9 +5,10 @@
     include_once ('navbar.php');
     include_once "logInCheck.php";
     $name = $_SESSION["name"];
-    $usertype = $_SESSION["user_type"];
+    $user_type = $_SESSION["user_type"];
       // echo '<pre>' . print_r($_SESSION) . '</pre>';
     $bills = new Homeowner();
+
 
     if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         header("location: index.php");
@@ -38,21 +39,15 @@
     </head>
 
     <body>
-
-      <style>
-      /* .container{
-        background-color: red;
-      } */
-      </style>
-    <div class="container " style ="margin-top:120px;">
+      <div class="container clearfix boxshadow p-5 m-p mt-100">
       <div class="row" style="height: 200px;">
-        <div class="col-4 ">
+        <div class="col-md-4 ">
           <h2 class ="fw-bold mb-0"><?php echo $_SESSION['company_name'];?></h2>
           <h5 class =" mb-0"><?php echo $_SESSION['company_address'];?> </h5 >
           <h5 class =" mb-0"><?php echo $_SESSION['company_postal'];?> </h5 >
           <h5 class =" mb-0">Due Date: <?php echo $_SESSION['bill_due_date'];?> </h5 >
         </div>
-        <div class="col-4 ms-auto">
+        <div class="col-md-4 ms-auto">
         <?php
           $date = strtotime($_SESSION['bill_date']);
           $month=date("F",$date);
@@ -67,10 +62,28 @@
         </div>
       </div>
       <div class="row">
-        <?php $bills->listBillDetailsHomeowner(); ?>
+        <?php $no_fees = $bills->listBillDetailsHomeowner(); ?>
+        </div>
+        <form  action="Payment.php" method="post">
+            <?php
+            if($_SESSION['bill_status'] != "Paid")
+            {
+               echo "<a class='btn btn-lg btn-primary text-white float-end mt-5' href=\"viewBills.php\" value='Back'>Back</a>";
+            }
+            else
+            {
+                echo "<a class='btn btn-lg btn-primary text-white float-end mt-5' href=\"viewPastBills.php\" value='Back'>Back</a>";
+            }
+            ?>
 
+          <?php if($no_fees == 0 )
+          {
+            if($_SESSION['bill_status'] != "Paid")
+              echo '<input type="submit" class="btn btn-lg btn-primary me-4 mt-5 float-end" value="Make Payment">';
+          }
+        ?>
+      </form>
       </div>
-    </div>
     <?php include_once('jsLinks.php');?>
 </body>
 </html>

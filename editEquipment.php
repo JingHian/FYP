@@ -36,9 +36,9 @@ else {
     </head>
     <body>
         <div class="container" >
-            <h1 class ="display-5 text-center" style="margin-top:50px;">Edit Equipment</h1>
+            <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Edit Equipment</h1>
             <div class="row justify-content-center">
-                <div class="col-6 text-center">
+                <div class="col-md-6 text-center">
                     <p class ="display-6 fs-5">Enter details to edit</p>
                 </div>
             </div>
@@ -60,7 +60,7 @@ else {
                 <div class="col">
                     <div class="form-floating mb-3 ">
                         <input type="text" class='form-control' name="quantity" placeholder="Quantity" value = "<?php echo $quantity?>" required>
-                        <label for="quantity">Equipment Email</label>
+                        <label for="quantity">Equipment Quantity</label>
                     </div>
                 </div>
             </div>
@@ -94,8 +94,8 @@ else {
                 <div class="form-group mt-3 text-center">
                     <input type ="hidden" name="edit_values" value = "true" />
                     <input type ="hidden" name="equipment_ID" value =" <?php echo $_SESSION['equipment_ID']?> "/>
-                    <input type="submit" class="btn btn-lg btn-primary" name="submit" value="Save Changes">
-                    <a class="btn btn-lg btn-primary" href="viewEquipment.php">Back to Equipment List</a>
+                    <input type="submit" class="btn btn-lg mb-2 btn-primary" name="submit" value="Save Changes">
+                    <a class="btn btn-lg mb-2 btn-danger" href="viewEquipment.php">Back to Equipment List</a>
                 </div>
                   <div class="alert alert-success booking-alert mt-3" role="alert"><?php echo $edit_success;?></div>
             </form>

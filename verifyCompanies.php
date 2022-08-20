@@ -19,9 +19,9 @@ $verify = new Admin();
 </head>
 <body>
   <div class="container" >
-      <h1 class ="display-5 text-center" style="margin-top:50px;">Verify Companies</h1>
+      <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Verify Companies</h1>
       <div class="row justify-content-center">
-          <div class="col-6 text-center">
+          <div class="col-md-6 text-center">
               <p class ="display-6 fs-5">Check details and approve or reject requests.</p>
           </div>
       </div>
@@ -32,7 +32,7 @@ $verify = new Admin();
     <input class="form-control rounded-0 search-for" type="text" placeholder="Search..">
   </div>
 </div>
-<div class="container justify-content-center text-center">
+<div class="container justify-content-center text-center table-responsive">
   <?php
     $verify->verifyCompanies();
   ?>

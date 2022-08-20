@@ -5,6 +5,7 @@ include_once("classes.php");
 include_once "logInCheck.php";
 
 $company = new Company();
+$DID = "";
 $Packname = "";
 $Packdesc = "";
 $SDate = "";
@@ -21,6 +22,7 @@ try {
     $result = $conn->query($sql);
     $row = $result -> fetch_assoc();
     if ($result->num_rows > 0) {
+      $DID = $row['discount_ID'];
       $Packname = $row['discount_name'];
       $Packdesc = $row['discount_description'];
       $SDate = $row['discount_start_date'];
@@ -104,6 +106,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
       {
+
+            $sql = "UPDATE Clients SET discount_ID = NULL WHERE discount_ID = '$DID'";
+            $result = mysqli_query($conn, $sql);
+
             $sql = "DELETE FROM Discounts WHERE company_ID = '$CID'";
             if ($conn->query($sql) === TRUE) {
               $discount_deleted = "Discount has been Deleted!";
@@ -126,9 +132,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
 
       <?php include_once('navbar.php');?>
       <div class="container" >
-      <h1 class ="display-5 text-center" style="margin-top:50px;">Add/Edit Discount</h1>
+      <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Add/Edit Discount</h1>
       <div class="row justify-content-center">
-        <div class="col-6 text-center">
+        <div class="col-md-6 text-center">
       <p class ="display-6 fs-5" name = "product" value ="avail">Enter/Edit Discount details or delete discount here.</p>
     </div>
       </div>
@@ -153,19 +159,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
           </div>
         </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
           <div class="form-floating mb-3">
             <input type="date" class="form-control" id="date" name = "SDate" value="<?php echo $SDate;  ?>">
             <label for="SDate">Start Date</label>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
           <div class="form-floating mb-3">
             <input type="date" class="form-control" id="date" name = "EDate" value="<?php echo $EDate;  ?>">
             <label for="EDate">End Date</label>
           </div>
         </div>
-      <div class="col-6">
+      <div class="col-md-6">
           <div class="form-floating mb-3">
             <input type="number" class="form-control" id="discount" name="discount" placeholder="discount" required min ="1" max="100" value="<?php echo $Modifier;  ?>">
             <label for="discount">Modifier</label>
@@ -182,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
       }
       else if ($have_discount == 1)
       {
-        echo '<input type="submit" class="btn btn-lg btn-primary me-5" name="Edit" value="Edit Discount">';
+        echo '<input type="submit" class="btn btn-lg btn-primary me-5 me-m" name="Edit" value="Edit Discount">';
         echo '<input type="submit" class="btn btn-lg  btn-danger" name="Delete" value="Delete Discount">';
       }
         ?>
@@ -195,6 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Delete']))
 
 
     </body>
+    <?php include_once('jsLinks.php');?>
 
 
 

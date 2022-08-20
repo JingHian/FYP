@@ -5,9 +5,9 @@ include_once("classes.php");
 include_once "logInCheck.php";
 include_once ('navbar.php');
 $name = $_SESSION["name"];
-$usertype = $_SESSION["user_type"];
+$user_type = $_SESSION["user_type"];
 $UID = $_POST['ID'];
-$usertype = $_POST['usertype'];
+$user_type = $_POST['user_type'];
 $editInfo_success = "";
 $editInfo_suspended = "";
 $suspended = "";
@@ -25,7 +25,7 @@ if(isset($_POST['Edit']))
 
 if(isset($_POST['save']))
 {
-    if($usertype == 'homeowner')
+    if($user_type == 'homeowner')
     {
         $name= $_POST['name'];
         $phone = $_POST['phone'];
@@ -33,27 +33,29 @@ if(isset($_POST['save']))
         $address = $_POST['address'];
         $postcode = $_POST['postal_code'];
         $hometype = $_POST['home_type'];
-        $change = "UPDATE homeowners SET name='$name', email='$email', phone='$phone', address='$address', postal_code='$postcode', home_type='$hometype' WHERE homeowner_ID='$UID'";
+        $change = "UPDATE Homeowners SET name='$name', email='$email', phone='$phone', address='$address', postal_code='$postcode', home_type='$hometype' WHERE homeowner_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $editInfo_success = "Your details have been updated!";
+            $suspended = 0;
         }
         else
         {
             echo "Error" . $conn->error;
         }
     }
-    elseif($usertype == 'company')
+    elseif($user_type == 'company')
     {
         $name= $_POST['name'];
         $phone = $_POST['phone'];
         $email = $_POST['email'];
         $address = $_POST['address'];
         $postcode = $_POST['postal_code'];
-        $change = "UPDATE company SET name='$name', email='$email', phone='$phone', address='$address', postal_code='$postcode' WHERE company_ID='$UID'";
+        $change = "UPDATE Company SET name='$name', email='$email', phone='$phone', address='$address', postal_code='$postcode' WHERE company_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $editInfo_success = "Your details have been updated!";
+            $suspended = 0;
         }
         else
         {
@@ -64,9 +66,9 @@ if(isset($_POST['save']))
 }
 else if(isset($_POST['suspend']))
 {
-    if($usertype == 'homeowner')
+    if($user_type == 'homeowner')
     {
-        $change = "UPDATE homeowners SET suspended = 1 WHERE homeowner_ID='$UID'";
+        $change = "UPDATE Homeowners SET suspended = 1 WHERE homeowner_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $suspended = 1;
@@ -77,9 +79,9 @@ else if(isset($_POST['suspend']))
             echo "Error" . $conn->error;
         }
     }
-    elseif($usertype == 'company')
+    elseif($user_type == 'company')
     {
-        $change = "UPDATE company SET suspended = 1 WHERE company_ID='$UID'";
+        $change = "UPDATE Company SET suspended = 1 WHERE company_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $suspended = 1;
@@ -93,9 +95,9 @@ else if(isset($_POST['suspend']))
 }
 else if(isset($_POST['unsuspend']))
 {
-    if($usertype == 'homeowner')
+    if($user_type == 'homeowner')
     {
-        $change = "UPDATE homeowners SET suspended = 0 WHERE homeowner_ID='$UID'";
+        $change = "UPDATE Homeowners SET suspended = 0 WHERE homeowner_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $suspended = 0;
@@ -106,9 +108,9 @@ else if(isset($_POST['unsuspend']))
             echo "Error" . $conn->error;
         }
     }
-    elseif($usertype == 'company')
+    elseif($user_type == 'company')
     {
-        $change = "UPDATE company SET suspended = 0 WHERE company_ID='$UID'";
+        $change = "UPDATE Company SET suspended = 0 WHERE company_ID='$UID'";
         if ($conn->query($change) === TRUE)
         {
             $suspended = 0;
@@ -131,17 +133,17 @@ else if(isset($_POST['unsuspend']))
     </head>
     <body>
     <div class="container" >
-    <h1 class ="display-5 text-center" style="margin-top:50px;">Edit/Suspend Profile</h1>
+    <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Edit/Suspend Profile</h1>
     <div class="row justify-content-center">
-      <div class="col-6 text-center">
+      <div class="col-md-6 text-center">
     <p class ="display-6 fs-5" name = "product" value ="avail">Change the details here.</p>
     </div>
     </div>
     </div>
         <?php
-        if($usertype == 'homeowner')
+        if($user_type == 'homeowner')
         {
-            $sql = "SELECT * FROM homeowners WHERE homeowner_ID = '$UID'";
+            $sql = "SELECT * FROM Homeowners WHERE homeowner_ID = '$UID'";
             try
             {
                 $getdata = mysqli_query($conn, $sql);
@@ -153,47 +155,47 @@ else if(isset($_POST['unsuspend']))
                     echo "<div class=\"container justify-content-center\"  style=\"text-align: center;\">
                     <div class=\"container\">
                         <form class =\"form-horizontal-2\" action='' method=\"post\">
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                               <div class=\"form-floating  mb-3 \">
                               <input type=\"text\" class=\"form-control\" id=\"ID\" name=\"ID\" value = ". $row['homeowner_ID'] ." readonly>
                               <label for=\"ID\">User ID</label>
                               </div>
                             </div>
 
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                               <div class=\"form-floating  mb-3 \">
                                 <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"name\" value= '$name'>
                                 <label for=\"name\">Name</label>
                               </div>
                             </div>
 
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                             <div class=\"form-floating mb-3\">
                               <input type=\"number\" class=\"form-control\" id=\"phone\" name=\"phone\" placeholder=\"phone\" value=". $row['phone'] .">
                               <label for=\"phone\">Phone</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating  mb-3 \">
                               <input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"email\" value=". $row['email']. ">
                               <label for=\"email\">Email</label>
                             </div>
                           </div>
 
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating  mb-3 \">
                               <input type=\"text\" class=\"form-control\" id=\"address\" name=\"address\" placeholder=\"address\" value= '$address'>
                               <label for=\"address\">Address</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating mb-3\">
                               <input type=\"number\" class=\"form-control\" id=\"postal_code\" name=\"postal_code\"placeholder=\"postal_code\" value=". $row['postal_code']." >
                               <label for=\"postal_code\">Postal Code</label>
                             </div>
                           </div>
-                        <input type=\"hidden\" name=\"usertype\"value='$usertype'>
-                    <div class=\"col form-floating  mb-3 \">
+                        <input type=\"hidden\" name=\"user_type\"value='$user_type'>
+                    <div class=\"col-md form-floating  mb-3 \">
                           <div class=\"condi-dropdown\">
                             <select id=\"home_type\" name=\"home_type\" class=\"form-select\">
                               <option value=\"2room\" ".(($row['home_type']=='2room')?'selected="selected"':"").">HDB 2-room</option>
@@ -209,13 +211,13 @@ else if(isset($_POST['unsuspend']))
                         <div class=\"alert alert-success booking-alert mt-3\" role=\"alert\">$editInfo_success</div>
                         <div class=\"alert alert-danger booking-alert mt-3\" role=\"alert\">$editInfo_suspended</div>
                         <div class=\"form-group mb-2 mt-3  text-center\">
-                            <button type=\"submit\" class=\"btn btn-lg btn-primary me-5\" id=\"save\" name =\"save\" value=\"Save Changes\">Save Changes</button>";
+                            <button type=\"submit\" class=\"btn btn-lg btn-primary me-5 me-m mb-1\" id=\"save\" name =\"save\" value=\"Save Changes\">Save Changes</button>";
                             if ($suspended == 0)
                             {
-                            echo "  <button type=\"submit\" class=\"btn btn-lg btn-danger\" id=\"suspend\" name =\"suspend\" value=\"Suspend\">Suspend user</button>";
+                            echo "  <button type=\"submit\" class=\"btn btn-lg btn-danger mb-1\" id=\"suspend\" name =\"suspend\" value=\"Suspend\">Suspend user</button>";
                           } else if ($suspended == 1)
                             {
-                            echo "  <button type=\"submit\" class=\"btn btn-lg btn-success\" id=\"unsuspend\" name =\"unsuspend\" value=\"unSuspend\">Unsuspend user</button>";
+                            echo "  <button type=\"submit\" class=\"btn btn-lg btn-success mb-1\" id=\"unsuspend\" name =\"unsuspend\" value=\"unSuspend\">Unsuspend user</button>";
                             }
                         echo"  </div>
                         </form>
@@ -228,9 +230,9 @@ else if(isset($_POST['unsuspend']))
                 mysqli_close($conn);
             }
         }
-        elseif ($usertype == 'company')
+        elseif ($user_type == 'company')
         {
-            $sql = "SELECT * FROM company WHERE company_ID = '$UID'";
+            $sql = "SELECT * FROM Company WHERE company_ID = '$UID'";
             try
             {
                 $getdata = mysqli_query($conn, $sql);
@@ -242,45 +244,45 @@ else if(isset($_POST['unsuspend']))
                     echo "<div class=\"container justify-content-center\"  style=\"text-align: center;\">
                     <div class=\"container\">
                         <form class =\"form-horizontal-2\" action='' method=\"post\">
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                               <div class=\"form-floating  mb-3 \">
                               <input type=\"text\" class=\"form-control\" id=\"ID\" name=\"ID\" value = ". $row['company_ID'] ." readonly>
                               <label for=\"ID\">User ID</label>
                               </div>
                             </div>
 
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                               <div class=\"form-floating  mb-3 \">
                                 <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"name\" value= '$name'>
                                 <label for=\"name\">Name</label>
                               </div>
                             </div>
 
-                            <div class=\"col\">
+                            <div class=\"col-md\">
                             <div class=\"form-floating mb-3\">
                               <input type=\"number\" class=\"form-control\" id=\"phone\" name=\"phone\" placeholder=\"phone\" value=". $row['phone'] .">
                               <label for=\"phone\">Phone</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating  mb-3 \">
                               <input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"email\" value=". $row['email']. ">
                               <label for=\"email\">Email</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating  mb-3 \">
                               <input type=\"text\" class=\"form-control\" id=\"address\" name=\"address\" placeholder=\"address\" value='$address'>
                               <label for=\"address\">Address</label>
                             </div>
                           </div>
-                          <div class=\"col\">
+                          <div class=\"col-md\">
                             <div class=\"form-floating mb-3\">
                               <input type=\"number\" class=\"form-control\" id=\"postal_code\" name=\"postal_code\"placeholder=\"postal_code\" value=". $row['postal_code']." >
                               <label for=\"postal_code\">Postal Code</label>
                             </div>
                           </div>
-                        <input type=\"hidden\" name=\"usertype\"value='$usertype'>
+                        <input type=\"hidden\" name=\"user_type\"value='$user_type'>
                         <div class=\"alert alert-success booking-alert mt-3\" role=\"alert\">$editInfo_success</div>
                         <div class=\"alert alert-danger booking-alert mt-3\" role=\"alert\">$editInfo_suspended</div>
                         <div class=\"form-group mb-2 mt-3 text-center\">
@@ -306,12 +308,14 @@ else if(isset($_POST['unsuspend']))
             }
         }
                             /*Kept as reference if implementing
-                             * <div class=\"col\">
+                             * <div class=\"col-md\">
                               <div class=\"form-floating mb-3\">
                                 <input type=\"password\" class=\"form-control\" id=\"n_password\" name=\"n_password\" placeholder=\"n_password\">
                                 <label for=\"n_password\">New password</label>
                               </div>
                             </div>*/
         ?>
+
+        <?php include_once('jsLinks.php');?>
     </body>
 </html>

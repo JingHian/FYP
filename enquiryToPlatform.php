@@ -3,40 +3,34 @@ session_start();
 include("conn.php");
 include_once("classes.php");
 include_once "logInCheck.php";
-//print_r($_SESSION);
+// print_r($_SESSION);
 
 $enquiry_success = "";
-
-
-//automatically create the table if not exists yet when the user clicks the add enquiry menu
-$enquiryTable = "CREATE TABLE IF NOT EXISTS Enquiries (
-enquiry_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-admin_ID INT(10) NULL, /*The id of the admin who replies the enquiry*/
-`user_ID` int(11) NOT NULL,
-usertype VARCHAR(15) NOT NULL,
-enquiry_date VARCHAR(15) NOT NULL,
-enquiry_subject VARCHAR(30) NOT NULL,
-enquiry_description VARCHAR(500) NOT NULL,
-enquiry_status VARCHAR(10) NOT NULL,
-enquiry_reply VARCHAR(500) NULL)";
-
-mysqli_query($conn, $enquiryTable);
 
 if($_SERVER["REQUEST_METHOD"] == "POST"&& $_POST['randcheck']==$_SESSION['rand']){
 
 $enquirySubject = $_POST['enquirysubject'] ?? "";
 $enquiryDetails = $_POST['enquirydetails'] ?? "";
 $userID = $_SESSION['ID'] ?? "";
-$userType = $_SESSION['user_type'] ?? "";
+$user_type = $_SESSION['user_type'] ?? "";
 
-$tableName = "enquiries";
+if ($user_type == 'company')
+{
+  $tableName = "Enquiries_Company";
+  $id_type = "company_ID";
+}
+else if ($user_type == 'homeowner')
+{
+  $tableName = "Enquiries_Homeowner";
+  $id_type = "homeowner_ID";
+}
 
 if ($enquirySubject == "") {
     echo "";
 } else {
     try {
         //userid can be homeownerid and companyid
-        $sql = "INSERT INTO $tableName (`user_ID`, usertype, enquiry_date, enquiry_subject, enquiry_description, enquiry_status) VALUES " . "('$userID', '$userType' , curdate(), '$enquirySubject', '$enquiryDetails', 'Awaiting')";
+        $sql = "INSERT INTO $tableName ($id_type, user_type, enquiry_date, enquiry_subject, enquiry_description, enquiry_status) VALUES " . "('$userID', '$user_type' , curdate(), '$enquirySubject', '$enquiryDetails', 'Awaiting')";
         // printf("Affected rows (INSERT): %d\n", $conn->affected_rows);
         @mysqli_query($conn, $sql);
         $enquiry_success = "Your enquiry has been sent to our Platform!";
@@ -62,9 +56,9 @@ if ($enquirySubject == "") {
 
       <?php include_once('navbar.php');?>
         <div class="container" >
-            <h1 class ="display-5 text-center" style="margin-top:50px;">Send an Enquiry to Us!</h1>
+            <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Send an Enquiry to Us!</h1>
                 <div class="row justify-content-center">
-                    <div class="col-6 text-center">
+                    <div class="col-md-6 text-center">
                         <p class ="display-6 fs-5" name = "product" value ="avail">Please enter details.</p>
                     </div>
                 </div>
@@ -90,10 +84,11 @@ if ($enquirySubject == "") {
                     </div>
 
                     <div class="form-group mb-2 mt-3 text-center">
-                        <input type="submit" class="btn  btn-primary" value="Submit Enquiry">
+                        <input type="submit" class="btn btn-lg btn-primary" value="Submit Enquiry">
                     </div>
                     <div class="alert alert-success booking-alert text-center  mt-3" role="alert"><?php echo $enquiry_success;?></div>
             </form>
         </div>
     </body>
+    <?php include_once ("jsLinks.php"); ?>
 </html>

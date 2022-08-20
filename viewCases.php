@@ -5,7 +5,7 @@
     include_once ('navbar.php');
     include_once "logInCheck.php";
     $name = $_SESSION["name"];
-    $usertype = $_SESSION["user_type"];
+    $user_type = $_SESSION["user_type"];
 
     $tables = new Company();
 
@@ -30,10 +30,10 @@
 
 
 <div class="container" >
-<h1 class ="display-5 text-center" style="margin-top:50px;">Homeowner Cases</h1>
+<h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Homeowner Enquiries</h1>
 <div class="row justify-content-center">
-  <div class="col-6 text-center">
-<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View and reply to cases from Homeowners.</p>
+  <div class="col-md-6 text-center">
+<p class ="display-6 fs-5 text-secondary" name = "product" value ="avail">View and reply to enquiries from Homeowners.</p>
 </div>
 </div>
 </div>
@@ -42,7 +42,7 @@
 				<input class="form-control rounded-0 search-for" type="text" placeholder="Search..">
 			</div>
 		</div>
-    <div class="container justify-content-center text-center">
+    <div class="container justify-content-center text-center table-responsive">
     <?php
       $tables->listCases();
       ?>
