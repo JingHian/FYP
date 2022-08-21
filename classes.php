@@ -770,19 +770,6 @@ function listBillDetailsCompany(){
                </tr>
              </form>";
      }
-     echo "
-     <tr class='table-padding' >
-     <td></td>
-     </tr>
-     <tr class='table-padding' >
-      <th></th>
-      <th></th>
-      <th></th>
-      <th class = 'border border-dark border-start-0 border-end-0 border-3'>Total Price:</th>
-      <th class = 'border border-dark border-start-0 border-end-0 border-3'>$total_price</th>
-      </tr>
-
-    </tbody> </table>";
    } else {
    echo "<td>No Maintenance usage found</td>";
    }
