@@ -71,8 +71,12 @@ include_once "logInCheck.php";
                 <p class="usage-font ">Service Categories</p>
               </div>
             </a>
-          <div class="col-md-3 hide-box border border-end-0 border-bottom-0 border-dark border-3"></div>
-    </div>
+          <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border border-end-0 border-bottom-0 border-dark border-3 pt-3  height-200 " href="viewEnquiryReplies.php">
+              <div class =" text-center">
+                <span class="material-symbols-rounded  icon-size">chat</span>
+                <p class="usage-font ">Platform Replies</p>
+              </div>
+            </a>
   </div>
 <?php include_once('jsLinks.php');?>
 </body>
