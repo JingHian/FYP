@@ -7,8 +7,6 @@ include_once "logInCheck.php";
 $enquiry_success = "";
 $reply = "";
 $_SESSION['enquiry_ID'] = $_POST['enquiry_ID'];
-$_SESSION['enquiry_user_type'] = $_POST['user_type'];
-$_SESSION['user_name'] = $_POST['name'];
 // echo '<pre>'; print_r($_POST);echo '</pre>';
 
 
@@ -18,7 +16,7 @@ $_SESSION['user_name'] = $_POST['name'];
       <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?php include_once('cssLinks.php');?>
-        <title>Enquiry</title>
+        <title>Enquiry Replies</title>
     </head>
 
     <body>
@@ -28,7 +26,7 @@ $_SESSION['user_name'] = $_POST['name'];
       <h1 class ="display-5 fw-bold text-center" style="margin-top:50px;">Enquiry #<?php echo $_SESSION['enquiry_ID'] ?></h1>
       <div class="row justify-content-center">
         <div class="col-md-6 text-center">
-      <p class ="display-6 fs-5" name = "product" value ="avail">View and reply to enquiry.</p>
+      <p class ="display-6 fs-5" name = "product" value ="avail">View Enquiry replies from our Platform.</p>
     </div>
       </div>
     </div>
@@ -36,10 +34,6 @@ $_SESSION['user_name'] = $_POST['name'];
   <form id="reply_enquiry" class ="form-horizontal-2" action="replyEnquirySuccess.php" method="post">
       <input type="hidden" name="enquiry_ID" value ="<?php echo $_SESSION['enquiry_ID']; ?>">
         <div class="col">
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="name" name="name" placeholder="name" value ="<?php echo $_POST['name']; ?>" disabled>
-            <label for="name">Name</label>
-          </div>
         </div>
         <div class="col">
           <div class="form-floating mb-3">
@@ -71,20 +65,14 @@ $_SESSION['user_name'] = $_POST['name'];
         </div>
         <div class="col">
           <div class="form-floating  mb-3 ">
-            <textarea  class="form-control" name="reply" placeholder="reply" style="height: 150px" <?php if($_POST['enquiry_status'] == "Closed") {echo "disabled";}?>><?php echo $_POST['enquiry_reply']; ?></textarea>
+            <textarea  class="form-control" name="reply" placeholder="reply" style="height: 150px" disabled><?php echo $_POST['enquiry_reply']; ?></textarea>
             <label for="reply">Reply</label>
           </div>
         </div>
+        <div class="form-group mb-2 mt-3 text-center">
+              <a href="viewEnquiryReplies.php" class="btn btn-lg btn-primary" name="Back">Back</a>
+        </div>
 
-    <div class="form-group mb-2 mt-3 text-center">
-        <?php
-        if ($_POST['enquiry_status']!= "Closed")
-        {
-            echo "<button type=\"submit\" class=\"btn btn-lg btn-primary\" name=\"Reply\">Reply</button>
-                <button type=\"submit\" class=\"btn btn-lg btn-primary\" name=\"complete\">Mark as Complete</button>";
-        }
-        ?>
-    </div>
     <p class="text-center" style  ="color:green"><?php echo $enquiry_success;?></p>
   </form>
 </div>

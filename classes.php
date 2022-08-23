@@ -770,19 +770,6 @@ function listBillDetailsCompany(){
                </tr>
              </form>";
      }
-     echo "
-     <tr class='table-padding' >
-     <td></td>
-     </tr>
-     <tr class='table-padding' >
-      <th></th>
-      <th></th>
-      <th></th>
-      <th class = 'border border-dark border-start-0 border-end-0 border-3'>Total Price:</th>
-      <th class = 'border border-dark border-start-0 border-end-0 border-3'>$total_price</th>
-      </tr>
-
-    </tbody> </table>";
    } else {
    echo "<td>No Maintenance usage found</td>";
    }
@@ -843,8 +830,57 @@ function listBillDetailsCompany(){
 
 }
 
+function tableHeaderEnquiryReplies()
+  {
+    echo "<table class='table table-hover  datatable_style' >
+            <thead>
+            <tr class='table-padding text-white'>
+              <th class='hide-box'>Enquiry #</th>
+			        <th>Subject</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody class='search-table'>";
+  }
 
+function viewEnquiryReplies(){
 
+ $ID = $_SESSION['ID'];
+ //Get all homeowner enquiries and display them
+     $stmt = $this->conn->prepare("SELECT * FROM Enquiries_Company where company_ID =?");
+     $stmt->bind_param("s", $ID);
+     $stmt->execute();
+     $result = $stmt->get_result(); // get the mysqli result
+
+     if (mysqli_num_rows($result) < 1) {
+         echo "<br><br>No enquiries are found.<br><br>";
+     } else {
+        $this->tableHeaderEnquiryReplies();
+         while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
+             echo "
+                     <tr class='table-padding'>
+                     <form method='post' action='viewEnquiryReplyDetails.php'>
+                        <td class='hide-box'>" . $Row['ec_ID'] . "</td>".
+                       "<td>" . $Row['enquiry_subject'] . "</td>".
+                       "<td>" . $Row['enquiry_date'] ."</td>".
+                       "<td>" . $Row['enquiry_status'] ."</td>".
+                       "<input type ='hidden' value ='".$Row['ec_ID']."' name ='enquiry_ID'/>".
+                       "<input type ='hidden' value ='".$Row['company_ID']."' name ='user_id'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_subject']."' name ='enquiry_subject'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_date']."' name ='enquiry_date'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_description']."' name ='enquiry_description'/>".
+                       "<input type ='hidden' value ='".$Row['user_type']."' name ='user_type'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_status']."' name ='enquiry_status'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_reply']."' name ='enquiry_reply'/>".
+                       "<td class ='align-middle'><input type='submit' class='btn btn-mobile btn-primary' name='Details' value='Details'></td>".
+                    " </tr>
+                   </form>";
+
+         }
+}
+}
 
 }
 
@@ -1488,8 +1524,59 @@ function listContracted(){
 }
 
 
-}
+function tableHeaderEnquiryReplies()
+  {
+    echo "<table class='table table-hover  datatable_style' >
+            <thead>
+            <tr class='table-padding text-white'>
+              <th class='hide-box'>Enquiry #</th>
+			        <th>Subject</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody class='search-table'>";
+  }
 
+function viewEnquiryReplies(){
+
+ $ID = $_SESSION['ID'];
+ //Get all homeowner enquiries and display them
+     $stmt = $this->conn->prepare("SELECT * FROM Enquiries_Homeowner where homeowner_ID =?");
+     $stmt->bind_param("s", $ID);
+     $stmt->execute();
+     $result = $stmt->get_result(); // get the mysqli result
+
+     if (mysqli_num_rows($result) < 1) {
+         echo "<br><br>No enquiries are found.<br><br>";
+     } else {
+        $this->tableHeaderEnquiryReplies();
+         while (($Row = mysqli_fetch_assoc($result)) != FALSE) {
+
+             echo "
+                     <tr class='table-padding'>
+                     <form method='post' action='viewEnquiryReplyDetails.php'>
+                        <td class='hide-box'>" . $Row['eh_ID'] . "</td>".
+                       "<td>" . $Row['enquiry_subject'] . "</td>".
+                       "<td>" . $Row['enquiry_date'] ."</td>".
+                       "<td>" . $Row['enquiry_status'] ."</td>".
+                       "<input type ='hidden' value ='".$Row['eh_ID']."' name ='enquiry_ID'/>".
+                       "<input type ='hidden' value ='".$Row['homeowner_ID']."' name ='user_id'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_subject']."' name ='enquiry_subject'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_date']."' name ='enquiry_date'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_description']."' name ='enquiry_description'/>".
+                       "<input type ='hidden' value ='".$Row['user_type']."' name ='user_type'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_status']."' name ='enquiry_status'/>".
+                       "<input type ='hidden' value ='".$Row['enquiry_reply']."' name ='enquiry_reply'/>".
+                       "<td class ='align-middle'><input type='submit' class='btn btn-mobile btn-primary' name='Details' value='Details'></td>".
+                    " </tr>
+                   </form>";
+
+         }
+}
+}
+}
 
 class Admin{
 
@@ -1727,6 +1814,7 @@ function tableHeaderEnquiriesAdmin()
                            "<input type ='hidden' value ='".$Row['enquiry_date']."' name ='enquiry_date'/>".
                            "<input type ='hidden' value ='".$Row['enquiry_description']."' name ='enquiry_description'/>".
                            "<input type ='hidden' value ='".$Row['user_type']."' name ='user_type'/>".
+                           "<input type ='hidden' value ='".$Row['enquiry_reply']."' name ='enquiry_reply'/>".
                            "<input type ='hidden' value ='".$Row['enquiry_status']."' name ='enquiry_status'/>"."
                          </tr>
                        </form>";

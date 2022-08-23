@@ -17,7 +17,7 @@ include_once "logInCheck.php";
 </head>
 <body>
   <?php include_once('navbar.php');?>
-  <h1 class ="display-5 fw-bold text-center " style="margin-top:50px;margin-bottom:50px;">Services Menu</h1>
+  <h1 class ="display-5 fw-bold text-center " style="margin-top:20px;margin-bottom:20px;">Services Menu</h1>
   <div class="container">
     <div class="row ">
     <div class="col-md-15"></div>
@@ -93,6 +93,16 @@ include_once "logInCheck.php";
                     <p class="usage-font">Send Enquiry to Platform </p>
                   </div>
                   </a>
+                  <div class="col-md-15"></div>
+                  <div class="col-md-15"></div>
+                  <div class="col-md-3 hide-box border border-start-0 border-bottom-0 border-dark border-3"></div>
+                  <a class="menu-style no-text-deco no-rounded-border d-flex align-items-center justify-content-center col-md-3 border  border-start-0 border-end-0 border-bottom-0  border-dark border-3 pt-3  height-200 " href="viewEnquiryReplies.php">
+                      <div class =" text-center">
+                        <span class="material-symbols-rounded  icon-size">chat</span>
+                        <p class="usage-font ">Platform Replies</p>
+                      </div>
+                    </a>
+                    <div class="col-md-3 hide-box border border-end-0 border-bottom-0 border-dark border-3"></div>
 
 
     </div>
