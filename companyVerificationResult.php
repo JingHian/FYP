@@ -11,7 +11,7 @@
 
 
      $company_ID = $_SESSION["company_ID"];
-     $name = $_SESSION["name"];
+     $name = $_SESSION["company_name"];
      $email = new Universal();
 
 ?>
