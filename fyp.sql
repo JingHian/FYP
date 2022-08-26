@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 19, 2022 at 06:15 AM
+-- Generation Time: Aug 27, 2022 at 12:35 AM
 -- Server version: 10.5.15-MariaDB-cll-lve
 -- PHP Version: 7.4.30
 
@@ -47,7 +47,7 @@ CREATE TABLE `Admin` (
 --
 
 INSERT INTO `Admin` (`admin_ID`, `username`, `password`, `name`, `email`, `phone`, `user_type`, `suspended`, `verified`) VALUES
-(2, 'admin1', '$2y$10$PzVZrvMbbN8/ANiT2.9OBu2j1/exOdblgYA.l8UF/NHAC2Q7Y/5Aq', 'Test', 'test@mail.com', 98765432, 'admin', 0, 1),
+(2, 'admin1', '$2y$10$PzVZrvMbbN8/ANiT2.9OBu2j1/exOdblgYA.l8UF/NHAC2Q7Y/5Aq', 'Admin One', 'adminOne@mail.com', 98765432, 'admin', 0, 1),
 (3, 'admin2', '$2y$10$0iYfj9OoXidNNX0YDBVS..wo.9oTGCWsPHmG94uwwfJmyHXQFSMZS', 'Admin Two', 'admin2@mail.com', 81234567, 'admin', 0, 1),
 (4, 'admin3', '$2y$10$peq7JKBeNYxlgYZTT9fNDuBSkU3FMMm8elZrDlOroN6M5KO8oi1OC', 'Admin Three', 'admin@mail.com', 98765432, 'admin', 0, 1);
 
@@ -67,6 +67,16 @@ CREATE TABLE `Bills` (
   `bill_status` varchar(20) NOT NULL DEFAULT 'pending',
   `bill_payment_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `Bills`
+--
+
+INSERT INTO `Bills` (`bill_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `bill_date`, `bill_due_date`, `bill_status`, `bill_payment_date`) VALUES
+(21, 5, 1, 11, '2022-08-31', '2022-09-30', 'pending', NULL),
+(22, 5, 3, 16, '2022-07-31', '2022-08-31', 'Paid', '2022-08-20'),
+(25, 5, 3, 16, '2022-08-31', '2022-09-30', 'pending', NULL),
+(26, 26, 25, 18, '2022-08-31', '2022-09-30', 'pending', NULL);
 
 -- --------------------------------------------------------
 
@@ -93,8 +103,12 @@ CREATE TABLE `Bookings` (
 --
 
 INSERT INTO `Bookings` (`booking_ID`, `company_ID`, `homeowner_ID`, `client_ID`, `staff_ID`, `booking_date`, `booking_description`, `booking_type`, `booking_status`, `booking_image`, `completion_date`) VALUES
-(19, 5, 1, 2, NULL, '2022-08-19', '123', 'installation', 'In Progress', '', NULL),
-(20, 5, 1, 2, NULL, '2022-08-25', 'test', 'problem', 'In Progress', '1_user_problem_image_1660860544.573.jpg', NULL);
+(29, 5, 1, 11, NULL, '2022-08-19', '', 'installation', 'Completed ', '', '2022-08-19'),
+(36, 5, 3, 16, NULL, '2022-08-25', '', 'installation', 'In Progress', '', NULL),
+(37, 5, 3, 16, NULL, '2022-08-26', '', 'problem', 'In Progress', '', NULL),
+(40, 5, 3, 16, NULL, '2022-08-31', 'Water pipe spoil', 'problem', 'Completed ', '3_user_problem_image_1661047574.8795.png', '2022-08-20'),
+(41, 26, 25, 18, NULL, '2022-08-31', 'hello, my water meter is broken', 'installation', 'In Progress', '', NULL),
+(42, 26, 25, 18, NULL, '2022-09-08', 'pipe broken', 'problem', 'Completed ', '', '2022-08-25');
 
 -- --------------------------------------------------------
 
@@ -118,16 +132,20 @@ CREATE TABLE `Cases` (
 --
 
 INSERT INTO `Cases` (`case_ID`, `case_subject`, `company_ID`, `homeowner_ID`, `case_date`, `case_status`, `case_description`, `case_reply`) VALUES
-(24, '123', 1, 2, '2022-06-24', 'Replied', '123', '456'),
-(25, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
-(26, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
-(27, '123', 2, 2, '2022-06-24', 'Awaiting', '123', NULL),
+(24, '123', 1, 2, '2022-06-24', 'Closed', 'Pipes rusted', '456'),
+(25, '123', 2, 2, '2022-06-24', 'Closed', 'Check water meter', NULL),
+(26, '123', 2, 2, '2022-06-24', 'Awaiting', 'Sink Broken', NULL),
+(27, '123', 2, 2, '2022-06-24', 'Awaiting', 'Water heater spoil', NULL),
 (31, 'Homeowner 3 problem', 3, 3, '2022-07-05', 'Awaiting', 'Homeowner 3 problem details', NULL),
-(32, 'test', 1, 3, '2022-07-05', 'Replied', 'testing', 'Testing Reply\r\n'),
+(32, 'test', 1, 3, '2022-07-05', 'Replied', 'My Kitchen sink is leaking', 'Testing Reply\r\n'),
 (34, 'asdasd', 2, 3, '2022-07-05', 'Awaiting', 'test', NULL),
-(35, 'test', 2, 3, '2022-07-05', 'Awaiting', 'test', NULL),
+(35, 'test', 2, 3, '2022-07-05', 'Awaiting', 'Toilet not flushing', NULL),
 (36, 'test', 2, 1, '2022-07-12', 'Awaiting', 'Hello Test', NULL),
-(37, 'new', 5, 1, '2022-08-08', 'Replied', 'Do you support', 'Lolno');
+(37, 'new', 5, 1, '2022-08-08', 'Closed', 'Do you support', 'Hello'),
+(40, 'help', 4, 3, '2022-08-20', 'Awaiting', 'Help', NULL),
+(41, 'Enquiry', 5, 23, '2022-08-20', 'Closed', 'this is new', 'help'),
+(42, 'Enquiry', 5, 3, '2022-08-21', 'Closed', 'Hello\r\nyes', 'Hello\r\nyes '),
+(43, 'Enquiry', 26, 25, '2022-08-25', 'Closed', 'Help my house is flooding!', 'yes ');
 
 -- --------------------------------------------------------
 
@@ -148,7 +166,9 @@ CREATE TABLE `Clients` (
 --
 
 INSERT INTO `Clients` (`client_ID`, `company_ID`, `homeowner_ID`, `discount_ID`, `start_date`) VALUES
-(2, 5, 1, 15, '2022-08-19');
+(11, 5, 1, 15, '2022-08-19'),
+(16, 5, 3, 15, '2022-08-25'),
+(18, 26, 25, 20, '2022-08-31');
 
 -- --------------------------------------------------------
 
@@ -176,12 +196,13 @@ CREATE TABLE `Company` (
 --
 
 INSERT INTO `Company` (`company_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `description`, `user_type`, `suspended`, `verified`) VALUES
-(1, 'company1', '$2y$10$Walm.A37GJ6HYfD5JGl2LOmvaYQIxaUKFH6474V6.q6nh/FO66Nn.', 'Company One', 'angjinghian@gmail.com', 98765432, '123 Test A42111', 123520, 'Testing', 'company', 0, 1),
+(1, 'company1', '$2y$10$4mtyz/kdHvYwqvXKEc2BkuWr2FAk66TaKSrkPxbraj/vOAgLUXjzG', 'Company One', 'angjinghian@gmail.com', 98765432, '123 Test A42111', 123520, 'We are Company one, the leading experts in the water supply chain.', 'company', 0, 1),
 (2, 'company2', '$2y$10$N/4f/SnOelWGRAGKjmiVn.9CMZgCVoVj4PEAtn6cWm9GRLeX4Yo1q', 'Company Two', 'test@mail.com', 98765432, '421 Something Avenue 6 #1-2492', 123942, 'Hello we are company 2', 'company', 0, 1),
 (3, 'company3', '$2y$10$QIvZG0d3GxA6DQQllMyBBu0Db21d4Mu1LhSJps2KrxzQeh0s4cHES', 'Company Three', 'company3@sma.net', 98765432, '123 Test Avenue 12 #4-2192', 239423, 'Hello we are company three', 'company', 0, 1),
 (4, 'company4', '$2y$10$KL2pPxj97pnCOazUynfgNOStA2jPc/DdBX.zFnSCDDFnu0Y16U116', 'Company Four', 'compfour@mail.com', 67876543, '93 Lorum Avenue 1 #05-98', 52821, 'Bringing fresh water right to your homes', 'company', 0, 1),
-(5, 'company5', '$2y$10$.YFGFGMcLbK1Sq66S5G.6e/YpicGLLJDyQ7BqsAxkCwbcecKlS5TO', 'Company Five', 'company5@mail.com', 89876544, '358 Random Lane 7 #2-223', 798628, 'We are number 5', 'company', 0, 1),
-(20, 'company34', '$2y$10$FTfAwCYsKMKuEI2RtLLIp.xbCNBJFBFcK1wt3IX5Fws1NGsJHjbsm', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, 'No description has been set by the company yet', 'company', 0, 1);
+(5, 'company5', '$2y$10$.YFGFGMcLbK1Sq66S5G.6e/YpicGLLJDyQ7BqsAxkCwbcecKlS5TO', 'Company Five', 'company5@mail.com', 89876544, '358 Random Lane 7 #2-223', 798628, 'Hi, this is the description for Company 5!', 'company', 0, 1),
+(25, 'company85', '$2y$10$3uDLlBXVD4EsKjzAJp/s1OMgpu3PkQrWhwkkedtLcjjBaR9cLrfk.', 'Comp force', 'a@a.com', 12345678, 'Block 15 #08-122', 522361, 'No description has been set by the company yet', 'company', 0, 1),
+(26, 'comp88', '$2y$10$IAfLFngaRlQbHuzNaZ68lec7q6IuSykw9U0kPVPTohAnjW7w6rEq6', 'Company 88', 'test@email.com', 12345678, '1 Adam Road', 852366, 'We are company 88, established 1988', 'company', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -201,8 +222,8 @@ CREATE TABLE `Company_Services` (
 --
 
 INSERT INTO `Company_Services` (`cs_ID`, `service_ID`, `company_ID`, `price`) VALUES
-(1, 1, 1, 2.55),
-(2, 2, 1, 50.50),
+(1, 1, 1, 2.57),
+(2, 2, 1, 50.60),
 (3, 4, 1, NULL),
 (4, 5, 1, NULL),
 (5, 2, 2, 56.00),
@@ -212,11 +233,19 @@ INSERT INTO `Company_Services` (`cs_ID`, `service_ID`, `company_ID`, `price`) VA
 (10, 6, 3, NULL),
 (11, 3, 3, NULL),
 (12, 1, 4, 0.25),
-(45, 1, 5, NULL),
-(46, 2, 5, NULL),
+(45, 1, 5, 5.55),
+(46, 2, 5, 101.20),
 (47, 3, 5, NULL),
-(50, 1, 20, 12.56),
-(52, 20, 1, NULL);
+(52, 20, 1, NULL),
+(73, 1, 25, NULL),
+(74, 2, 25, NULL),
+(75, 3, 25, NULL),
+(76, 20, 25, NULL),
+(77, 29, 5, NULL),
+(78, 1, 26, 5.55),
+(79, 5, 26, NULL),
+(80, 20, 26, NULL),
+(81, 2, 26, 101.20);
 
 -- --------------------------------------------------------
 
@@ -241,26 +270,9 @@ CREATE TABLE `Discounts` (
 INSERT INTO `Discounts` (`discount_ID`, `company_ID`, `discount_name`, `discount_start_date`, `discount_end_date`, `discount_description`, `discount_modifier`) VALUES
 (5, 2, 'Sign up bonus', '2022-07-15', '2022-08-01', 'Sign up now and get 15% off', 15),
 (12, 4, 'Sign up bonus', '2022-07-01', '2022-08-31', 'Sign up by August and get 25% off your Bill for life!', 25),
-(13, 1, '30% off your Total bill', '2022-07-07', '2022-07-30', 'test', 12),
-(15, 5, 'New Adopter', '2022-08-04', '2022-12-28', '14', 15);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Enquiries`
---
-
-CREATE TABLE `Enquiries` (
-  `enquiry_ID` int(11) NOT NULL,
-  `admin_ID` int(10) DEFAULT NULL,
-  `user_ID` int(11) NOT NULL,
-  `user_type` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `enquiry_date` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `enquiry_subject` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `enquiry_description` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `enquiry_status` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `enquiry_reply` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(15, 5, 'New Adopter', '2022-08-04', '2022-12-28', 'New Adopters get 15% off from August 4th to December 28th!', 15),
+(19, 1, 'test', '2022-07-07', '2022-07-30', '12% off if you sign up with use today!', 12),
+(20, 26, 'New discount', '2022-08-01', '2022-10-31', '15% off new owners', 15);
 
 -- --------------------------------------------------------
 
@@ -285,10 +297,15 @@ CREATE TABLE `Enquiries_Company` (
 --
 
 INSERT INTO `Enquiries_Company` (`ec_ID`, `admin_ID`, `company_ID`, `user_type`, `enquiry_date`, `enquiry_subject`, `enquiry_description`, `enquiry_status`, `enquiry_reply`) VALUES
-(100, 2, 1, 'company', '2022-07-14', 'test', '123', 'Replied', 'no'),
-(101, 2, 1, 'company', '2022-07-14', 'test', 'asd', 'Replied', 'Test Company Enquiry Reply'),
-(102, NULL, 1, 'company', '2022-07-15', 'test', '123', 'Awaiting', NULL),
-(103, NULL, 5, 'company', '2022-07-30', 'Enquiry from Company 5', 'Enquiry from Company 5 details', 'Awaiting', NULL);
+(100, 2, 1, 'company', '2022-07-14', 'Can\'t upload profile photo', 'Can\'t upload profile photo', 'Closed', 'no'),
+(101, 2, 1, 'company', '2022-07-14', 'Cannot Add Services', 'Cannot Add Services', 'Replied', 'Noted, we are currently in the process of fixing this issue'),
+(102, NULL, 1, 'company', '2022-07-15', 'Cannot Add Services', 'Cannot Add Services since last week', 'Awaiting', NULL),
+(103, NULL, 5, 'company', '2022-07-30', 'Enquiry from Company 5', 'Enquiry from Company 5 details', 'Awaiting', NULL),
+(105, NULL, 1, 'company', '2022-08-19', 'hi', 'how to ...', 'Awaiting', NULL),
+(106, NULL, 5, 'company', '2022-08-19', 'Enquiry', 'Can\'t log in during 12am!', 'Awaiting', NULL),
+(107, NULL, 5, 'company', '2022-08-20', 'help', 'not working', 'Awaiting', NULL),
+(108, NULL, 5, 'company', '2022-08-20', 'Enquiry', 'help', 'Awaiting', NULL),
+(109, 2, 26, 'company', '2022-08-25', 'Enquiry', 'Unable to remove staff', 'Replied', 'ok hi');
 
 -- --------------------------------------------------------
 
@@ -313,8 +330,11 @@ CREATE TABLE `Enquiries_Homeowner` (
 --
 
 INSERT INTO `Enquiries_Homeowner` (`eh_ID`, `admin_ID`, `homeowner_ID`, `user_type`, `enquiry_date`, `enquiry_subject`, `enquiry_description`, `enquiry_status`, `enquiry_reply`) VALUES
-(200, 2, 1, 'homeowner', '2022-07-14', 'asdasd', '123', 'Replied', 'Test ENQUIRY homeowner Reply'),
-(201, NULL, 1, 'homeowner', '2022-07-15', 'test', 'asdasd', 'Awaiting', NULL);
+(200, 2, 1, 'homeowner', '2022-07-14', 'Can\'t upload profile photo', 'Can\'t upload profile photo', 'Replied', 'Test ENQUIRY homeowner Reply'),
+(201, NULL, 1, 'homeowner', '2022-07-15', 'Can\'t log out', 'Can\'t log out', 'Awaiting', NULL),
+(204, NULL, 3, 'homeowner', '2022-08-20', 'New ship', 'Help', 'Awaiting', NULL),
+(205, 2, 23, 'homeowner', '2022-08-20', 'New ship', 'help', 'Closed', 'reply'),
+(206, 2, 3, 'homeowner', '2022-08-21', 'Enquiry', 'hello', 'Replied', 'lolk');
 
 -- --------------------------------------------------------
 
@@ -343,13 +363,16 @@ CREATE TABLE `Homeowners` (
 
 INSERT INTO `Homeowners` (`homeowner_ID`, `username`, `password`, `name`, `email`, `phone`, `address`, `postal_code`, `home_type`, `user_type`, `suspended`, `verified`) VALUES
 (1, 'homeowner1', '$2y$10$A70oK8EuIeeGvOXv7vNxBOT9HiCDp5c8IcPNIGSUZoxWmHf8zc1ri', 'Mark Lee', 'MarkLee@mail.com', 98765432, '421 Lee Avenue 92 #6-2123', 123456, 'exec', 'homeowner', 0, 1),
-(2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Test', 'test@mail.com', 92658976, '123 Test Avenue 12 #4-2192', 123942, 'exec', 'homeowner', 0, 1),
+(2, 'homeowner2', '$2y$10$xZglMrSjvQX6OsqgIcHc0en1XGBKRKQD54UNR0VAKbumBjfHHdExq', 'Carman Perry', 'CPerry@mail.com', 92658976, '72 Punting Avenue #9-213', 974235, 'exec', 'homeowner', 0, 1),
 (3, 'homeowner5', '$2y$10$BXkqQo2q2zqQPH2HE9ju8OmGO4njqP/WmjEF1y5oMr7bV.yQiZgJe', 'Ang Jing Hian', 'jh@mail.com', 98762826, 'Block 241 Ang Mo Kio Avenue 12 #2-2420', 560241, '2room', 'homeowner', 0, 1),
 (4, 'homeowner4', '$2y$10$v4wKpvpubMGqaJKIuJpMQOmoe8B8D8teLdXM1UXcxsBzqIlMAj9x2', 'Jamie Poh', 'four@mail.com', 86532469, '24 Poh Avenue 2 #02-451', 526975, '4room', 'homeowner', 0, 1),
 (6, 'homeowner3', '$2y$10$pggC5TgFDNr4Wjf4vRpB2u5ZXP19CpJc0ALhc7YgOAqfbSnnyONGa', 'Andrew Sim', 'test@mail.com', 98764892, '123 Random Street 7 #16-24', 416123, '2room', 'homeowner', 0, 1),
-(9, 'homeowner11', '$2y$10$XlVcbU9uRljQDl9LHWmEkuJUkLvENtAApW5xvSSgA/5qyTT8nrqUi', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '2room', 'homeowner', 0, 0),
-(10, 'homeowner7', '$2y$10$15DFEZvCdoZwaQ5hKN3ZM.O7xys2uaOhVcK40BvNNVbe/nWMCkoqe', 'Test', 'test@mail.com', 98765432, '123 Test Avenue 12 #4-2192', 123942, '2room', 'homeowner', 0, 0),
-(15, 'homeowner6', '$2y$10$3syjRB/fdDiYYTkjld74oOULsT7JS0Q19dY44LNZqj/Pp80KYkM9a', 'Sunny Yew', 'Syew@mail.sg', 71028921, 'Fake Street 92 #6-1252', 259612, '5room', 'homeowner', 0, 1);
+(9, 'homeowner11', '$2y$10$XlVcbU9uRljQDl9LHWmEkuJUkLvENtAApW5xvSSgA/5qyTT8nrqUi', 'Powell Max', 'PowellM@mail.com', 98765432, '54 Powell Road #25-852', 684297, '2room', 'homeowner', 0, 1),
+(10, 'homeowner7', '$2y$10$15DFEZvCdoZwaQ5hKN3ZM.O7xys2uaOhVcK40BvNNVbe/nWMCkoqe', 'Gurman Phua', 'GurmanPhua@mail.com', 98765432, '81 Gurman Street #8-825', 863123, '2room', 'homeowner', 0, 1),
+(15, 'homeowner6', '$2y$10$3syjRB/fdDiYYTkjld74oOULsT7JS0Q19dY44LNZqj/Pp80KYkM9a', 'Sunny Yew', 'Syew@mail.sg', 71028921, 'Fake Street 92 #6-1252', 259612, '5room', 'homeowner', 0, 1),
+(23, 'homeowner85', '$2y$10$vytOMPHFmtx3qnj9VFVLXuJDVSks93la1q4ivOsC2d7RaDpE5scG.', 'Albert Lim', 'test@email.com', 12345678, '1 Adam Road', 852366, '4room', 'homeowner', 0, 1),
+(24, 'Greglee', '$2y$10$UaS6Pm4TCvx/lWY1Giofz.aVTgNBiCctJXEabeU4LeGjDEwp19Tyu', 'Greg Lee', 'Greg Lee@ggg.com', 1234567, '98 Low Avenue #6-7510', 985632, '2room', 'homeowner', 0, 1),
+(25, 'home1', '$2y$10$SSKqSy6o86f0SB/cSwuOku55i89yttgZUYpy7Zgh.IRCSO.5zNy.2', 'Adman Le', 'test@email.com', 98887777, 'Block 123 #02-33, Compass Crescent', 530628, 'condo', 'homeowner', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -381,7 +404,15 @@ INSERT INTO `Homeowner_Services` (`hs_ID`, `service_ID`, `homeowner_ID`) VALUES
 (17, 1, 15),
 (18, 2, 15),
 (19, 3, 15),
-(20, 4, 15);
+(20, 4, 15),
+(48, 1, 23),
+(49, 2, 23),
+(50, 29, 23),
+(51, 67, 24),
+(52, 1, 25),
+(53, 2, 25),
+(54, 3, 25),
+(55, 5, 25);
 
 -- --------------------------------------------------------
 
@@ -404,17 +435,19 @@ CREATE TABLE `Maintenance_Equipment` (
 --
 
 INSERT INTO `Maintenance_Equipment` (`equipment_ID`, `company_ID`, `equipment_name`, `quantity`, `installation_date`, `warranty_date`, `expiry_date`) VALUES
-(3, 1, 'ianeeqqqq', 1234321, '2022-06-29', '2022-06-30', '2022-07-07'),
-(4, 1, 'dcqwdf', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
-(5, 1, 'dcqwdf', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
+(3, 1, 'Steel Pipes', 12343, '2022-06-29', '2022-06-30', '2022-07-07'),
+(4, 1, 'Mixing Containers', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
+(5, 1, 'Generic Filters', 21, '2022-05-06', '2022-06-06', '2022-06-04'),
 (6, 2, 'Water Tank', 2, '2022-04-19', '2022-07-14', '2023-04-12'),
 (7, 1, 'Water Meters', 800, '2022-07-12', '2022-07-22', '2022-07-30'),
 (8, 2, 'Reverse Osmosis Filters', 20, '2022-07-04', '2022-09-02', '2024-05-15'),
-(9, 2, 'test', 123, '2022-07-05', '2022-07-15', '2022-07-27'),
+(9, 2, 'Mixing Compound', 123, '2022-07-05', '2022-07-15', '2022-07-27'),
 (10, 2, 'Alkaline Solution', 521, '2022-06-27', '2022-08-05', '2022-10-19'),
-(11, 2, 'test11', 123, '2022-07-20', '2022-07-28', '2022-08-03'),
+(11, 2, 'Black Alkaline Powder', 123, '2022-07-20', '2022-07-28', '2022-08-03'),
 (12, 1, 'Reverse Osmosis Filters', 20, '2022-07-08', '2022-07-29', '2022-07-20'),
-(14, 1, 'meter', 2, '2022-08-18', '2022-08-31', '2022-08-25');
+(14, 1, 'meter', 2, '2022-08-18', '2022-08-31', '2022-08-25'),
+(17, 5, 'Pipe 5x5cm', 20, '2022-08-18', '2022-11-30', '2022-08-31'),
+(18, 26, 'Pipe 5x5cm', 15, '2022-08-18', '2022-08-31', '2022-08-28');
 
 -- --------------------------------------------------------
 
@@ -440,7 +473,7 @@ CREATE TABLE `Maintenance_Staff` (
 INSERT INTO `Maintenance_Staff` (`staff_ID`, `company_ID`, `booking_ID`, `staff_role`, `staff_name`, `email`, `phone`, `status`) VALUES
 (1, 1, 4, 'Customer Service', 'John Doe', 'jd@mail.sg', 5551234, 'Assigned'),
 (2, 1, 5, 'Plumber', 'Jane Smith', 'js@mail.sg', 46109281, 'Assigned'),
-(3, 1, 1, 'Customer Service', 'Tan Ah Kow', 'TaK@mail.com', 95719243, 'Not Assigned'),
+(3, 1, 30, 'Customer Service', 'Tan Ah Kow', 'TaK@mail.com', 95719243, 'Assigned'),
 (4, 2, NULL, 'Customer Service', 'Jing Hian', 'jh@mail.com', 92837621, 'Not Assigned'),
 (5, 2, NULL, 'Plumber', 'John Doe', 'test@mail.com', 12345678, 'Not Assigned'),
 (6, 1, 2, 'Customer Service', 'John Doe', 'test@mail.com', 12345678, 'Assigned'),
@@ -449,7 +482,10 @@ INSERT INTO `Maintenance_Staff` (`staff_ID`, `company_ID`, `booking_ID`, `staff_
 (9, 1, NULL, 'Plumber', 'Tan Ah Kow', 'Angjinghian@gmail.com', 98785474, 'Not Assigned'),
 (10, 1, NULL, 'Plumber', 'John Doe', 'Angjinghian@gmail.com', 97846523, 'Not Assigned'),
 (11, 5, NULL, 'Water Executive', 'James Lee', 'JLee@Jmail.com', 55123456, 'Not Assigned'),
-(13, 1, NULL, 'Technician', 'James Lee', 'JL@comp1.com', 78945612, 'Not Assigned');
+(13, 1, NULL, 'Technician', 'Jimmy Lee', 'JL@comp1.com', 78945612, 'Not Assigned'),
+(15, 5, NULL, 'Plumber', 'Andy Lau', 'ALau@google.com', 81565123, 'Not Assigned'),
+(16, 5, NULL, 'Water Service', 'lawernce loo', 'test@email.com', 86590913, 'Not Assigned'),
+(17, 26, NULL, 'Plumber', 'Andy Lau', 'a@a.com', 12345678, 'Not Assigned');
 
 -- --------------------------------------------------------
 
@@ -469,7 +505,17 @@ CREATE TABLE `Past_Clients` (
 --
 
 INSERT INTO `Past_Clients` (`client_ID`, `company_ID`, `homeowner_ID`, `cancellation_date`) VALUES
-(1, 5, 1, '2022-08-18');
+(1, 5, 1, '2022-08-19'),
+(2, 5, 1, '2022-08-19'),
+(3, 5, 1, '2022-08-19'),
+(4, 4, 1, '2022-08-19'),
+(5, 5, 1, '2022-08-19'),
+(6, 5, 1, '2022-08-19'),
+(7, 4, 1, '2022-08-19'),
+(8, 20, 1, '2022-08-19'),
+(9, 1, 1, '2022-08-19'),
+(13, 3, 18, '2022-08-19'),
+(17, 5, 23, '2022-08-20');
 
 -- --------------------------------------------------------
 
@@ -494,7 +540,11 @@ INSERT INTO `Ratings` (`rating_ID`, `company_ID`, `homeowner_ID`, `score`, `revi
 (2, 5, 1, '3.5', 'Testing review 2'),
 (3, 1, 1, '4.0', 'TEST'),
 (4, 3, 1, '5.0', 'Yet to install looks good'),
-(5, 4, 1, '4.0', 'Would recommend their services to my family and friends!');
+(5, 4, 1, '4.0', 'Would recommend their services to my family and friends!'),
+(7, 5, 3, '4.0', 'Good'),
+(8, 5, 23, '5.0', 'good job'),
+(9, 5, 3, '5.0', 'Good service'),
+(10, 26, 25, '4.0', 'good job');
 
 -- --------------------------------------------------------
 
@@ -512,16 +562,19 @@ CREATE TABLE `Services` (
 --
 
 INSERT INTO `Services` (`service_ID`, `service_name`) VALUES
+(40, 'Coupling Adjustments'),
 (3, 'Customer Service'),
 (4, 'Fireworks'),
+(27, 'Flow Regulation Test'),
 (6, 'Inspections'),
 (2, 'Maintenance'),
-(5, 'Pipes'),
+(5, 'Pipe Burnishing'),
 (20, 'Pipes installation'),
 (29, 'Repair'),
-(27, 'test'),
+(61, 'Stress Testing'),
 (28, 'Testing'),
-(1, 'Water Supply');
+(1, 'Water Supply'),
+(67, 'Water testing');
 
 -- --------------------------------------------------------
 
@@ -562,7 +615,14 @@ INSERT INTO `Water_Tracking` (`tracking_ID`, `company_ID`, `homeowner_ID`, `usag
 (19, 1, 2, '2022-07-23', 'July', 10.05),
 (20, 1, 1, '2022-08-17', 'August', 15.00),
 (21, 4, 1, '2022-08-14', 'August', 1250.00),
-(22, 1, 1, '2022-08-14', 'August', 1250.00);
+(22, 1, 1, '2022-08-14', 'August', 1250.00),
+(24, 5, 3, '2022-07-15', 'July', 20.00),
+(25, 5, 3, '2022-08-19', 'August', 30.00),
+(26, 5, 23, '2022-08-05', 'August', 20.00),
+(27, 5, 23, '2022-07-14', 'July', 30.00),
+(28, 5, 3, '2022-08-17', 'August', 80.00),
+(29, 26, 25, '2022-08-11', 'August', 20.00),
+(30, 26, 25, '2022-08-16', 'August', 80.00);
 
 --
 -- Indexes for dumped tables
@@ -629,12 +689,6 @@ ALTER TABLE `Company_Services`
 ALTER TABLE `Discounts`
   ADD PRIMARY KEY (`discount_ID`),
   ADD KEY `FK_discounts_company_ID` (`company_ID`);
-
---
--- Indexes for table `Enquiries`
---
-ALTER TABLE `Enquiries`
-  ADD PRIMARY KEY (`enquiry_ID`);
 
 --
 -- Indexes for table `Enquiries_Company`
@@ -716,103 +770,97 @@ ALTER TABLE `Admin`
 -- AUTO_INCREMENT for table `Bills`
 --
 ALTER TABLE `Bills`
-  MODIFY `bill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `bill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `Bookings`
 --
 ALTER TABLE `Bookings`
-  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `Cases`
 --
 ALTER TABLE `Cases`
-  MODIFY `case_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `case_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `Clients`
 --
 ALTER TABLE `Clients`
-  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `Company`
 --
 ALTER TABLE `Company`
-  MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `company_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `Company_Services`
 --
 ALTER TABLE `Company_Services`
-  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `cs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `Discounts`
 --
 ALTER TABLE `Discounts`
-  MODIFY `discount_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `Enquiries`
---
-ALTER TABLE `Enquiries`
-  MODIFY `enquiry_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `discount_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `Enquiries_Company`
 --
 ALTER TABLE `Enquiries_Company`
-  MODIFY `ec_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `ec_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `Enquiries_Homeowner`
 --
 ALTER TABLE `Enquiries_Homeowner`
-  MODIFY `eh_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
+  MODIFY `eh_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
 
 --
 -- AUTO_INCREMENT for table `Homeowners`
 --
 ALTER TABLE `Homeowners`
-  MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `homeowner_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `Homeowner_Services`
 --
 ALTER TABLE `Homeowner_Services`
-  MODIFY `hs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `hs_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `Maintenance_Equipment`
 --
 ALTER TABLE `Maintenance_Equipment`
-  MODIFY `equipment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `equipment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `Maintenance_Staff`
 --
 ALTER TABLE `Maintenance_Staff`
-  MODIFY `staff_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `staff_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `Ratings`
 --
 ALTER TABLE `Ratings`
-  MODIFY `rating_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `rating_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `Services`
 --
 ALTER TABLE `Services`
-  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `service_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `Water_Tracking`
 --
 ALTER TABLE `Water_Tracking`
-  MODIFY `tracking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `tracking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables
